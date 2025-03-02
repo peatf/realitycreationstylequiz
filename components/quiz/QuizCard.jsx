@@ -21,15 +21,34 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
   };
   
   return (
-    <div className="glassmorphic-card">
+    <div style={{
+      position: 'relative',
+      zIndex: 10,
+      width: '100%',
+      padding: '1.5rem', // Reduced padding
+      borderRadius: '5rem',
+      background: "rgba(220, 230, 255, 0.2)",
+      backdropFilter: "blur(14px)",
+      WebkitBackdropFilter: "blur(14px)",
+      border: "1px solid rgba(255,255,255,0.3)",
+      boxShadow: "0 10px 40px rgba(255,255,255,0.2), inset 0 0 30px rgba(255,255,255,0.2)",
+      animation: "pulseGlow 8s infinite alternate ease-in-out",
+    }}>
       {/* Texture overlay */}
-      <div className="texture-overlay" />
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        borderRadius: '5rem',
+        mixBlendMode: 'overlay',
+        opacity: 0.03,
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E")`
+      }} />
 
-      <div className="relative z-10">
+      <div style={{ position: 'relative', zIndex: 10 }}>
         {/* Multiple Questions */}
         {currentQuestions.map((question, index) => (
           <React.Fragment key={question.id}>
-            <div className="mb-6 text-center">
+            <div style={{ marginBottom: '1.5rem', textAlign: 'center' }}>
               {/* Question box with fixed styling */}
               <div
                 style={{
@@ -41,14 +60,18 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
                   WebkitBackdropFilter: "blur(4px)",
                   border: "1px solid rgba(220,255,200,0.6)",
                   boxShadow: "inset 0 2px 5px rgba(0,0,0,0.1), 0 0 10px rgba(193,191,132,0.5)",
-                  maxWidth: '28rem',
+                  maxWidth: '36rem', // Wider to use more of the available space
                   margin: '0 auto',
-                  overflow: 'hidden'
+                  overflow: 'hidden',
+                  width: '100%'
                 }}
               >
                 <p 
-                  className="text-center text-xs tracking-wide leading-tight" 
                   style={{
+                    textAlign: 'center',
+                    fontSize: '0.75rem',
+                    letterSpacing: '0.05em',
+                    lineHeight: '1.25',
                     color: "#2359FF",
                     textShadow: "0 0 5px rgba(35,89,255,0.3)"
                   }}
@@ -69,37 +92,73 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
             {/* Add divider between questions except for the last one - fixed width */}
             {index < currentQuestions.length - 1 && (
               <div 
-                className="mx-auto my-3" 
                 style={{ 
                   height: '1px', 
                   background: "rgba(35,89,255,0.2)",
-                  width: '90%',
-                  maxWidth: '28rem'
+                  width: '85%',
+                  maxWidth: '36rem',
+                  margin: '0 auto 1rem auto'
                 }}
-              ></div>
+              />
             )}
           </React.Fragment>
         ))}
         
         {/* Navigation buttons */}
-        <div className="button-container">
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          marginTop: '1.5rem',
+          gap: '1rem'
+        }}>
           {onPrev && (
             <button
               onClick={onPrev}
-              className="button-glass"
+              style={{
+                padding: '0.5rem 2rem',
+                borderRadius: '76px',
+                color: "#2359FF",
+                background: "rgba(224,224,224,0)",
+                border: "1px solid rgba(255,255,255,0.3)",
+                boxShadow: "inset 19px 19px 38px rgba(190,190,190,0.3), inset -19px -19px 38px rgba(255,255,255,0.3)",
+                fontSize: '0.75rem',
+                letterSpacing: '0.1em',
+                transition: 'all 0.3s',
+                cursor: 'pointer'
+              }}
             >
-              <span className="relative z-10">PREVIOUS</span>
+              <span style={{ position: 'relative', zIndex: 10 }}>PREVIOUS</span>
             </button>
           )}
           
           <button
             onClick={onNext}
-            className="button-glass relative overflow-hidden"
+            style={{
+              padding: '0.5rem 2rem',
+              borderRadius: '76px',
+              color: "#2359FF",
+              background: "rgba(224,224,224,0)",
+              border: "1px solid rgba(255,255,255,0.3)",
+              boxShadow: "inset 19px 19px 38px rgba(190,190,190,0.3), inset -19px -19px 38px rgba(255,255,255,0.3)",
+              fontSize: '0.75rem',
+              letterSpacing: '0.1em',
+              position: 'relative',
+              overflow: 'hidden',
+              transition: 'all 0.3s',
+              cursor: 'pointer'
+            }}
           >
-            <span className="relative z-10">{isLast ? 'SEE RESULTS' : 'NEXT'}</span>
+            <span style={{ position: 'relative', zIndex: 10 }}>{isLast ? 'SEE RESULTS' : 'NEXT'}</span>
             <div
-              className="button-shine"
-            ></div>
+              style={{
+                position: 'absolute',
+                inset: 0,
+                opacity: 0.2,
+                background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
+                transform: "translateX(-100%)",
+                animation: "buttonShine 3s infinite"
+              }}
+            />
           </button>
         </div>
       </div>
