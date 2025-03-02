@@ -65,7 +65,7 @@ const DimensionChart = ({ dimension, value, state }) => {
       
       {/* Dimension description card */}
       <div 
-        className="p-4 rounded-3xl mt-4 mb-6"
+        className="p-4 rounded-3xl mt-4"
         style={{
           background: "rgba(235,240,180,0.5)",
           backdropFilter: "blur(4px)",
@@ -77,11 +77,11 @@ const DimensionChart = ({ dimension, value, state }) => {
         <h3 className="text-base font-light mb-2" style={{ color: "#2359FF" }}>
           {dimension.title}: <span className="font-normal">{stateName}</span>
         </h3>
-        <p className="text-sm mb-4" style={{ color: "#2359FF" }}>
+        <p className="text-sm" style={{ color: "#2359FF" }}>
           {stateDescription}
         </p>
         
-        {/* Frameworks, Practices, and Tools sections */}
+        {/* Only show these sections if they exist */}
         {dimension.states[state]?.frameworks && (
           <div className="mt-3">
             <h4 className="text-sm font-semibold" style={{ color: "#2359FF" }}>Frameworks you may be interested in:</h4>
