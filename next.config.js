@@ -6,7 +6,6 @@ const nextConfig = {
   // Optimize for production builds
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production', // Remove console logs in production
-    minify: true,
   },
   
   // Configure Content Security Policy
