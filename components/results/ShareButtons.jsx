@@ -62,9 +62,16 @@ const ShareButtons = ({ url, text }) => {
       <div className="flex items-center mt-2">
         <button 
           onClick={handleCopy}
-          className="button-glass"
+          className="px-8 py-2 transition-all duration-300 text-xs tracking-wide relative overflow-hidden"
+          style={{
+            borderRadius: "76px",
+            color: "#2359FF",
+            background: "rgba(224,224,224,0)",
+            border: "1px solid rgba(255,255,255,0.3)",
+            boxShadow: "inset 19px 19px 38px rgba(190,190,190,0.3), inset -19px -19px 38px rgba(255,255,255,0.3)"
+          }}
         >
-          <span className="relative z-10 tracking-wide text-xs">
+          <span className="relative z-10">
             {copied ? 'Link Copied!' : 'Copy Link'}
           </span>
           <div 
