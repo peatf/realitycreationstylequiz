@@ -26,7 +26,7 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
             transform: "translateX(-100%)",
             animation: "pulse 3s infinite"
           }}
-        ></div>
+        />
       </div>
       
       {/* Slider thumb */}
@@ -39,10 +39,15 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
           backdropFilter: "blur(8px)",
           WebkitBackdropFilter: "blur(8px)",
           boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
-          border: "1px solid rgba(255,255,255,0.2)"
+          border: "1px solid rgba(255,255,255,0.2)",
+          zIndex: 2
         }}
       >
-        <div className="absolute top-1 left-1 w-1 h-1 rounded-full bg-white opacity-60"></div>
+        {/* White dot in the center of the thumb */}
+        <div 
+          className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60"
+          style={{ transform: "translate(-50%, -50%)" }}
+        />
       </div>
       
       {/* Hidden actual input slider */}
@@ -52,7 +57,7 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
         max="100"
         value={value}
         onChange={handleChange}
-        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
       />
       
       {/* Answer labels */}
