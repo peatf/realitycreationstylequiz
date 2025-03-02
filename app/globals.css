@@ -373,6 +373,19 @@ body {
   filter: blur(3rem);
 }
 /* Add this to your globals.css file */
+/* Fix for mobile question boxes overflowing */
+@media (max-width: 480px) {
+  .glassmorphic-card, .question-box {
+    max-width: 95% !important;
+    padding: 0.75rem !important;
+    border-radius: 1rem !important;
+  }
+  
+  .slider-track {
+    width: 90% !important;
+    margin: 0 auto !important;
+  }
+}
 
 /* Styles to apply when the app is running in an iframe */
 body.in-iframe {
@@ -416,9 +429,10 @@ body.in-iframe h2 {
 @media (max-width: 640px) {
   body.in-iframe .glassmorphic-card,
   body.in-iframe .card-container {
-    padding: 1rem;
-    border-radius: 1.5rem;
+    padding: 0.75rem;
+    border-radius: 1.25rem;
     margin: 0.5rem auto;
+    max-width: 95vw; /* Ensure it doesn't overflow viewport width */
   }
   
   body.in-iframe h1 {
