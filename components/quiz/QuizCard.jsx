@@ -4,18 +4,21 @@
 import React from 'react';
 import { useQuiz } from '@/context/QuizContext';
 import QuizSlider from './QuizSlider';
+import { getAllQuestions } from '@/data/questions';
 
-const QuizCard = ({ question, onNext, onPrev, isLast, value }) => {
-  const { updateAnswer } = useQuiz();
+const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
+  const { updateAnswer, answers } = useQuiz();
+  const allQuestions = getAllQuestions();
   
-  // Handle slider change
-  const handleSliderChange = (newValue) => {
-    if (question) {
-      updateAnswer(question.id, question.dimension, newValue);
-    }
+  // Get the current group of 3 questions (or fewer if at the end)
+  const questionsPerPage = 3;
+  const startIdx = Math.floor(currentQuestionIndex / questionsPerPage) * questionsPerPage;
+  const currentQuestions = allQuestions.slice(startIdx, startIdx + questionsPerPage);
+  
+  // Handle slider change for a specific question
+  const handleSliderChange = (questionId, dimensionKey, newValue) => {
+    updateAnswer(questionId, dimensionKey, newValue);
   };
-  
-  if (!question) return null;
   
   return (
     <div 
@@ -40,37 +43,46 @@ const QuizCard = ({ question, onNext, onPrev, isLast, value }) => {
       />
 
       <div className="relative z-10">
-        {/* Question */}
-        <div className="mb-6 text-center">
-          <div
-            className="p-4 mb-2 rounded-3xl mx-auto w-full max-w-md overflow-hidden"
-            style={{
-              background: "rgba(235,240,180,0.95)",
-              backdropFilter: "blur(4px)",
-              WebkitBackdropFilter: "blur(4px)",
-              border: "1px solid rgba(220,255,200,0.6)",
-              boxShadow: "inset 0 2px 5px rgba(0,0,0,0.1), 0 0 10px rgba(193,191,132,0.5)",
-            }}
-          >
-            <p 
-              className="text-center text-xs tracking-wide leading-tight" 
-              style={{
-                color: "#2359FF",
-                textShadow: "0 0 5px rgba(35,89,255,0.3)"
-              }}
-            >
-              {question.text}
-            </p>
-          </div>
-          
-          {/* Slider */}
-          <QuizSlider
-            value={value}
-            onChange={handleSliderChange}
-            leftLabel={question.leftLabel}
-            rightLabel={question.rightLabel}
-          />
-        </div>
+        {/* Multiple Questions */}
+        {currentQuestions.map((question, index) => (
+          <React.Fragment key={question.id}>
+            <div className="mb-6 text-center">
+              <div
+                className="p-4 mb-2 rounded-3xl mx-auto w-full max-w-md overflow-hidden"
+                style={{
+                  background: "rgba(235,240,180,0.95)",
+                  backdropFilter: "blur(4px)",
+                  WebkitBackdropFilter: "blur(4px)",
+                  border: "1px solid rgba(220,255,200,0.6)",
+                  boxShadow: "inset 0 2px 5px rgba(0,0,0,0.1), 0 0 10px rgba(193,191,132,0.5)",
+                }}
+              >
+                <p 
+                  className="text-center text-xs tracking-wide leading-tight" 
+                  style={{
+                    color: "#2359FF",
+                    textShadow: "0 0 5px rgba(35,89,255,0.3)"
+                  }}
+                >
+                  {question.text}
+                </p>
+              </div>
+              
+              {/* Slider */}
+              <QuizSlider
+                value={answers[question.id] || 50}
+                onChange={(newValue) => handleSliderChange(question.id, question.dimension, newValue)}
+                leftLabel={question.leftLabel}
+                rightLabel={question.rightLabel}
+              />
+            </div>
+            
+            {/* Add divider between questions except for the last one */}
+            {index < currentQuestions.length - 1 && (
+              <div className="w-full h-px mx-auto my-3" style={{ background: "rgba(35,89,255,0.2)" }}></div>
+            )}
+          </React.Fragment>
+        ))}
         
         {/* Navigation buttons */}
         <div className="flex justify-center mt-4">
@@ -101,7 +113,7 @@ const QuizCard = ({ question, onNext, onPrev, isLast, value }) => {
               boxShadow: "inset 19px 19px 38px rgba(190,190,190,0.3), inset -19px -19px 38px rgba(255,255,255,0.3)"
             }}
           >
-            <span className="relative z-10">{isLast ? 'NEXT' : 'NEXT'}</span>
+            <span className="relative z-10">{isLast ? 'SEE RESULTS' : 'NEXT'}</span>
             <div
               className="absolute inset-0 opacity-20"
               style={{
