@@ -40,40 +40,40 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
             animation: "pulse 3s infinite"
           }}
         />
-      </div>
-      
-      {/* Slider thumb */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '50%',
-          width: '1rem',
-          height: '1rem',
-          borderRadius: '9999px',
-          left: `${value}%`,
-          transform: "translate(-50%, -50%)",
-          background: "rgba(255,255,255,0.2)",
-          backdropFilter: "blur(8px)",
-          WebkitBackdropFilter: "blur(8px)",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
-          border: "1px solid rgba(255,255,255,0.2)",
-          zIndex: 2
-        }}
-      >
-        {/* White dot in the center of the thumb */}
-        <div 
-          style={{ 
+        
+        {/* Slider thumb - moved inside the track div */}
+        <div
+          style={{
             position: 'absolute',
             top: '50%',
-            left: '50%',
-            width: '0.25rem',
-            height: '0.25rem',
+            width: '1rem',
+            height: '1rem',
             borderRadius: '9999px',
-            background: 'white',
-            opacity: '0.6',
-            transform: "translate(-50%, -50%)"
+            left: `${value}%`,
+            transform: "translate(-50%, -50%)",
+            background: "rgba(255,255,255,0.2)",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
+            border: "1px solid rgba(255,255,255,0.2)",
+            zIndex: 2
           }}
-        />
+        >
+          {/* White dot in the center of the thumb */}
+          <div 
+            style={{ 
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '0.25rem',
+              height: '0.25rem',
+              borderRadius: '9999px',
+              background: 'white',
+              opacity: '0.6',
+              transform: "translate(-50%, -50%)"
+            }}
+          />
+        </div>
       </div>
       
       {/* Hidden actual input slider */}
