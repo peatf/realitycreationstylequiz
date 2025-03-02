@@ -46,6 +46,11 @@ const QuizContainer = () => {
     nextQuestion();
   };
   
+  // Choose background color - removed the green background per request
+  const backgroundStyle = {
+    background: "#fff" // Changed from "#c0f2c0" to white
+  };
+  
   // Render correct step
   const renderStep = () => {
     switch (currentStep) {
@@ -77,13 +82,13 @@ const QuizContainer = () => {
   };
   
   return (
-    <div className="flex items-start justify-center w-full min-h-screen">
+    <div className="flex items-start justify-center w-full min-h-screen" style={backgroundStyle}>
       <div className="relative w-full max-w-2xl mx-auto mt-10 mb-10 p-8">
         {/* Background glow */}
         <div
           className="absolute inset-0 rounded-2xl blur-3xl opacity-50"
           style={{
-            background: "rgba(255, 182, 193, 0.4)",
+            background: "rgba(255,182,193,0.4)",
             zIndex: 0,
           }}
         />
