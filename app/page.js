@@ -1,32 +1,16 @@
 // app/page.js
 'use client';
 
-import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { QuizProvider } from '@/context/QuizContext';
-import QuizContainer from '@/components/quiz/QuizContainer';
+
+// Dynamically import the QuizContainer to avoid SSR issues
+const QuizContainer = dynamic(() => import('@/components/quiz/QuizContainer'), {
+  ssr: false,
+  loading: () => <div>Loading...</div>
+});
 
 export default function Home() {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    try {
-      // Try to initialize anything that might be causing errors
-      setIsLoaded(true);
-    } catch (err) {
-      console.error("Error initializing page:", err);
-      setError(err.message);
-    }
-  }, []);
-
-  if (error) {
-    return <div className="p-8 text-red-600">Something went wrong: {error}</div>;
-  }
-
-  if (!isLoaded) {
-    return <div className="p-8">Loading...</div>;
-  }
-
   return (
     <QuizProvider>
       <main>
