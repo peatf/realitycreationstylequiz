@@ -6,8 +6,6 @@ const nextConfig = {
   // Standard output mode
   output: 'standalone',
   
-  // Remove experimental section since appDir is standard in Next.js 14
-  
   // Skip type checking during build
   typescript: {
     ignoreBuildErrors: true,
@@ -25,12 +23,12 @@ const nextConfig = {
         source: '/(.*)',
         headers: [
           {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
+            key: 'Content-Security-Policy',
+            value: "frame-ancestors 'self' https://alesha-legair-fnpz.squarespace.com https://www.peathefeary.com"
           },
           {
-            key: 'X-Frame-Options',
-            value: 'SAMEORIGIN',
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
           },
         ],
       },
