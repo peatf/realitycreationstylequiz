@@ -43,17 +43,19 @@ export function QuizProvider({ children }) {
     }));
   };
   
-  const nextQuestion = () => {
+  // Updated to support jumping multiple questions
+  const nextQuestion = (steps = 1) => {
     setState(prev => ({
       ...prev,
-      currentQuestionIndex: prev.currentQuestionIndex + 1,
+      currentQuestionIndex: prev.currentQuestionIndex + steps,
     }));
   };
   
-  const prevQuestion = () => {
+  // Updated to support jumping back multiple questions
+  const prevQuestion = (steps = 1) => {
     setState(prev => ({
       ...prev,
-      currentQuestionIndex: Math.max(0, prev.currentQuestionIndex - 1),
+      currentQuestionIndex: Math.max(0, prev.currentQuestionIndex - steps),
     }));
   };
   
