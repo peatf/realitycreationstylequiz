@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
           rel="stylesheet" 
         />
       </head>
-      <body>
+      <body style={{ background: 'transparent' }}>
         {children}
       </body>
     </html>
