@@ -1,5 +1,6 @@
 // app/layout.js
 import './globals.css';
+import IFrameWrapper from './IFrameWrapper';
 
 export const metadata = {
   title: 'Reality Creation Style Assessment',
@@ -17,7 +18,9 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body style={{ background: 'transparent' }}>
-        {children}
+        <IFrameWrapper>
+          {children}
+        </IFrameWrapper>
       </body>
     </html>
   );
