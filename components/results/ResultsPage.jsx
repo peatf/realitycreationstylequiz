@@ -5,8 +5,8 @@ import React from 'react';
 import { useQuiz } from '@/context/QuizContext';
 import { createShareableUrl, generateShareText } from '@/lib/utils';
 import { scoreToPercentage } from '@/lib/scoring';
-import { getAllDimensions } from '@/data/dimensions';
 import ShareButtons from './ShareButtons';
+import { getAllDimensions } from '@/data/dimensions';
 
 const ResultsPage = () => {
   const { dimensionScores, dimensionStates, profileResult, restartQuiz } = useQuiz();
@@ -29,7 +29,7 @@ const ResultsPage = () => {
   return (
     <div className="glassmorphic-card">
       {/* Texture overlay */}
-      <div className="texture-overlay"></div>
+      <div className="texture-overlay" />
       
       <div className="relative z-10">
         {/* Title */}
@@ -42,15 +42,13 @@ const ResultsPage = () => {
         </div>
         
         {/* Progress indicator (completed) */}
-        <div className="w-full text-center mb-6">
+        <div className="progress-container">
           <div className="flex justify-center mb-1">
             <span className="text-sm" style={{ color: "#2359FF" }}>
               Step 10/10 - Complete!
             </span>
           </div>
-          <div className="progress-bar w-full max-w-md mx-auto">
-            <div className="progress-fill" style={{ width: '100%' }}></div>
-          </div>
+          <div className="progress-bar w-full"></div>
         </div>
         
         {/* Trait Sliders */}
@@ -128,11 +126,11 @@ const ResultsPage = () => {
             >
               <h3 className="text-base font-light mb-2" style={{ color: "#2359FF" }}>
                 {dimension.title}: <span className="font-normal">
-                  {dimension.states[dimensionStates[dimension.id]]?.name || "Balanced"}
+                  {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
                 </span>
               </h3>
               <p className="text-sm" style={{ color: "#2359FF" }}>
-                {dimension.states[dimensionStates[dimension.id]]?.description || ""}
+                {dimension.states[dimensionStates[dimension.id]]?.description || 'Your approach is balanced in this dimension.'}
               </p>
             </div>
           ))}
@@ -140,16 +138,7 @@ const ResultsPage = () => {
 
         {/* Summary Section */}
         {profileResult && (
-          <div 
-            className="p-6 rounded-3xl mb-6"
-            style={{
-              background: "rgba(224,224,224,0.2)",
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
-              border: "1px solid rgba(255,255,255,0.3)",
-              boxShadow: "inset 0 2px 5px rgba(0,0,0,0.05), 0 0 10px rgba(255,255,255,0.3)",
-            }}
-          >
+          <div className="profile-card">
             <h2 
               className="text-xl font-thin tracking-widest text-center mb-4 gradient-text"
             >
