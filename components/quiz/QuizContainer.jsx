@@ -46,9 +46,9 @@ const QuizContainer = () => {
     nextQuestion();
   };
   
-  // Choose background color - removed the green background per request
+  // Choose background color - using transparent background
   const backgroundStyle = {
-    background: "#fff" // Changed from "#c0f2c0" to white
+    background: "transparent" // Changed to transparent
   };
   
   // Render correct step
