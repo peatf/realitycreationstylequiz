@@ -6,11 +6,7 @@ const nextConfig = {
   // Standard output mode
   output: 'standalone',
   
-  // Simplify the experimental section
-  experimental: {
-    appDir: true,
-    // Remove any other experimental features that could cause issues
-  },
+  // Remove experimental section since appDir is standard in Next.js 14
   
   // Skip type checking during build
   typescript: {
