@@ -30,7 +30,7 @@ const QuizContainer = () => {
     if (currentStep === 'intro') return 0;
     if (currentStep === 'results') return 100;
     // Progress is based on group/page of questions, not individual question
-    return Math.floor((Math.floor(currentQuestionIndex / questionsPerPage) * questionsPerPage / questions.length) * 100);
+    return Math.floor(((Math.floor(currentQuestionIndex / questionsPerPage) + 1) * questionsPerPage / questions.length) * 100);
   }, [currentStep, currentQuestionIndex, questions.length]);
   
   // Handle submit button click
@@ -63,11 +63,6 @@ const QuizContainer = () => {
       const prevGroupStart = (currentGroup - 1) * questionsPerPage;
       prevQuestion(currentQuestionIndex - prevGroupStart); // Jump back to the previous group
     }
-  };
-  
-  // Choose background color - using transparent background
-  const backgroundStyle = {
-    background: "transparent"
   };
   
   // Render correct step
@@ -105,21 +100,13 @@ const QuizContainer = () => {
   };
   
   return (
-    <div className="flex items-start justify-center w-full min-h-screen" style={backgroundStyle}>
-      <div className="relative w-full max-w-2xl mx-auto mt-10 mb-10 p-8">
+    <div className="main-container">
+      <div className="card-container">
         {/* Background glow */}
-        <div
-          className="absolute inset-0 rounded-2xl blur-3xl opacity-50"
-          style={{
-            background: "rgba(255,182,193,0.4)",
-            zIndex: 0,
-          }}
-        />
+        <div className="bg-glow"></div>
         
         {renderStep()}
       </div>
     </div>
   );
 };
-
-export default QuizContainer;
