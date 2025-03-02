@@ -30,14 +30,20 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
         {currentQuestions.map((question, index) => (
           <React.Fragment key={question.id}>
             <div className="mb-6 text-center">
+              {/* Question box with fixed styling */}
               <div
-                className="p-4 mb-2 rounded-3xl mx-auto w-full max-w-md overflow-hidden"
                 style={{
+                  padding: '1rem',
+                  marginBottom: '0.5rem',
+                  borderRadius: '1.5rem',
                   background: "rgba(235,240,180,0.95)",
                   backdropFilter: "blur(4px)",
                   WebkitBackdropFilter: "blur(4px)",
                   border: "1px solid rgba(220,255,200,0.6)",
                   boxShadow: "inset 0 2px 5px rgba(0,0,0,0.1), 0 0 10px rgba(193,191,132,0.5)",
+                  maxWidth: '28rem',
+                  margin: '0 auto',
+                  overflow: 'hidden'
                 }}
               >
                 <p 
@@ -60,9 +66,17 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
               />
             </div>
             
-            {/* Add divider between questions except for the last one */}
+            {/* Add divider between questions except for the last one - fixed width */}
             {index < currentQuestions.length - 1 && (
-              <div className="w-full h-px mx-auto my-3" style={{ background: "rgba(35,89,255,0.2)" }}></div>
+              <div 
+                className="mx-auto my-3" 
+                style={{ 
+                  height: '1px', 
+                  background: "rgba(35,89,255,0.2)",
+                  width: '90%',
+                  maxWidth: '28rem'
+                }}
+              ></div>
             )}
           </React.Fragment>
         ))}
