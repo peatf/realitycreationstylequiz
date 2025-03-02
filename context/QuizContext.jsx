@@ -1,62 +1,48 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { calculateResults } from '@/lib/scoring';
 
-// Define the initial state
+// Initial state
 const initialState = {
-  // Quiz flow state
-  currentStep: 'intro', // 'intro', 'questions', 'results'
+  currentStep: 'intro',
   currentQuestionIndex: 0,
-  
-  // Answers state - will be populated with question IDs as keys and values 1-5
   answers: {},
-  
-  // Results state
   dimensionScores: {
-    beliefMindset: 0,      // 1-5 scale
-    clarityVision: 0,      // 1-5 scale
-    actionOrientation: 0,  // 1-5 scale
-    intuitionStrategy: 0,  // 1-5 scale
-    emotionalAlignment: 0, // 1-5 scale
+    beliefMindset: 0,
+    clarityVision: 0,
+    actionOrientation: 0,
+    intuitionStrategy: 0,
+    emotionalAlignment: 0,
   },
   dimensionStates: {
-    beliefMindset: 'balanced',      // 'left', 'balanced', 'right'
-    clarityVision: 'balanced',      // 'left', 'balanced', 'right'
-    actionOrientation: 'balanced',  // 'left', 'balanced', 'right'
-    intuitionStrategy: 'balanced',  // 'left', 'balanced', 'right'
-    emotionalAlignment: 'balanced', // 'left', 'balanced', 'right'
+    beliefMindset: 'balanced',
+    clarityVision: 'balanced',
+    actionOrientation: 'balanced',
+    intuitionStrategy: 'balanced',
+    emotionalAlignment: 'balanced',
   },
-  profileResult: null,       // The final profile based on combination of dimension states
+  profileResult: null,
 };
 
-// Create the context
+// Create context with default value
 const QuizContext = createContext(initialState);
 
-// Create a provider component
+// Provider component
 export function QuizProvider({ children }) {
+  // Use useState with initial state
   const [state, setState] = useState(initialState);
   
-  // Function to start the quiz
-  const startQuiz = () => {
-    setState(prev => ({
-      ...prev,
-      currentStep: 'questions',
-    }));
-  };
+  // Context functions
+  const startQuiz = () => setState(prev => ({ ...prev, currentStep: 'questions' }));
   
-  // Function to update an answer
   const updateAnswer = (questionId, dimensionKey, value) => {
     setState(prev => ({
       ...prev,
-      answers: {
-        ...prev.answers,
-        [questionId]: value
-      }
+      answers: { ...prev.answers, [questionId]: value }
     }));
   };
   
-  // Function to move to the next question
   const nextQuestion = () => {
     setState(prev => ({
       ...prev,
@@ -64,7 +50,6 @@ export function QuizProvider({ children }) {
     }));
   };
   
-  // Function to move to the previous question
   const prevQuestion = () => {
     setState(prev => ({
       ...prev,
@@ -72,10 +57,8 @@ export function QuizProvider({ children }) {
     }));
   };
   
-  // Function to calculate and set results
   const calculateAndSetResults = (questionsData) => {
     const results = calculateResults(state.answers, questionsData);
-    
     setState(prev => ({
       ...prev,
       currentStep: 'results',
@@ -85,12 +68,9 @@ export function QuizProvider({ children }) {
     }));
   };
   
-  // Function to restart the quiz
-  const restartQuiz = () => {
-    setState(initialState);
-  };
+  const restartQuiz = () => setState(initialState);
   
-  // Create a value object to expose state and functions
+  // Create context value object
   const value = {
     ...state,
     startQuiz,
@@ -108,11 +88,10 @@ export function QuizProvider({ children }) {
   );
 }
 
-// Custom hook to use the quiz context
+// Custom hook with better error handling for SSR
 export function useQuiz() {
+  // Add safer context access for SSR
   const context = useContext(QuizContext);
-  if (context === undefined) {
-    throw new Error('useQuiz must be used within a QuizProvider');
-  }
-  return context;
+  // Return initialState as fallback instead of throwing during SSR
+  return context || initialState;
 }
