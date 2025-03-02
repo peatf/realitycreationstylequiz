@@ -7,64 +7,23 @@ import { useQuiz } from '@/context/QuizContext';
 // Pressed Squares Preloader Component
 const PressedSquaresPreloader = () => {
   return (
-    <div className="ps-wrapper relative w-[250px] h-[250px] mx-auto my-10">
+    <div className="ps-wrapper">
       {/* Custom shape SVG */}
-      <svg className="absolute inset-0 z-[1]" viewBox="0 0 719.81 722.87" aria-hidden="true">
+      <svg className="ps-custom-shape" viewBox="0 0 719.81 722.87" aria-hidden="true">
         <path 
           d="M719.81,218.2 C719.81,97.69,622.11,0,501.6,0c-54.77,0-104.83,20.19-143.15,53.52C320.53,21.66,271.61,2.46,218.2,2.46C97.69,2.46,0,100.16,0,220.67c0,54.23,19.79,103.83,52.53,142C19.79,400.83,0,450.44,0,504.67c0,120.51,97.69,218.2,218.2,218.2c54.77,0,104.83-20.19,143.15-53.52c37.93,31.86,86.84,51.06,140.25,51.06c120.51,0,218.2-97.69,218.2-218.2c0-54.23-19.79-103.83-52.53-142c32.74-38.17,52.53-87.77,52.53-142Z" 
-          fill="rgba(220, 230, 255, 0.08)"
-          filter="drop-shadow(-5px -5px 10px rgba(150, 159, 200, 0.3)) drop-shadow(5px 5px 10px rgba(150, 159, 200, 0.3))"
         />
       </svg>
       
       {/* Shape inner glow */}
-      <div 
-        className="absolute inset-0 z-[3] opacity-20 bg-white" 
-        style={{
-          maskImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 719.81 722.87"><path d="M719.81,218.2C719.81,97.69,622.11,0,501.6,0c-54.77,0-104.83,20.19-143.15,53.52C320.53,21.66,271.61,2.46,218.2,2.46C97.69,2.46,0,100.16,0,220.67c0,54.23,19.79,103.83,52.53,142C19.79,400.83,0,450.44,0,504.67c0,120.51,97.69,218.2,218.2,218.2c54.77,0,104.83-20.19,143.15-53.52c37.93,31.86,86.84,51.06,140.25,51.06c120.51,0,218.2-97.69,218.2-218.2c0-54.23-19.79-103.83-52.53-142c32.74-38.17,52.53-87.77,52.53-142Z"/></svg>')`,
-          WebkitMaskImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 719.81 722.87"><path d="M719.81,218.2C719.81,97.69,622.11,0,501.6,0c-54.77,0-104.83,20.19-143.15,53.52C320.53,21.66,271.61,2.46,218.2,2.46C97.69,2.46,0,100.16,0,220.67c0,54.23,19.79,103.83,52.53,142C19.79,400.83,0,450.44,0,504.67c0,120.51,97.69,218.2,218.2,218.2c54.77,0,104.83-20.19,143.15-53.52c37.93,31.86,86.84,51.06,140.25,51.06c120.51,0,218.2-97.69,218.2-218.2c0-54.23-19.79-103.83-52.53-142c32.74-38.17,52.53-87.77,52.53-142Z"/></svg>')`,
-          maskSize: '100% 100%',
-          WebkitMaskSize: '100% 100%'
-        }}
-      />
-      
-      {/* Texture overlay */}
-      <div 
-        className="absolute inset-0 z-[2] mix-blend-overlay opacity-[0.03]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E")`
-        }}
-      />
+      <div className="ps-shape-inner-glow"></div>
+      <div className="ps-texture-overlay"></div>
       
       {/* Pressed squares */}
-      <div 
-        className="absolute top-[50px] left-[50px] w-[40px] h-[40px] rounded-xl z-[4] bg-[rgba(220,230,255,0.08)] border border-[rgba(255,255,255,0.1)]"
-        style={{
-          boxShadow: 'inset -4px -4px 7px rgba(255, 255, 255, 0.8), inset 4px 4px 8px rgba(150, 159, 200, 0.3)',
-          animation: 'move1 15s ease-in-out infinite'
-        }}
-      />
-      <div 
-        className="absolute top-[50px] right-[50px] w-[40px] h-[40px] rounded-xl z-[4] bg-[rgba(220,230,255,0.08)] border border-[rgba(255,255,255,0.1)]"
-        style={{
-          boxShadow: 'inset -4px -4px 7px rgba(255, 255, 255, 0.8), inset 4px 4px 8px rgba(150, 159, 200, 0.3)',
-          animation: 'move2 15s ease-in-out infinite 3.75s'
-        }}
-      />
-      <div 
-        className="absolute bottom-[50px] left-[50px] w-[40px] h-[40px] rounded-xl z-[4] bg-[rgba(220,230,255,0.08)] border border-[rgba(255,255,255,0.1)]"
-        style={{
-          boxShadow: 'inset -4px -4px 7px rgba(255, 255, 255, 0.8), inset 4px 4px 8px rgba(150, 159, 200, 0.3)',
-          animation: 'move3 15s ease-in-out infinite 7.5s'
-        }}
-      />
-      <div 
-        className="absolute bottom-[50px] right-[50px] w-[40px] h-[40px] rounded-xl z-[4] bg-[rgba(220,230,255,0.08)] border border-[rgba(255,255,255,0.1)]"
-        style={{
-          boxShadow: 'inset -4px -4px 7px rgba(255, 255, 255, 0.8), inset 4px 4px 8px rgba(150, 159, 200, 0.3)',
-          animation: 'move4 15s ease-in-out infinite 11.25s'
-        }}
-      />
+      <div className="ps-pressed-square ps-square1"></div>
+      <div className="ps-pressed-square ps-square2"></div>
+      <div className="ps-pressed-square ps-square3"></div>
+      <div className="ps-pressed-square ps-square4"></div>
     </div>
   );
 };
@@ -99,15 +58,7 @@ const IntroPage = () => {
         </h1>
         
         {/* Description box */}
-        <div className="p-4 mb-6 rounded-3xl mx-auto text-[#2359FF] text-sm max-h-[250px] overflow-y-auto"
-          style={{
-            background: "rgba(235, 240, 180, 0.5)",
-            backdropFilter: "blur(4px)",
-            WebkitBackdropFilter: "blur(4px)",
-            border: "1px solid rgba(220, 255, 200, 0.6)",
-            boxShadow: "inset 0 2px 5px rgba(0, 0, 0, 0.1), 0 0 10px rgba(193, 191, 132, 0.3)",
-          }}
-        >
+        <div className="text-box scrollable">
           <p className="mb-4">
             We know that manifestation or reality creation at its core is simple. You desire something, and you're drawn to the reality where it exists. That's it.
           </p>
@@ -129,16 +80,7 @@ const IntroPage = () => {
         </div>
         
         {/* Assessment Process & Participation Box */}
-        <div 
-          className="p-4 mb-6 rounded-3xl mx-auto text-[#2359FF] text-sm"
-          style={{
-            background: "rgba(235, 240, 180, 0.5)",
-            backdropFilter: "blur(4px)",
-            WebkitBackdropFilter: "blur(4px)",
-            border: "1px solid rgba(220, 255, 200, 0.6)",
-            boxShadow: "inset 0 2px 5px rgba(0, 0, 0, 0.1), 0 0 10px rgba(193, 191, 132, 0.3)",
-          }}
-        >
+        <div className="text-box">
           <h2 className="text-lg font-semibold mb-4">Assessment Process</h2>
           <p className="mb-4">
             This assessment consists of 30 questions across five key dimensions of reality creation. Each question presents a spectrum between two natural tendencies, there are no right or wrong answers, only what feels most like you.
@@ -163,9 +105,9 @@ const IntroPage = () => {
         <div className="flex justify-center mt-6">
           <button 
             onClick={startQuiz}
-            className="button-glass relative z-10 tracking-widest uppercase"
+            className="button-glass"
           >
-            <span className="relative z-10">Begin Assessment</span>
+            <span className="relative z-10 tracking-widest uppercase">Begin Assessment</span>
             <div 
               className="absolute inset-0 opacity-20"
               style={{
