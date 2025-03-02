@@ -150,7 +150,26 @@ body {
   border: 1px solid var(--question-border);
   box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1), 0 0 10px var(--question-shadow);
 }
+.text-box {
+  padding: 1rem;
+  border-radius: 1.5rem;
+  background: rgba(235,240,180,0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(220,255,200,0.6);
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.1),
+              0 0 10px rgba(193,191,132,0.3);
+  color: #2359FF;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
 
+.text-box.scrollable {
+  max-height: 300px;
+  overflow-y: auto;
+}
+  
 .slider-track {
   @apply h-5 rounded-full w-full relative overflow-hidden;
   background: var(--slider-track);
