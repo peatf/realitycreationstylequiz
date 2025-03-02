@@ -21,17 +21,17 @@ const initialState = {
     emotionalAlignment: 0, // 1-5 scale
   },
   dimensionStates: {
-    beliefMindset: null,      // 'left', 'balanced', 'right'
-    clarityVision: null,      // 'left', 'balanced', 'right'
-    actionOrientation: null,  // 'left', 'balanced', 'right'
-    intuitionStrategy: null,  // 'left', 'balanced', 'right'
-    emotionalAlignment: null, // 'left', 'balanced', 'right'
+    beliefMindset: 'balanced',      // 'left', 'balanced', 'right'
+    clarityVision: 'balanced',      // 'left', 'balanced', 'right'
+    actionOrientation: 'balanced',  // 'left', 'balanced', 'right'
+    intuitionStrategy: 'balanced',  // 'left', 'balanced', 'right'
+    emotionalAlignment: 'balanced', // 'left', 'balanced', 'right'
   },
   profileResult: null,       // The final profile based on combination of dimension states
 };
 
 // Create the context
-const QuizContext = createContext();
+const QuizContext = createContext(initialState);
 
 // Create a provider component
 export function QuizProvider({ children }) {
