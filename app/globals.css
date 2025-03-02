@@ -352,7 +352,7 @@ body {
   justify-content: center;
   width: 100%;
   min-height: 100vh;
-  background: #c0f2c0;
+  background: transparent;
 }
 
 .card-container {
