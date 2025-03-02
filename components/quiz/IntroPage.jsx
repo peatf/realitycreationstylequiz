@@ -32,18 +32,9 @@ const IntroPage = () => {
   const { startQuiz } = useQuiz();
   
   return (
-    <div className="glassmorphic-card relative">
-      {/* Background glow */}
-      <div
-        className="absolute inset-0 rounded-2xl blur-3xl opacity-50"
-        style={{
-          background: "rgba(255, 182, 193, 0.4)",
-          zIndex: 0,
-        }}
-      />
-      
+    <div className="glassmorphic-card">
       {/* Texture overlay */}
-      <div className="texture-overlay z-[1]" />
+      <div className="texture-overlay" />
       
       <div className="relative z-10">
         {/* Preloader graphic */}
@@ -102,20 +93,13 @@ const IntroPage = () => {
         </div>
         
         {/* Begin button */}
-        <div className="flex justify-center mt-6">
+        <div className="button-container">
           <button 
             onClick={startQuiz}
-            className="button-glass"
+            className="button-glass relative overflow-hidden"
           >
             <span className="relative z-10 tracking-widest uppercase">Begin Assessment</span>
-            <div 
-              className="absolute inset-0 opacity-20"
-              style={{
-                background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)",
-                transform: "translateX(-100%)",
-                animation: "buttonShine 4s infinite"
-              }}
-            ></div>
+            <div className="button-shine"></div>
           </button>
         </div>
       </div>
