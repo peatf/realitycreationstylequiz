@@ -71,7 +71,7 @@ export const dimensions = {
     states: {
       left: {
         name: 'Contemplative Observer',
-        description: 'You prioritize inner alignment and reflection before taking physical action on your intentions. This contemplative approach helps you ensure your actions are aligned with your true desires and that you're moving from an energetically optimal state.',
+        description: 'You prioritize inner alignment and reflection before taking physical action on your intentions. This contemplative approach helps you ensure your actions are aligned with your true desires and that you\'re moving from an energetically optimal state.',
         frameworks: 'Zen Buddhism, Depth Hypnosis, Divination Systems (for indirect guidance)',
         practices: 'Bibliomancy (random book wisdom), Lucid Dreaming for pre-experiencing outcomes, Ancestral Connection for deep-rooted insight',
         tools: 'I Ching for calculated movement, Shamanic drumming'
