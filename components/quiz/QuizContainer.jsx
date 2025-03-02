@@ -110,3 +110,6 @@ const QuizContainer = () => {
     </div>
   );
 };
+
+export default QuizContainer;
+};
