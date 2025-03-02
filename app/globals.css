@@ -31,7 +31,7 @@
 body {
   margin: 0;
   padding: 0;
-  background: #fff; /* Changed from #c0f2c0 to white */
+  background: transparent; /* Changed to transparent */
   font-family: system-ui, sans-serif;
   overflow-x: hidden;
 }
