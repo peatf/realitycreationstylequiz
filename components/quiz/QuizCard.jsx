@@ -25,7 +25,7 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
       position: 'relative',
       zIndex: 10,
       width: '100%',
-      padding: '1.5rem', // Reduced padding
+      padding: '1rem', // Reduced padding
       borderRadius: '5rem',
       background: "rgba(220, 230, 255, 0.2)",
       backdropFilter: "blur(14px)",
@@ -52,18 +52,19 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
               {/* Question box with fixed styling */}
               <div
                 style={{
-                  padding: '1rem',
+                  padding: '0.75rem',
                   marginBottom: '0.5rem',
-                  borderRadius: '1.5rem',
+                  borderRadius: '1rem',
                   background: "rgba(235,240,180,0.95)",
                   backdropFilter: "blur(4px)",
                   WebkitBackdropFilter: "blur(4px)",
                   border: "1px solid rgba(220,255,200,0.6)",
                   boxShadow: "inset 0 2px 5px rgba(0,0,0,0.1), 0 0 10px rgba(193,191,132,0.5)",
-                  maxWidth: '36rem', // Wider to use more of the available space
+                  maxWidth: '100%', // Ensure it doesn't exceed parent width
                   margin: '0 auto',
                   overflow: 'hidden',
-                  width: '100%'
+                  width: '95%', // Slightly less than full width to ensure margins
+                  boxSizing: 'border-box' // Include padding and border in the element's width
                 }}
               >
                 <p 
