@@ -62,11 +62,19 @@ const ShareButtons = ({ url, text }) => {
       <div className="flex items-center mt-2">
         <button 
           onClick={handleCopy}
-          className="button-glass relative z-10 tracking-wide text-xs"
+          className="button-glass"
         >
-          <span className="relative z-10">
+          <span className="relative z-10 tracking-wide text-xs">
             {copied ? 'Link Copied!' : 'Copy Link'}
           </span>
+          <div 
+            className="absolute inset-0 opacity-20"
+            style={{
+              background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)",
+              transform: "translateX(-100%)",
+              animation: "buttonShine 4s infinite"
+            }}
+          ></div>
         </button>
       </div>
     </div>
