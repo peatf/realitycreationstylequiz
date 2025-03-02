@@ -7,13 +7,13 @@
       "source": "/(.*)",
       "headers": [
         {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self' https://alesha-legair-fnpz.squarespace.com https://www.peathefeary.com"
         },
         {
-           "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
-          }
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
       ]
     }
   ]
