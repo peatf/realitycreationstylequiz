@@ -33,28 +33,44 @@ const ResultsPage = () => {
       
       <div className="relative z-10">
         {/* Title */}
-        <div className="text-center mb-4">
+        <div className="text-center mb-6">
           <h1 
-            className="text-3xl tracking-widest font-extralight mb-6 gradient-text"
+            className="text-3xl tracking-widest font-extralight mb-6"
+            style={{
+              color: "#2359FF",
+              background: "linear-gradient(90deg, #2359FF, #6195ED)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text"
+            }}
           >
             Your Reality Creation Profile
           </h1>
         </div>
         
         {/* Progress indicator (completed) */}
-        <div className="progress-container">
+        <div className="progress-container mb-8">
           <div className="flex justify-center mb-1">
             <span className="text-sm" style={{ color: "#2359FF" }}>
               Step 10/10 - Complete!
             </span>
           </div>
-          <div className="progress-bar w-full"></div>
+          <div className="w-full max-w-md mx-auto">
+            <div
+              className="h-2 mx-auto rounded-full"
+              style={{
+                background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
+                boxShadow: "0 0 10px rgba(193,191,132,0.3), inset 0 1px 3px rgba(0,0,0,0.1)"
+              }}
+            ></div>
+          </div>
         </div>
         
-        {/* Trait Sliders */}
+        {/* Trait Sliders/Charts */}
         <div className="space-y-8 mb-8">
           {dimensions.map((dimension) => (
-            <div key={dimension.id} className="mb-4">
+            <div key={dimension.id} className="mb-6">
+              {/* Dimension labels */}
               <div className="flex justify-between mb-1">
                 <span className="text-sm" style={{ color: "#2359FF" }}>{dimension.leftLabel}</span>
                 <span className="text-sm font-light" style={{ color: "#2359FF" }}>{dimension.title}</span>
@@ -111,17 +127,19 @@ const ResultsPage = () => {
         </div>
         
         {/* Trait Description Cards */}
-        <div className="space-y-4 mb-8">
+        <div className="space-y-6 mb-8">
           {dimensions.slice(0, 3).map((dimension) => (
             <div 
               key={dimension.id}
-              className="p-4 rounded-3xl"
               style={{
+                padding: '1rem',
+                borderRadius: '1.5rem',
                 background: "rgba(235,240,180,0.5)",
                 backdropFilter: "blur(4px)",
                 WebkitBackdropFilter: "blur(4px)",
                 border: "1px solid rgba(220,255,200,0.6)",
                 boxShadow: "inset 0 2px 5px rgba(0,0,0,0.1), 0 0 10px rgba(193,191,132,0.3)",
+                marginBottom: '1.5rem'
               }}
             >
               <h3 className="text-base font-light mb-2" style={{ color: "#2359FF" }}>
@@ -138,9 +156,27 @@ const ResultsPage = () => {
 
         {/* Summary Section */}
         {profileResult && (
-          <div className="profile-card">
+          <div 
+            style={{
+              padding: '1.5rem',
+              borderRadius: '1.5rem',
+              marginBottom: '1.5rem',
+              background: "rgba(224,224,224,0.2)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+              border: "1px solid rgba(255,255,255,0.3)",
+              boxShadow: "inset 0 2px 5px rgba(0,0,0,0.05), 0 0 10px rgba(255,255,255,0.3)"
+            }}
+          >
             <h2 
-              className="text-xl font-thin tracking-widest text-center mb-4 gradient-text"
+              className="text-xl font-thin tracking-widest text-center mb-4"
+              style={{ 
+                color: "#2359FF",
+                background: "linear-gradient(90deg, #2359FF, #5283E8)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text"
+              }}
             >
               Your Overall Style: {profileResult.name}
             </h2>
@@ -154,13 +190,28 @@ const ResultsPage = () => {
         <ShareButtons url={shareableUrl} text={shareText} />
         
         {/* Restart button */}
-        <div className="button-container mt-4">
+        <div className="button-container mt-6">
           <button 
             onClick={restartQuiz}
             className="button-glass relative overflow-hidden"
+            style={{
+              borderRadius: '76px',
+              padding: '0.5rem 2rem',
+              color: "#2359FF",
+              background: "rgba(224,224,224,0)",
+              border: "1px solid rgba(255,255,255,0.3)",
+              boxShadow: "inset 19px 19px 38px rgba(190,190,190,0.3), inset -19px -19px 38px rgba(255,255,255,0.3)"
+            }}
           >
             <span className="relative z-10 tracking-widest">TAKE QUIZ AGAIN</span>
-            <div className="button-shine"></div>
+            <div 
+              className="absolute inset-0 opacity-20"
+              style={{
+                background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)",
+                transform: "translateX(-100%)",
+                animation: "buttonShine 4s infinite"
+              }}
+            ></div>
           </button>
         </div>
       </div>
