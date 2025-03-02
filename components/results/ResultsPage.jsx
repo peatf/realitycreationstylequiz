@@ -5,9 +5,8 @@ import React from 'react';
 import { useQuiz } from '@/context/QuizContext';
 import { createShareableUrl, generateShareText } from '@/lib/utils';
 import { scoreToPercentage } from '@/lib/scoring';
-import DimensionChart from './DimensionChart';
-import ShareButtons from './ShareButtons';
 import { getAllDimensions } from '@/data/dimensions';
+import ShareButtons from './ShareButtons';
 
 const ResultsPage = () => {
   const { dimensionScores, dimensionStates, profileResult, restartQuiz } = useQuiz();
@@ -28,38 +27,15 @@ const ResultsPage = () => {
   const shareText = generateShareText(profileResult?.name);
   
   return (
-    <div
-      className="relative z-10 w-full p-8"
-      style={{
-        borderRadius: "5rem",
-        background: "rgba(220, 230, 255, 0.2)",
-        backdropFilter: "blur(14px)",
-        WebkitBackdropFilter: "blur(14px)",
-        border: "1px solid rgba(255,255,255,0.3)",
-        boxShadow: "0 10px 40px rgba(255,255,255,0.2), inset 0 0 30px rgba(255,255,255,0.2)",
-        animation: "pulseGlow 8s infinite alternate ease-in-out",
-      }}
-    >
+    <div className="glassmorphic-card">
       {/* Texture overlay */}
-      <div 
-        className="absolute inset-0 rounded-[5rem] mix-blend-overlay"
-        style={{
-          opacity: 0.03,
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E")`
-        }}
-      />
+      <div className="texture-overlay"></div>
       
       <div className="relative z-10">
         {/* Title */}
         <div className="text-center mb-4">
           <h1 
-            className="text-3xl tracking-widest font-extralight mb-6"
-            style={{ 
-              color: "#2359FF",
-              background: "linear-gradient(90deg, #2359FF, #6195ED)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent"
-            }}
+            className="text-3xl tracking-widest font-extralight mb-6 gradient-text"
           >
             Your Reality Creation Profile
           </h1>
@@ -72,14 +48,8 @@ const ResultsPage = () => {
               Step 10/10 - Complete!
             </span>
           </div>
-          <div className="w-full max-w-md mx-auto">
-            <div
-              className="h-2 mx-auto rounded-full"
-              style={{
-                background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
-                boxShadow: "0 0 10px rgba(193,191,132,0.3), inset 0 1px 3px rgba(0,0,0,0.1)"
-              }}
-            ></div>
+          <div className="progress-bar w-full max-w-md mx-auto">
+            <div className="progress-fill" style={{ width: '100%' }}></div>
           </div>
         </div>
         
@@ -107,7 +77,7 @@ const ResultsPage = () => {
                     className="absolute inset-y-0 left-0 rounded-full"
                     style={{
                       width: `${dimensionPercentages[dimension.id]}%`,
-                      background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
+                      background: "linear-gradient(to right, rgba(193,191,132,0.5), rgba(150,159,30,0.5))",
                     }}
                   ></div>
                   
@@ -158,11 +128,11 @@ const ResultsPage = () => {
             >
               <h3 className="text-base font-light mb-2" style={{ color: "#2359FF" }}>
                 {dimension.title}: <span className="font-normal">
-                  {dimension.states[dimensionStates[dimension.id]].name}
+                  {dimension.states[dimensionStates[dimension.id]]?.name || "Balanced"}
                 </span>
               </h3>
               <p className="text-sm" style={{ color: "#2359FF" }}>
-                {dimension.states[dimensionStates[dimension.id]].description}
+                {dimension.states[dimensionStates[dimension.id]]?.description || ""}
               </p>
             </div>
           ))}
@@ -181,13 +151,7 @@ const ResultsPage = () => {
             }}
           >
             <h2 
-              className="text-xl font-thin tracking-widest text-center mb-4"
-              style={{ 
-                color: "#2359FF",
-                background: "linear-gradient(90deg, #2359FF, #5283E8)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent"
-              }}
+              className="text-xl font-thin tracking-widest text-center mb-4 gradient-text"
             >
               Your Overall Style: {profileResult.name}
             </h2>
@@ -201,27 +165,13 @@ const ResultsPage = () => {
         <ShareButtons url={shareableUrl} text={shareText} />
         
         {/* Restart button */}
-        <div className="flex justify-center mt-4">
+        <div className="button-container mt-4">
           <button 
             onClick={restartQuiz}
-            className="px-8 py-2 transition-all duration-300 text-xs tracking-wide relative overflow-hidden"
-            style={{
-              borderRadius: "76px",
-              color: "#2359FF",
-              background: "rgba(224,224,224,0)", 
-              border: "1px solid rgba(255,255,255,0.3)",
-              boxShadow: "inset 19px 19px 38px rgba(190,190,190,0.3), inset -19px -19px 38px rgba(255,255,255,0.3)"
-            }}
+            className="button-glass relative overflow-hidden"
           >
             <span className="relative z-10 tracking-widest">TAKE QUIZ AGAIN</span>
-            <div 
-              className="absolute inset-0 opacity-20"
-              style={{
-                background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)",
-                transform: "translateX(-100%)",
-                animation: "buttonShine 4s infinite"
-              }}
-            ></div>
+            <div className="button-shine"></div>
           </button>
         </div>
       </div>
