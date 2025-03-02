@@ -77,9 +77,37 @@ const DimensionChart = ({ dimension, value, state }) => {
         <h3 className="text-base font-light mb-2" style={{ color: "#2359FF" }}>
           {dimension.title}: <span className="font-normal">{stateName}</span>
         </h3>
-        <p className="text-sm" style={{ color: "#2359FF" }}>
+        <p className="text-sm mb-4" style={{ color: "#2359FF" }}>
           {stateDescription}
         </p>
+        
+        {/* Frameworks, Practices, and Tools sections */}
+        {dimension.states[state]?.frameworks && (
+          <div className="mt-3">
+            <h4 className="text-sm font-semibold" style={{ color: "#2359FF" }}>Frameworks you may be interested in:</h4>
+            <p className="text-xs mt-1" style={{ color: "#2359FF" }}>
+              {dimension.states[state].frameworks}
+            </p>
+          </div>
+        )}
+        
+        {dimension.states[state]?.practices && (
+          <div className="mt-3">
+            <h4 className="text-sm font-semibold" style={{ color: "#2359FF" }}>Practices you may be interested in:</h4>
+            <p className="text-xs mt-1" style={{ color: "#2359FF" }}>
+              {dimension.states[state].practices}
+            </p>
+          </div>
+        )}
+        
+        {dimension.states[state]?.tools && (
+          <div className="mt-3">
+            <h4 className="text-sm font-semibold" style={{ color: "#2359FF" }}>Tools you may be interested in:</h4>
+            <p className="text-xs mt-1" style={{ color: "#2359FF" }}>
+              {dimension.states[state].tools}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
