@@ -30,8 +30,10 @@ const QuizContainer = () => {
     if (currentStep === 'intro') return 0;
     if (currentStep === 'results') return 100;
     // Progress is based on group/page of questions, not individual question
-    return Math.floor(((Math.floor(currentQuestionIndex / questionsPerPage) + 1) * questionsPerPage / questions.length) * 100);
-  }, [currentStep, currentQuestionIndex, questions.length]);
+    const currentGroup = Math.floor(currentQuestionIndex / questionsPerPage);
+    const totalGroups = Math.ceil(questions.length / questionsPerPage);
+    return Math.floor(((currentGroup + 1) / totalGroups) * 100);
+  }, [currentStep, currentQuestionIndex, questions.length, questionsPerPage]);
   
   // Handle submit button click
   const handleSubmit = () => {
@@ -77,7 +79,7 @@ const QuizContainer = () => {
         const isLastGroup = currentGroup >= totalGroups - 1;
         
         return (
-          <div className="flex flex-col">
+          <div className="flex flex-col space-y-4">
             <ProgressBar 
               progress={progress} 
               currentStep={currentGroup + 1} 
@@ -112,4 +114,3 @@ const QuizContainer = () => {
 };
 
 export default QuizContainer;
-};
