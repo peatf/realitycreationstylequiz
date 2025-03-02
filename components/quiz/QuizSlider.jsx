@@ -11,7 +11,13 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
   return (
     <div className="relative py-2 w-full max-w-xs mx-auto">
       {/* Slider track */}
-      <div className="slider-track">
+      <div
+        className="h-5 rounded-full w-full relative overflow-hidden"
+        style={{
+          background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
+          boxShadow: "inset 2px 2px 3px rgba(166,167,161,0.3), inset -2px -2px 3px rgba(255,255,250,0.3)"
+        }}
+      >
         {/* Animated pulse effect */}
         <div
           className="absolute inset-0 opacity-20"
@@ -25,13 +31,18 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
       
       {/* Slider thumb */}
       <div
-        className="slider-thumb"
+        className="absolute top-1/2 w-4 h-4 rounded-full"
         style={{
           left: `${value}%`,
+          transform: "translate(-50%, -50%)",
+          background: "rgba(255,255,255,0.2)",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
+          border: "1px solid rgba(255,255,255,0.2)"
         }}
       >
-        <div className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60"
-             style={{ transform: "translate(-50%, -50%)" }}></div>
+        <div className="absolute top-1 left-1 w-1 h-1 rounded-full bg-white opacity-60"></div>
       </div>
       
       {/* Hidden actual input slider */}
