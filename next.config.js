@@ -3,13 +3,13 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   
-  // Disable static site generation and use client-side rendering
+  // Standard output mode
   output: 'standalone',
   
-  // Disable server-side rendering for all pages
+  // Simplify the experimental section
   experimental: {
-    // This is important to fix the HTML issue
     appDir: true,
+    // Remove any other experimental features that could cause issues
   },
   
   // Skip type checking during build
@@ -22,10 +22,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   
-  // Allow easier deployment
-  trailingSlash: true,
-  
-  // Configure Content Security Policy
+  // Headers for security
   async headers() {
     return [
       {
