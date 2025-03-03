@@ -468,18 +468,4 @@ body.in-iframe .button-glass {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Ensure the embedded quiz integrates well with Squarespace's light/dark themes */
-body.in-iframe {
-  color-scheme: light dark;
-}
 
-/* Quick fix for Squarespace dark mode compatibility */
-@media (prefers-color-scheme: dark) {
-  body.in-iframe .glassmorphic-card {
-    background: rgba(30, 40, 65, 0.3);
-  }
-  
-  body.in-iframe .text-box {
-    background: rgba(40, 45, 60, 0.5);
-  }
-}
