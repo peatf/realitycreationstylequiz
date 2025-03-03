@@ -56,7 +56,7 @@ export const dimensions = {
       right: {
         name: 'Focused Visionary',
         description: 'Strengths: Exceptional at defining precise, actionable goals and maintaining a strong direction. Potential Challenges: May become rigid or resistant to unexpected changes. Everyday Manifestations: You consistently plan with clarity and pursue your objectives with determination.',
-        frameworks: 'Esoteric Kabbalah, Mystery Schools, Solar Magic (harnessing sun cycles for clarity), Realization Toolkit',
+        frameworks: 'Esoteric Kabbalah, Mystery Schools, Solar Magic (harnessing sun cycles for clarity)',
         practices: 'Precision goal-setting with planetary cycles, Candle magic for focus, Neuro-somatic rewiring',
         tools: 'Sigils for goal embodiment, Stoic journaling, Realization Toolkit for refinement and alignment'
       }
@@ -88,7 +88,7 @@ export const dimensions = {
         description: 'Strengths: Bold, proactive, and results-oriented in making things happen. Potential Challenges: Risk of acting too quickly without full analysis, which might lead to missteps. Everyday Manifestations: You're known for quickly seizing opportunities and translating ideas into action with confidence.',
         frameworks: 'Chaos Magick (harnessing momentum), Theurgy (divine manifestation techniques)',
         practices: 'Ritual baths for energetic resets, Mars or Solar invocations (for sustained action), Daily alignment statements',
-        tools: 'Crystal grids for motivation, Realization Toolkit for high-speed refinement, Sacred Contracts (Caroline Myss), Timeline Jumping'
+        tools: 'Crystal grids for motivation, Sacred Contracts (Caroline Myss), Timeline Jumping'
       }
     }
   },
