@@ -79,8 +79,7 @@ const QuizContainer = () => {
         const isLastGroup = currentGroup >= totalGroups - 1;
         
         return (
-          <div className="flex flex-col space-y-4">
-            <ProgressBar 
+<div className="flex flex-col space-y-4" style={{ paddingTop: '0.5rem' }}>            <ProgressBar 
               progress={progress} 
               currentStep={currentGroup + 1} 
               totalSteps={totalGroups} 
