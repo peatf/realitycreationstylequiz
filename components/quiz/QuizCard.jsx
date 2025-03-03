@@ -44,7 +44,7 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
         backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E")`
       }} />
 
-      <div style={{ position: 'relative', zIndex: 10 }}>
+      <div style={{ position: 'relative', zIndex: 10, paddingTop: '1.5rem' }}>
         {/* Multiple Questions */}
         {currentQuestions.map((question, index) => (
           <React.Fragment key={question.id}>
