@@ -467,5 +467,17 @@ body.in-iframe .button-glass {
   background: rgba(224, 224, 224, 0.2);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+/* Add to globals.css */
+.react-share__ShareButton {
+  transition: transform 0.2s ease;
+}
 
+.react-share__ShareButton:hover {
+  transform: scale(1.1);
+}
+
+/* Platform-specific hover effects */
+.facebook:hover .react-share__ShareButton { background-color: #1877f2 !important; }
+.twitter:hover .react-share__ShareButton { background-color: #1da1f2 !important; }
+.linkedin:hover .react-share__ShareButton { background-color: #0a66c2 !important; }
 
