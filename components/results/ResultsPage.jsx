@@ -192,9 +192,9 @@ const ResultsPage = () => {
           ))}
         </div>
         
-        {/* Trait Description Cards */}
+        {/* Trait Description Cards - MODIFIED: Removed .slice(0, 3) to show all dimensions */}
         <div style={{ marginBottom: '2rem' }}>
-          {dimensions.slice(0, 3).map((dimension) => (
+          {dimensions.map((dimension) => (
             <div 
               key={dimension.id}
               style={{
@@ -216,6 +216,34 @@ const ResultsPage = () => {
               <p style={{ fontSize: '0.875rem', color: "#2359FF" }}>
                 {dimension.states[dimensionStates[dimension.id]]?.description || 'Your approach is balanced in this dimension.'}
               </p>
+              
+              {/* ADDED: Show frameworks, practices, and tools if they exist */}
+              {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
+                <div style={{ marginTop: '0.75rem' }}>
+                  <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: "#2359FF" }}>Frameworks you may be interested in:</h4>
+                  <p style={{ fontSize: '0.75rem', marginTop: '0.25rem', color: "#2359FF" }}>
+                    {dimension.states[dimensionStates[dimension.id]].frameworks}
+                  </p>
+                </div>
+              )}
+              
+              {dimension.states[dimensionStates[dimension.id]]?.practices && (
+                <div style={{ marginTop: '0.75rem' }}>
+                  <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: "#2359FF" }}>Practices you may be interested in:</h4>
+                  <p style={{ fontSize: '0.75rem', marginTop: '0.25rem', color: "#2359FF" }}>
+                    {dimension.states[dimensionStates[dimension.id]].practices}
+                  </p>
+                </div>
+              )}
+              
+              {dimension.states[dimensionStates[dimension.id]]?.tools && (
+                <div style={{ marginTop: '0.75rem' }}>
+                  <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: "#2359FF" }}>Tools you may be interested in:</h4>
+                  <p style={{ fontSize: '0.75rem', marginTop: '0.25rem', color: "#2359FF" }}>
+                    {dimension.states[dimensionStates[dimension.id]].tools}
+                  </p>
+                </div>
+              )}
             </div>
           ))}
         </div>
