@@ -574,7 +574,12 @@ export const getAllProfiles = () => profiles;
 export const getProfileById = (id) => profiles[id] || profiles.default;
 
 // Function to determine profile ID based on dimension states
-export const determineProfileId = (dimensionStates) => {
+// Updated determineProfileId function for data/profiles.js
+
+// This version requires modifying the calculateResults function in lib/scoring.js
+// to pass dimensionScores along with dimensionStates to this function
+
+export const determineProfileId = (dimensionStates, dimensionScores = null) => {
   // Count extreme dimensions (left or right)
   const extremeDimensions = Object.entries(dimensionStates).filter(
     ([_, state]) => state === 'left' || state === 'right'
@@ -599,8 +604,32 @@ export const determineProfileId = (dimensionStates) => {
     const [dim3, state3] = extremeDimensions[2];
     return `${dim1}_${state1}_${dim2}_${state2}_${dim3}_${state3}`;
   } else {
-    // Four or more extreme dimensions - return default
-    // You can extend this logic to handle 4 or 5 extreme dimensions if needed
-    return 'default';
+    // Four or five extreme dimensions - select top 3 most extreme
+    let sortedDimensions = [...extremeDimensions];
+    
+    // If we have dimension scores, use them to find the most extreme values
+    if (dimensionScores) {
+      sortedDimensions = sortedDimensions.sort((a, b) => {
+        const dimensionA = a[0];
+        const stateA = a[1];
+        const scoreA = dimensionScores[dimensionA];
+        const dimensionB = b[0];
+        const stateB = b[1];
+        const scoreB = dimensionScores[dimensionB];
+        
+        // Calculate how far from the middle (3) each score is
+        const extremenessA = Math.abs(scoreA - 3);
+        const extremenessB = Math.abs(scoreB - 3);
+        
+        return extremenessB - extremenessA; // Sort by most extreme first
+      });
+    }
+    
+    // Take the top 3 most extreme dimensions
+    const [dim1, state1] = sortedDimensions[0];
+    const [dim2, state2] = sortedDimensions[1];
+    const [dim3, state3] = sortedDimensions[2];
+    
+    return `${dim1}_${state1}_${dim2}_${state2}_${dim3}_${state3}`;
   }
 };
