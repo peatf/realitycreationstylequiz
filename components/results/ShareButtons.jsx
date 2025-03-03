@@ -1,25 +1,31 @@
-// components/results/ShareButtons.jsx
 'use client';
 
 import React, { useState } from 'react';
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  LinkedinShareButton,
+  FacebookIcon,
+  TwitterIcon,
+  LinkedinIcon,
+} from 'react-share';
+import { generateShareText } from '@/lib/utils';
 
-const ShareButtons = ({ url, text }) => {
+const ShareButtons = ({ profileName, dimensionScores, profileId }) => {
   const [copied, setCopied] = useState(false);
-  
-  // Placeholder for actual social sharing functionality
-  // In a real implementation, you would use proper share libraries
-  
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const shareText = generateShareText(profileName);
+
   // Handle copy link
   const handleCopy = () => {
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText(url).then(() => {
+      navigator.clipboard.writeText(shareUrl).then(() => {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       });
     } else {
-      // Fallback for browsers without clipboard API
       const textArea = document.createElement('textarea');
-      textArea.value = url;
+      textArea.value = shareUrl;
       document.body.appendChild(textArea);
       textArea.select();
       document.execCommand('copy');
@@ -28,7 +34,7 @@ const ShareButtons = ({ url, text }) => {
       setTimeout(() => setCopied(false), 2000);
     }
   };
-  
+
   return (
     <div style={{
       display: 'flex',
@@ -54,66 +60,32 @@ const ShareButtons = ({ url, text }) => {
         marginBottom: '1rem',
         gap: '1rem'
       }}>
-        {/* Placeholder social buttons - replace with actual social share buttons in production */}
-        <div style={{
-          width: '2.5rem',
-          height: '2.5rem',
-          borderRadius: '50%',
-          backgroundColor: '#3b5998',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer',
-          opacity: '0.9',
-          transition: 'opacity 0.2s'
-        }}>
-          <span style={{ color: 'white', fontWeight: 'bold' }}>f</span>
-        </div>
-        
-        <div style={{
-          width: '2.5rem',
-          height: '2.5rem',
-          borderRadius: '50%',
-          backgroundColor: '#1DA1F2',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer',
-          opacity: '0.9',
-          transition: 'opacity 0.2s'
-        }}>
-          <span style={{ color: 'white', fontWeight: 'bold' }}>t</span>
-        </div>
-        
-        <div style={{
-          width: '2.5rem',
-          height: '2.5rem',
-          borderRadius: '50%',
-          backgroundColor: '#0077b5',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer',
-          opacity: '0.9',
-          transition: 'opacity 0.2s'
-        }}>
-          <span style={{ color: 'white', fontWeight: 'bold' }}>in</span>
-        </div>
-        
-        <div style={{
-          width: '2.5rem',
-          height: '2.5rem',
-          borderRadius: '50%',
-          backgroundColor: '#25D366',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer',
-          opacity: '0.9',
-          transition: 'opacity 0.2s'
-        }}>
-          <span style={{ color: 'white', fontWeight: 'bold' }}>w</span>
-        </div>
+        <FacebookShareButton
+          url={shareUrl}
+          quote={shareText}
+          className="hover:opacity-80 transition-opacity"
+        >
+          <FacebookIcon size={40} round />
+        </FacebookShareButton>
+
+        <TwitterShareButton
+          url={shareUrl}
+          title={shareText}
+          hashtags={["RealityCreation", "Manifestation"]}
+          className="hover:opacity-80 transition-opacity"
+        >
+          <TwitterIcon size={40} round />
+        </TwitterShareButton>
+
+        <LinkedinShareButton
+          url={shareUrl}
+          title={profileName}
+          summary={shareText}
+          source="Reality Creation Assessment"
+          className="hover:opacity-80 transition-opacity"
+        >
+          <LinkedinIcon size={40} round />
+        </LinkedinShareButton>
       </div>
       
       <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem' }}>
