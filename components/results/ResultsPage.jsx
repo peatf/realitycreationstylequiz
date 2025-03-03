@@ -284,8 +284,12 @@ const ResultsPage = () => {
           </div>
         )}
         
-        {/* Share Buttons */}
-        <ShareButtons url={shareableUrl} text={shareText} />
+      {/* Share Buttons Section */}
+<ShareButtons 
+  profileName={profileResult.name}
+  dimensionScores={dimensionScores}
+  profileId={profileResult.id}
+/>
         
         {/* Restart button */}
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1.5rem' }}>
