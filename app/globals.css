@@ -4,7 +4,7 @@
 
 :root {
   /* Glass card colors (matching OG quiz) */
-  --glass-bg: rgba(220, 230, 255, 0.2);
+  --glass-bg: rgba(220, 230, 255, 0.1);
   --glass-glow: rgba(200, 215, 255, 0.4);
   
   /* Quiz card colors */
