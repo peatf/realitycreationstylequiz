@@ -9,70 +9,114 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
   };
   
   return (
-    <div className="relative py-2 w-full max-w-xs mx-auto">
-      {/* Slider track with inset styling */}
+    <div style={{
+      position: 'relative',
+      paddingTop: '0.5rem',
+      paddingBottom: '0.5rem',
+      width: '100%',
+      maxWidth: '20rem',
+      margin: '0 auto'
+    }}>
+      {/* Slider track */}
       <div
-        className="h-5 rounded-full w-full relative overflow-hidden"
         style={{
+          height: '1.25rem',
+          borderRadius: '9999px',
+          width: '100%',
+          position: 'relative',
+          overflow: 'hidden',
           background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
           boxShadow: "inset 2px 2px 3px rgba(166,167,161,0.3), inset -2px -2px 3px rgba(255,255,250,0.3)"
         }}
       >
-        {/* Energy flow effect - filled portion */}
+        {/* Animated pulse effect */}
         <div
-          className="absolute top-0 left-0 h-full rounded-full"
           style={{
-            width: `${value}%`,
-            background: "linear-gradient(to right, rgba(193,191,132,0.6), rgba(150,159,30,0.6))",
-            transition: "width 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-          }}
-        ></div>
-        
-        {/* Animated glow effect */}
-        <div
-          className="absolute inset-0 opacity-20"
-          style={{
+            position: 'absolute',
+            inset: '0',
+            opacity: '0.2',
             background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
             transform: "translateX(-100%)",
             animation: "pulse 3s infinite"
           }}
-        ></div>
+        />
+        
+        {/* Slider thumb - moved inside the track div */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            width: '1rem',
+            height: '1rem',
+            borderRadius: '9999px',
+            left: `${value}%`,
+            transform: "translate(-50%, -50%)",
+            background: "rgba(255,255,255,0.2)",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
+            border: "1px solid rgba(255,255,255,0.2)",
+            zIndex: 2
+          }}
+        >
+          {/* White dot in the center of the thumb */}
+          <div 
+            style={{ 
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: '0.25rem',
+              height: '0.25rem',
+              borderRadius: '9999px',
+              background: 'white',
+              opacity: '0.6',
+              transform: "translate(-50%, -50%)"
+            }}
+          />
+        </div>
       </div>
       
-      {/* Slider thumb */}
-      <div
-        className="absolute top-1/2 w-4 h-4 rounded-full thumb-glow"
-        style={{
-          left: `${value}%`,
-          transform: "translate(-50%, -50%)",
-          background: "rgba(255,255,255,0.2)",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
-          border: "1px solid rgba(255,255,255,0.2)",
-          zIndex: 2
-        }}
-      >
-        <div className="absolute top-1 left-1 w-1 h-1 rounded-full bg-white opacity-60"></div>
-      </div>
-      
-      {/* Range input (invisible but functional) */}
+      {/* Hidden actual input slider */}
       <input
         type="range"
         min="0"
         max="100"
         value={value}
         onChange={handleChange}
-        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+        style={{
+          position: 'absolute',
+          inset: '0',
+          width: '100%',
+          height: '100%',
+          opacity: '0',
+          cursor: 'pointer',
+          zIndex: 10
+        }}
       />
       
-      {/* Labels positioned on either side */}
-      <div className="flex justify-between mt-2 px-4">
-        <div className="text-left max-w-[45%]">
-          <p className="text-xs whitespace-pre-line" style={{ color: "#2359FF" }}>
+      {/* Answer labels */}
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginTop: '0.5rem',
+        paddingLeft: '1rem',
+        paddingRight: '1rem'
+      }}>
+        <div style={{ textAlign: 'left', maxWidth: '45%' }}>
+          <p style={{ 
+            fontSize: '0.75rem', 
+            whiteSpace: 'pre-line', 
+            color: "#2359FF"
+          }}>
             {leftLabel}
           </p>
         </div>
-        <div className="text-right max-w-[45%]">
-          <p className="text-xs whitespace-pre-line" style={{ color: "#2359FF" }}>
+        <div style={{ textAlign: 'right', maxWidth: '45%' }}>
+          <p style={{ 
+            fontSize: '0.75rem', 
+            whiteSpace: 'pre-line', 
+            color: "#2359FF"
+          }}>
             {rightLabel}
           </p>
         </div>
