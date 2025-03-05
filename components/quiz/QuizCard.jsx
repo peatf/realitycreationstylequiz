@@ -29,7 +29,7 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
             <div className="mb-6 text-center">
               {/* Question box with inset styling */}
               <div className="question-box">
-                <p className="text-center text-xs tracking-wide leading-tight text-[#2359FF]">
+                <p className="question-text">
                   {question.text}
                 </p>
               </div>
