@@ -38,18 +38,20 @@ const ResultsPage = () => {
         
         {/* Progress indicator (completed) */}
         <div className="text-center mb-8">
-          <span className="text-sm text-[#2359FF] mb-1 block">
-            Step 10/10 - Complete!
-          </span>
-          <div className="w-full max-w-md mx-auto relative h-2">
-            <div className="h-full rounded-full"
+          <div className="flex justify-center mb-1">
+            <span className="text-sm text-[#2359FF]">
+              Step 10/10 - Complete!
+            </span>
+          </div>
+          <div className="w-full max-w-md mx-auto">
+            <div className="h-2 rounded-full"
               style={{
                 background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
                 boxShadow: "0 0 10px rgba(193, 191, 132, 0.3), inset 0 1px 3px rgba(0, 0, 0, 0.1)"
               }}
             >
               <div 
-                className="absolute top-0 left-0 h-full rounded-full"
+                className="h-full rounded-full"
                 style={{ 
                   width: '100%',
                   background: "linear-gradient(to right, rgba(193,191,132,0.5), rgba(150,159,30,0.5))"
@@ -60,24 +62,19 @@ const ResultsPage = () => {
         </div>
         
         {/* Trait Sliders/Charts */}
-        <div className="mb-8">
+        <div className="space-y-6 mb-8">
           {dimensions.map((dimension) => (
             <div key={dimension.id} className="mb-6">
-              {/* Dimension labels with left/right labels and title in center */}
+              {/* Dimension labels on either side of the title */}
               <div className="flex justify-between items-center mb-2">
                 <span className="text-sm text-[#2359FF] w-1/3 text-left">{dimension.leftLabel}</span>
                 <span className="text-sm font-light text-[#2359FF] w-1/3 text-center">{dimension.title}</span>
                 <span className="text-sm text-[#2359FF] w-1/3 text-right">{dimension.rightLabel}</span>
               </div>
               
-              {/* Slider track - inset styling */}
-              <div className="relative h-5 w-full">
-                <div className="h-5 rounded-full w-full relative overflow-hidden"
-                  style={{
-                    background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
-                    boxShadow: "inset 2px 2px 3px rgba(166,167,161,0.3), inset -2px -2px 3px rgba(255,255,250,0.3)"
-                  }}
-                >
+              {/* Slider track with inset effect */}
+              <div className="h-5 relative">
+                <div className="slider-track">
                   {/* Filled portion */}
                   <div
                     className="absolute inset-y-0 left-0 rounded-full"
@@ -111,7 +108,7 @@ const ResultsPage = () => {
                     }}
                   >
                     <div className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60" 
-                       style={{transform: "translate(-50%, -50%)"}}></div>
+                         style={{ transform: "translate(-50%, -50%)" }}></div>
                   </div>
                 </div>
               </div>
@@ -119,12 +116,12 @@ const ResultsPage = () => {
           ))}
         </div>
         
-        {/* Dimension Description Cards */}
-        <div className="mb-8">
+        {/* Dimension Description Cards - in a grid layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {dimensions.map((dimension) => (
             <div 
               key={dimension.id}
-              className="p-4 rounded-[28px] mb-6"
+              className="p-4 rounded-[28px]"
               style={{
                 background: "rgba(235,240,180,0.5)",
                 backdropFilter: "blur(4px)",
@@ -134,41 +131,11 @@ const ResultsPage = () => {
               }}
             >
               <h3 className="text-base font-light mb-2 text-[#2359FF]">
-                {dimension.title}: <span className="font-normal">
-                  {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
-                </span>
+                {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
               </h3>
-              <p className="text-sm text-[#2359FF] mb-3">
+              <p className="text-sm text-[#2359FF]">
                 {dimension.states[dimensionStates[dimension.id]]?.description || 'Your approach is balanced in this dimension.'}
               </p>
-              
-              {/* Show frameworks, practices, and tools if they exist - with proper spacing */}
-              {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
-                <div className="mt-3">
-                  <h4 className="text-sm font-semibold text-[#2359FF] mb-1">Frameworks you may be interested in:</h4>
-                  <p className="text-xs text-[#2359FF]">
-                    {dimension.states[dimensionStates[dimension.id]].frameworks}
-                  </p>
-                </div>
-              )}
-              
-              {dimension.states[dimensionStates[dimension.id]]?.practices && (
-                <div className="mt-3">
-                  <h4 className="text-sm font-semibold text-[#2359FF] mb-1">Practices you may be interested in:</h4>
-                  <p className="text-xs text-[#2359FF]">
-                    {dimension.states[dimensionStates[dimension.id]].practices}
-                  </p>
-                </div>
-              )}
-              
-              {dimension.states[dimensionStates[dimension.id]]?.tools && (
-                <div className="mt-3">
-                  <h4 className="text-sm font-semibold text-[#2359FF] mb-1">Tools you may be interested in:</h4>
-                  <p className="text-xs text-[#2359FF]">
-                    {dimension.states[dimensionStates[dimension.id]].tools}
-                  </p>
-                </div>
-              )}
             </div>
           ))}
         </div>
