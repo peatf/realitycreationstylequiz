@@ -9,28 +9,21 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
   };
   
   return (
-    <div className="relative py-4 w-full max-w-xs mx-auto">
-      {/* Labels above slider */}
-      <div className="flex justify-between mb-2">
-        <div className="text-left">
-          <p className="text-xs text-[#2359FF]">
+    <div className="relative py-4 w-full max-w-md mx-auto">
+      <div className="flex justify-between mb-1">
+        <div className="text-left max-w-[45%]">
+          <p className="text-xs whitespace-pre-line text-[#2359FF]">
             {leftLabel}
           </p>
         </div>
-        <div className="text-right">
-          <p className="text-xs text-[#2359FF]">
+        <div className="text-right max-w-[45%]">
+          <p className="text-xs whitespace-pre-line text-[#2359FF]">
             {rightLabel}
           </p>
         </div>
       </div>
       
-      {/* Slider track with inset effect */}
-      <div className="h-5 rounded-full relative overflow-hidden"
-        style={{
-          background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
-          boxShadow: "inset 2px 2px 3px rgba(166,167,161,0.3), inset -2px -2px 3px rgba(255,255,250,0.3)"
-        }}
-      >
+      <div className="slider-track">
         {/* Filled portion */}
         <div
           className="absolute inset-y-0 left-0 rounded-full"
@@ -40,7 +33,7 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
           }}
         ></div>
         
-        {/* Animated pulse effect */}
+        {/* Pulse animation */}
         <div
           className="absolute inset-0 opacity-20"
           style={{
@@ -66,17 +59,18 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
           <div className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60" 
                style={{ transform: "translate(-50%, -50%)" }}></div>
         </div>
-        
-        {/* Position input directly over the track */}
-        <input
-          type="range"
-          min="0"
-          max="100"
-          value={value}
-          onChange={handleChange}
-          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-        />
       </div>
+      
+      {/* Position input directly over the track */}
+      <input
+        type="range"
+        min="0"
+        max="100"
+        value={value}
+        onChange={handleChange}
+        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+        style={{ top: '2rem' }} /* Positioned correctly over the track */
+      />
     </div>
   );
 };
