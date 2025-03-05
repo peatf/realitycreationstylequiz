@@ -27,10 +27,10 @@ const ResultsPage = () => {
   const shareText = generateShareText(profileResult?.name);
   
   return (
-    <div className="w-full">
+    <div className="bg-transparent p-6 rounded-3xl w-full">
       <div className="relative z-10">
         {/* Title */}
-        <div className="text-center mb-6">
+        <div className="text-center mb-4">
           <h1 
             className="text-3xl tracking-widest font-extralight mb-6"
             style={{ 
@@ -71,7 +71,7 @@ const ResultsPage = () => {
         </div>
 
         {/* Trait Sliders */}
-        <div className="space-y-6 mb-8">
+        <div className="space-y-8 mb-8">
           {dimensions.map((dimension) => (
             <div key={dimension.id} className="mb-4">
               <div className="flex justify-between mb-1">
@@ -127,14 +127,16 @@ const ResultsPage = () => {
           ))}
         </div>
 
-        {/* Trait Description Cards - Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+        {/* Trait Description Cards - Two Column Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
           {dimensions.map((dimension) => (
             <div 
               key={dimension.id}
-              className="p-4 rounded-[28px] inset-description-card"
+              className="p-4 rounded-[28px]"
               style={{
                 background: "linear-gradient(135deg, rgba(235,240,180,0.65) 0%, rgba(245,250,190,0.85) 50%, rgba(235,240,180,0.75) 100%)",
+                borderRadius: "28px",
+                position: "relative",
                 boxShadow: "inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3), 0 0 10px rgba(193,191,132,0.3)"
               }}
             >
@@ -158,37 +160,37 @@ const ResultsPage = () => {
                 }}
               ></div>
               
-              <h3 className="text-sm font-medium mb-2 relative z-10" style={{ color: "#2359FF" }}>
-                {dimension.title}: <span>{dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}</span>
+              <h3 className="font-light text-base mb-2 relative z-10" style={{ color: "#2359FF" }}>
+                {dimension.title}: <span className="font-normal">{dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}</span>
               </h3>
               
-              <p className="text-xs mb-3 relative z-10" style={{ color: "#2359FF" }}>
+              <p className="text-sm relative z-10 mb-3" style={{ color: "#2359FF" }}>
                 {dimension.states[dimensionStates[dimension.id]]?.description || 'Your approach is balanced in this dimension.'}
               </p>
               
               {/* Only show these sections if they exist */}
               {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
-                <div className="mt-2 relative z-10">
-                  <h4 className="text-xs font-semibold" style={{ color: "#2359FF" }}>Frameworks:</h4>
-                  <p className="text-xs" style={{ color: "#2359FF" }}>
+                <div className="mt-3 relative z-10">
+                  <h4 className="text-sm font-semibold" style={{ color: "#2359FF" }}>Frameworks you may be interested in:</h4>
+                  <p className="text-xs mt-1" style={{ color: "#2359FF" }}>
                     {dimension.states[dimensionStates[dimension.id]].frameworks}
                   </p>
                 </div>
               )}
               
               {dimension.states[dimensionStates[dimension.id]]?.practices && (
-                <div className="mt-2 relative z-10">
-                  <h4 className="text-xs font-semibold" style={{ color: "#2359FF" }}>Practices:</h4>
-                  <p className="text-xs" style={{ color: "#2359FF" }}>
+                <div className="mt-3 relative z-10">
+                  <h4 className="text-sm font-semibold" style={{ color: "#2359FF" }}>Practices you may be interested in:</h4>
+                  <p className="text-xs mt-1" style={{ color: "#2359FF" }}>
                     {dimension.states[dimensionStates[dimension.id]].practices}
                   </p>
                 </div>
               )}
               
               {dimension.states[dimensionStates[dimension.id]]?.tools && (
-                <div className="mt-2 relative z-10">
-                  <h4 className="text-xs font-semibold" style={{ color: "#2359FF" }}>Tools:</h4>
-                  <p className="text-xs" style={{ color: "#2359FF" }}>
+                <div className="mt-3 relative z-10">
+                  <h4 className="text-sm font-semibold" style={{ color: "#2359FF" }}>Tools you may be interested in:</h4>
+                  <p className="text-xs mt-1" style={{ color: "#2359FF" }}>
                     {dimension.states[dimensionStates[dimension.id]].tools}
                   </p>
                 </div>
@@ -200,10 +202,11 @@ const ResultsPage = () => {
         {/* Summary Section */}
         {profileResult && (
           <div 
-            className="p-6 rounded-3xl mb-6 mx-auto w-full overflow-hidden relative inset-description-card"
+            className="p-6 rounded-[28px] mb-6 mx-auto w-full"
             style={{
               background: "linear-gradient(135deg, rgba(235,240,180,0.65) 0%, rgba(245,250,190,0.85) 50%, rgba(235,240,180,0.75) 100%)",
               borderRadius: "28px",
+              position: "relative",
               boxShadow: "inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3), 0 0 10px rgba(193,191,132,0.3)"
             }}
           >
@@ -245,43 +248,42 @@ const ResultsPage = () => {
         )}
 
         {/* Share Buttons */}
-        <div className="flex flex-col items-center">
-          <ShareButtons 
-            profileName={profileResult?.name}
-            dimensionScores={dimensionScores}
-            profileId={profileResult?.id}
-          />
+        <ShareButtons 
+          profileName={profileResult?.name}
+          dimensionScores={dimensionScores}
+          profileId={profileResult?.id}
+        />
 
-          {/* Restart button */}
-          <div className="flex justify-center mt-4 mb-8">
-            <button 
-              onClick={restartQuiz}
-              className="relative px-8 py-2 transition-all duration-300 text-xs tracking-wide overflow-hidden keyboard-button"
+        {/* Restart button */}
+        <div className="flex justify-center mt-4">
+          <button 
+            onClick={restartQuiz}
+            className="relative px-8 py-2 transition-all duration-300 text-xs tracking-wide overflow-hidden keyboard-button"
+            style={{
+              borderRadius: "76px",
+              color: "#2359FF",
+              background: "#DBDECE",
+              border: "1px solid rgba(193,191,132,0.4)",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.1), 0 0 1px rgba(0,0,0,0.2)"
+            }}
+          >
+            <span className="relative z-10 tracking-widest uppercase">Take Quiz Again</span>
+            
+            {/* Keyboard texture overlay */}
+            <div 
+              className="absolute inset-0 keyboard-texture"
               style={{
                 borderRadius: "76px",
-                color: "#2359FF",
-                background: "#DBDECE",
-                border: "1px solid rgba(193,191,132,0.4)",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1), 0 0 1px rgba(0,0,0,0.2)"
+                background: "linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, rgba(230,230,220,0.05) 100%)",
+                boxShadow: "inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -1px 1px rgba(0,0,0,0.1)",
+                pointerEvents: "none"
               }}
-            >
-              <span className="relative z-10 tracking-widest">TAKE QUIZ AGAIN</span>
-              
-              {/* Keyboard texture overlay */}
-              <div 
-                className="absolute inset-0 keyboard-texture"
-                style={{
-                  borderRadius: "76px",
-                  background: "linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, rgba(230,230,220,0.05) 100%)",
-                  boxShadow: "inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -1px 1px rgba(0,0,0,0.1)",
-                  pointerEvents: "none"
-                }}
-              ></div>
-              
-              {/* Button particles */}
-              <div className="button-particles"></div>
-            </button>
-          </div>
+            ></div>
+            
+            {/* Button particles */}
+            <div className="button-particles"></div>
+            <div className="button-shine"></div>
+          </button>
         </div>
       </div>
     </div>
