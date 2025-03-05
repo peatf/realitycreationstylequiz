@@ -14,7 +14,7 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
       paddingTop: '0.5rem',
       paddingBottom: '0.5rem',
       width: '100%',
-      maxWidth: '20rem',
+      maxWidth: '30rem',
       margin: '0 auto'
     }}>
       {/* Slider track */}
@@ -102,7 +102,7 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
         paddingLeft: '1rem',
         paddingRight: '1rem'
       }}>
-        <div style={{ textAlign: 'left', maxWidth: '45%' }}>
+        <div style={{ textAlign: 'left', maxWidth: '55%' }}>
           <p style={{ 
             fontSize: '0.75rem', 
             whiteSpace: 'pre-line', 
@@ -111,7 +111,7 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
             {leftLabel}
           </p>
         </div>
-        <div style={{ textAlign: 'right', maxWidth: '45%' }}>
+        <div style={{ textAlign: 'right', maxWidth: '55%' }}>
           <p style={{ 
             fontSize: '0.75rem', 
             whiteSpace: 'pre-line', 
