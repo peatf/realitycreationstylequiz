@@ -9,9 +9,23 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
   };
   
   return (
-    <div className="relative py-2 w-full max-w-xs mx-auto">
-      {/* Slider track with positioned thumb and fill */}
-      <div className="h-5 rounded-full w-full relative overflow-hidden"
+    <div className="relative py-4 w-full max-w-xs mx-auto">
+      {/* Labels above slider */}
+      <div className="flex justify-between mb-2">
+        <div className="text-left">
+          <p className="text-xs text-[#2359FF]">
+            {leftLabel}
+          </p>
+        </div>
+        <div className="text-right">
+          <p className="text-xs text-[#2359FF]">
+            {rightLabel}
+          </p>
+        </div>
+      </div>
+      
+      {/* Slider track with inset effect */}
+      <div className="h-5 rounded-full relative overflow-hidden"
         style={{
           background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
           boxShadow: "inset 2px 2px 3px rgba(166,167,161,0.3), inset -2px -2px 3px rgba(255,255,250,0.3)"
@@ -22,7 +36,7 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
           className="absolute inset-y-0 left-0 rounded-full"
           style={{
             width: `${value}%`,
-            background: "linear-gradient(to right, rgba(193,191,132,0.5), rgba(150,159,30,0.5))"
+            background: "linear-gradient(to right, rgba(193,191,132,0.6), rgba(150,159,30,0.6))"
           }}
         ></div>
         
@@ -62,20 +76,6 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
           onChange={handleChange}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
         />
-      </div>
-      
-      {/* Answer labels */}
-      <div className="flex justify-between mt-2 px-2">
-        <div className="text-left max-w-[45%]">
-          <p className="text-xs whitespace-pre-line text-[#2359FF]">
-            {leftLabel}
-          </p>
-        </div>
-        <div className="text-right max-w-[45%]">
-          <p className="text-xs whitespace-pre-line text-[#2359FF]">
-            {rightLabel}
-          </p>
-        </div>
       </div>
     </div>
   );
