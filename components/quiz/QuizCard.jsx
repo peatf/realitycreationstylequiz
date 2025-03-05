@@ -54,14 +54,14 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
         <div className="flex justify-center mt-6 gap-4">
           {onPrev && (
             <button onClick={onPrev} className="keyboard-button">
-              <span className="relative z-10">PREVIOUS</span>
+              <span className="relative z-10 tracking-widest">PREVIOUS</span>
               <div className="keyboard-texture"></div>
               <div className="button-particles"></div>
             </button>
           )}
           
           <button onClick={onNext} className="keyboard-button">
-            <span className="relative z-10">{isLast ? 'SEE RESULTS' : 'NEXT'}</span>
+            <span className="relative z-10 tracking-widest">{isLast ? 'SEE RESULTS' : 'NEXT'}</span>
             <div className="keyboard-texture"></div>
             <div className="button-particles"></div>
             <div className="button-shine"></div>
