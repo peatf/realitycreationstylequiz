@@ -28,7 +28,7 @@
 body {
   margin: 0;
   padding: 0;
-  background: #DBDECE;
+  background: transparent;
   font-family: system-ui, sans-serif;
   overflow-x: hidden;
   color: var(--text-primary);
@@ -106,7 +106,7 @@ body {
   justify-content: center;
   width: 100%;
   min-height: 100vh;
-  background: #DBDECE;
+  background: transparent;
 }
 
 .card-container {
