@@ -579,7 +579,36 @@ export const getProfileById = (id) => profiles[id] || profiles.default;
 // This version requires modifying the calculateResults function in lib/scoring.js
 // to pass dimensionScores along with dimensionStates to this function
 
-export const determineProfileId = (dimensionStates, dimensionScores = null) => {
+// Updated determineProfileId function for data/profiles.js
+
+/**
+ * Determines which profile a user should get based on their dimension states and scores
+ * Uses a nearest-neighbor approach to match to one of the 30 defined profiles
+ * 
+ * @param {Object} dimensionStates - Object mapping dimensions to states (left, balanced, right)
+ * @param {Object} dimensionScores - Object mapping dimensions to scores (1-5)
+ * @returns {string} - Profile ID of the best matching profile
+ */
+export const determineProfileId = (dimensionStates, dimensionScores) => {
+  // First try exact matching based on number of extreme dimensions
+  const exactMatchId = getExactProfileMatch(dimensionStates);
+  
+  // If we found an exact match that exists in our profiles, return it
+  if (exactMatchId && profiles[exactMatchId]) {
+    return exactMatchId;
+  }
+  
+  // If no exact match or it doesn't exist in our profiles, find the nearest match
+  return findNearestProfile(dimensionStates, dimensionScores);
+};
+
+/**
+ * Attempts to create an exact profile match ID based on extreme dimensions
+ * 
+ * @param {Object} dimensionStates - Object mapping dimensions to states
+ * @returns {string|null} - Exact profile ID if found, null otherwise
+ */
+function getExactProfileMatch(dimensionStates) {
   // Count extreme dimensions (left or right)
   const extremeDimensions = Object.entries(dimensionStates).filter(
     ([_, state]) => state === 'left' || state === 'right'
@@ -603,33 +632,178 @@ export const determineProfileId = (dimensionStates, dimensionScores = null) => {
     const [dim2, state2] = extremeDimensions[1];
     const [dim3, state3] = extremeDimensions[2];
     return `${dim1}_${state1}_${dim2}_${state2}_${dim3}_${state3}`;
-  } else {
-    // Four or five extreme dimensions - select top 3 most extreme
-    let sortedDimensions = [...extremeDimensions];
-    
-    // If we have dimension scores, use them to find the most extreme values
-    if (dimensionScores) {
-      sortedDimensions = sortedDimensions.sort((a, b) => {
-        const dimensionA = a[0];
-        const stateA = a[1];
-        const scoreA = dimensionScores[dimensionA];
-        const dimensionB = b[0];
-        const stateB = b[1];
-        const scoreB = dimensionScores[dimensionB];
-        
-        // Calculate how far from the middle (3) each score is
-        const extremenessA = Math.abs(scoreA - 3);
-        const extremenessB = Math.abs(scoreB - 3);
-        
-        return extremenessB - extremenessA; // Sort by most extreme first
-      });
-    }
-    
-    // Take the top 3 most extreme dimensions
-    const [dim1, state1] = sortedDimensions[0];
-    const [dim2, state2] = sortedDimensions[1];
-    const [dim3, state3] = sortedDimensions[2];
-    
-    return `${dim1}_${state1}_${dim2}_${state2}_${dim3}_${state3}`;
   }
-};
+  
+  return null; // No exact match found
+}
+
+/**
+ * Finds the nearest profile match based on similarity to defined profiles
+ * 
+ * @param {Object} dimensionStates - User's dimension states
+ * @param {Object} dimensionScores - User's dimension scores
+ * @returns {string} - ID of the most similar profile
+ */
+function findNearestProfile(dimensionStates, dimensionScores) {
+  // Get all defined profile IDs (excluding 'default')
+  const definedProfileIds = Object.keys(profiles).filter(id => id !== 'default');
+  
+  // Parse each profile ID to determine its dimension states
+  const profilePatterns = definedProfileIds.map(id => {
+    return {
+      id,
+      pattern: parseProfileId(id)
+    };
+  });
+
+  // Create the user's pattern for comparison
+  const userPattern = {
+    beliefMindset: dimensionStates.beliefMindset,
+    clarityVision: dimensionStates.clarityVision,
+    actionOrientation: dimensionStates.actionOrientation,
+    intuitionStrategy: dimensionStates.intuitionStrategy,
+    emotionalAlignment: dimensionStates.emotionalAlignment
+  };
+  
+  // Calculate similarity scores for each profile
+  const scoredProfiles = profilePatterns.map(profile => {
+    const similarityScore = calculateSimilarity(userPattern, profile.pattern, dimensionScores);
+    return {
+      id: profile.id,
+      score: similarityScore
+    };
+  });
+  
+  // Sort by similarity score (highest first)
+  scoredProfiles.sort((a, b) => b.score - a.score);
+  
+  // Return the ID of the most similar profile
+  return scoredProfiles[0].id;
+}
+
+/**
+ * Parses a profile ID to extract its dimension states
+ * 
+ * @param {string} profileId - Profile ID string
+ * @returns {Object} - Object mapping dimensions to states
+ */
+function parseProfileId(profileId) {
+  // Start with all dimensions as 'balanced'
+  const pattern = {
+    beliefMindset: 'balanced',
+    clarityVision: 'balanced',
+    actionOrientation: 'balanced',
+    intuitionStrategy: 'balanced',
+    emotionalAlignment: 'balanced'
+  };
+  
+  // Special case for fully balanced profile
+  if (profileId === 'balanced_all') {
+    return pattern;
+  }
+  
+  // Parse the profile ID (format: dim1_state1_dim2_state2...)
+  const parts = profileId.split('_');
+  
+  // Process parts in pairs (dimension, state)
+  for (let i = 0; i < parts.length; i += 2) {
+    const dimension = parts[i];
+    const state = parts[i + 1];
+    
+    // Only update if this is a valid dimension
+    if (pattern.hasOwnProperty(dimension)) {
+      pattern[dimension] = state;
+    }
+  }
+  
+  return pattern;
+}
+
+/**
+ * Calculates similarity between user pattern and a profile pattern
+ * 
+ * @param {Object} userPattern - User's dimension states
+ * @param {Object} profilePattern - Profile's dimension states
+ * @param {Object} dimensionScores - User's dimension scores
+ * @returns {number} - Similarity score (higher is more similar)
+ */
+function calculateSimilarity(userPattern, profilePattern, dimensionScores) {
+  let score = 0;
+  const dimensions = Object.keys(userPattern);
+  
+  // Define weights for different aspects of similarity
+  const EXACT_MATCH_WEIGHT = 10;       // Weight for exact state match
+  const SIMILAR_DIRECTION_WEIGHT = 5;  // Weight for similar direction (both left/right but different magnitude)
+  const OPPOSITE_PENALTY = -5;         // Penalty for opposite states (left vs right)
+  
+  // Give points for each dimension based on matching states
+  for (const dimension of dimensions) {
+    const userState = userPattern[dimension];
+    const profileState = profilePattern[dimension];
+    
+    // Exact state match
+    if (userState === profileState) {
+      score += EXACT_MATCH_WEIGHT;
+    }
+    // Both are extreme but in opposite directions
+    else if ((userState === 'left' && profileState === 'right') || 
+             (userState === 'right' && profileState === 'left')) {
+      score += OPPOSITE_PENALTY;
+    }
+    // One is balanced, one is extreme
+    else {
+      // Get the numeric score to see how close to balanced it is
+      const numericScore = dimensionScores[dimension];
+      
+      // If user is balanced but profile is extreme
+      if (userState === 'balanced') {
+        // Check how close to that extreme the user actually is
+        const distanceFromMiddle = Math.abs(numericScore - 3);
+        
+        // If profile is 'left' and user leans left, or profile is 'right' and user leans right
+        const leaningTowardsProfile = 
+          (profileState === 'left' && numericScore < 3) || 
+          (profileState === 'right' && numericScore > 3);
+        
+        if (leaningTowardsProfile) {
+          // Award partial points based on how close to the extreme they are
+          score += SIMILAR_DIRECTION_WEIGHT * (distanceFromMiddle / 2);
+        }
+      }
+      // If user is extreme but profile is balanced 
+      else {
+        // Less similarity but still give some points for being closer to that balance point
+        const extremity = userState === 'left' ? Math.abs(dimensionScores[dimension] - 1) 
+                                               : Math.abs(5 - dimensionScores[dimension]);
+        
+        // The less extreme, the higher the score
+        score += SIMILAR_DIRECTION_WEIGHT * (extremity / 4);
+      }
+    }
+  }
+  
+  // Weight by number of extreme dimensions
+  const userExtremeCount = countExtremes(userPattern);
+  const profileExtremeCount = countExtremes(profilePattern);
+  
+  // Add bonus for having the same number of extreme dimensions
+  const EXTREME_COUNT_MATCH_BONUS = 8;
+  if (userExtremeCount === profileExtremeCount) {
+    score += EXTREME_COUNT_MATCH_BONUS;
+  } else {
+    // Penalize based on difference in extreme dimension count
+    score -= Math.abs(userExtremeCount - profileExtremeCount) * 2;
+  }
+  
+  return score;
+}
+
+/**
+ * Counts extreme dimensions in a pattern
+ * 
+ * @param {Object} pattern - Dimension states pattern
+ * @returns {number} - Count of extreme dimensions
+ */
+function countExtremes(pattern) {
+  return Object.values(pattern).filter(state => state === 'left' || state === 'right').length;
+}
