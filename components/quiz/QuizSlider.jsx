@@ -9,59 +9,52 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
   };
   
   return (
-    <div className="relative py-4 w-full max-w-md mx-auto">
-      <div className="flex justify-between mb-1">
-        <div className="text-left max-w-[45%]">
-          <p className="text-xs whitespace-pre-line text-[#2359FF]">
-            {leftLabel}
-          </p>
-        </div>
-        <div className="text-right max-w-[45%]">
-          <p className="text-xs whitespace-pre-line text-[#2359FF]">
-            {rightLabel}
-          </p>
-        </div>
-      </div>
-      
-      <div className="slider-track">
-        {/* Filled portion */}
+    <div className="relative py-2 w-full max-w-xs mx-auto">
+      {/* Slider track with inset styling */}
+      <div
+        className="h-5 rounded-full w-full relative overflow-hidden"
+        style={{
+          background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
+          boxShadow: "inset 2px 2px 3px rgba(166,167,161,0.3), inset -2px -2px 3px rgba(255,255,250,0.3)"
+        }}
+      >
+        {/* Energy flow effect - filled portion */}
         <div
-          className="absolute inset-y-0 left-0 rounded-full"
+          className="absolute top-0 left-0 h-full rounded-full"
           style={{
             width: `${value}%`,
-            background: "linear-gradient(to right, rgba(193,191,132,0.6), rgba(150,159,30,0.6))"
+            background: "linear-gradient(to right, rgba(193,191,132,0.6), rgba(150,159,30,0.6))",
+            transition: "width 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
           }}
         ></div>
         
-        {/* Pulse animation */}
+        {/* Animated glow effect */}
         <div
           className="absolute inset-0 opacity-20"
           style={{
             background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
+            transform: "translateX(-100%)",
             animation: "pulse 3s infinite"
           }}
         ></div>
-        
-        {/* Slider thumb */}
-        <div
-          className="absolute top-1/2 w-4 h-4 rounded-full"
-          style={{
-            left: `${value}%`,
-            transform: "translate(-50%, -50%)",
-            background: "rgba(255,255,255,0.2)",
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
-            border: "1px solid rgba(255,255,255,0.2)",
-            zIndex: 2
-          }}
-        >
-          <div className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60" 
-               style={{ transform: "translate(-50%, -50%)" }}></div>
-        </div>
       </div>
       
-      {/* Position input directly over the track */}
+      {/* Slider thumb */}
+      <div
+        className="absolute top-1/2 w-4 h-4 rounded-full thumb-glow"
+        style={{
+          left: `${value}%`,
+          transform: "translate(-50%, -50%)",
+          background: "rgba(255,255,255,0.2)",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
+          border: "1px solid rgba(255,255,255,0.2)",
+          zIndex: 2
+        }}
+      >
+        <div className="absolute top-1 left-1 w-1 h-1 rounded-full bg-white opacity-60"></div>
+      </div>
+      
+      {/* Range input (invisible but functional) */}
       <input
         type="range"
         min="0"
@@ -69,8 +62,21 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
         value={value}
         onChange={handleChange}
         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-        style={{ top: '2rem' }} /* Positioned correctly over the track */
       />
+      
+      {/* Labels positioned on either side */}
+      <div className="flex justify-between mt-2 px-4">
+        <div className="text-left max-w-[45%]">
+          <p className="text-xs whitespace-pre-line" style={{ color: "#2359FF" }}>
+            {leftLabel}
+          </p>
+        </div>
+        <div className="text-right max-w-[45%]">
+          <p className="text-xs whitespace-pre-line" style={{ color: "#2359FF" }}>
+            {rightLabel}
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
