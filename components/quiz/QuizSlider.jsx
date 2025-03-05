@@ -102,7 +102,7 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
         paddingLeft: '1rem',
         paddingRight: '1rem'
       }}>
-        <div style={{ textAlign: 'left', maxWidth: '55%' }}>
+        <div style={{ textAlign: 'left', maxWidth: '45%' }}>
           <p style={{ 
             fontSize: '0.75rem', 
             whiteSpace: 'pre-line', 
@@ -111,7 +111,7 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
             {leftLabel}
           </p>
         </div>
-        <div style={{ textAlign: 'right', maxWidth: '55%' }}>
+        <div style={{ textAlign: 'right', maxWidth: '45%' }}>
           <p style={{ 
             fontSize: '0.75rem', 
             whiteSpace: 'pre-line', 
