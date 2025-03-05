@@ -79,7 +79,8 @@ const QuizContainer = () => {
         const isLastGroup = currentGroup >= totalGroups - 1;
         
         return (
-<div className="flex flex-col space-y-4" style={{ paddingTop: '0.5rem' }}>            <ProgressBar 
+          <div className="flex flex-col space-y-4 pt-2">
+            <ProgressBar 
               progress={progress} 
               currentStep={currentGroup + 1} 
               totalSteps={totalGroups} 
@@ -103,9 +104,6 @@ const QuizContainer = () => {
   return (
     <div className="main-container">
       <div className="card-container">
-        {/* Background glow */}
-        <div className="bg-glow"></div>
-        
         {renderStep()}
       </div>
     </div>
