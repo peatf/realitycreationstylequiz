@@ -32,7 +32,7 @@ const IntroPage = () => {
   const { startQuiz } = useQuiz();
   
   return (
-    <div className="bg-[#DBDECE] p-6 rounded-3xl w-full">
+    <div className="bg-transparent p-6 rounded-3xl w-full">
       <div className="relative z-10">
         {/* Preloader graphic */}
         <PressedSquaresPreloader />
