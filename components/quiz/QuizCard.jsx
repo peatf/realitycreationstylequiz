@@ -21,45 +21,62 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
   };
   
   return (
-    <div className="bg-transparent w-full">
-      <div className="relative z-10">
+    <div style={{
+      position: 'relative',
+      zIndex: 10,
+      width: '100%',
+      padding: '1rem', // Reduced padding
+      borderRadius: '5rem',
+      background: "rgba(220, 230, 255, 0.2)",
+      backdropFilter: "blur(14px)",
+      WebkitBackdropFilter: "blur(14px)",
+      border: "1px solid rgba(255,255,255,0.3)",
+      boxShadow: "0 10px 40px rgba(255,255,255,0.2), inset 0 0 30px rgba(255,255,255,0.2)",
+      animation: "pulseGlow 8s infinite alternate ease-in-out",
+    }}>
+      {/* Texture overlay */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        borderRadius: '5rem',
+        mixBlendMode: 'overlay',
+        opacity: 0.03,
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E")`
+      }} />
+
+      <div style={{ position: 'relative', zIndex: 10, paddingTop: '1.5rem' }}>
         {/* Multiple Questions */}
         {currentQuestions.map((question, index) => (
           <React.Fragment key={question.id}>
-            <div className="mb-6 text-center">
-              {/* Question box with inset styling */}
+            <div style={{ marginBottom: '1.5rem', textAlign: 'center' }}>
+              {/* Question box with fixed styling */}
               <div
-                className="p-4 mb-2 mx-auto w-full max-w-md overflow-hidden relative inset-question-card"
                 style={{
-                  background: "linear-gradient(135deg, rgba(235,240,180,0.65) 0%, rgba(245,250,190,0.85) 50%, rgba(235,240,180,0.75) 100%)",
-                  borderRadius: "28px",
-                  position: "relative",
-                  boxShadow: "inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3), 0 0 10px rgba(193,191,132,0.3)"
+                  padding: '0.75rem',
+                  marginBottom: '0.5rem',
+                  borderRadius: '1rem',
+                  background: "rgba(235,240,180,0.95)",
+                  backdropFilter: "blur(4px)",
+                  WebkitBackdropFilter: "blur(4px)",
+                  border: "1px solid rgba(220,255,200,0.6)",
+                  boxShadow: "inset 0 2px 5px rgba(0,0,0,0.1), 0 0 10px rgba(193,191,132,0.5)",
+                  maxWidth: '100%', // Ensure it doesn't exceed parent width
+                  margin: '0 auto',
+                  overflow: 'hidden',
+                  width: '95%', // Slightly less than full width to ensure margins
+                  boxSizing: 'border-box' // Include padding and border in the element's width
                 }}
               >
-                {/* Inset shadow for debossed effect */}
-                <div 
-                  className="absolute inset-0 rounded-[28px]"
+                <p 
                   style={{
-                    boxShadow: "inset 0 2px 5px rgba(0,0,0,0.15), inset 0 -1px 2px rgba(255,255,255,0.2)",
-                    pointerEvents: "none",
-                    zIndex: 1
+                    textAlign: 'center',
+                    fontSize: '0.75rem',
+                    letterSpacing: '0.05em',
+                    lineHeight: '1.25',
+                    color: "#2359FF",
+                    textShadow: "0 0 5px rgba(35,89,255,0.3)"
                   }}
-                ></div>
-                
-                {/* Depression edge highlights */}
-                <div 
-                  className="absolute inset-1 rounded-[26px]"
-                  style={{
-                    boxShadow: "inset 0 1px 3px rgba(0,0,0,0.1)",
-                    pointerEvents: "none",
-                    zIndex: 2
-                  }}
-                ></div>
-                
-                <p className="text-center text-xs tracking-wide leading-tight relative z-10" style={{
-                  color: "#2359FF"
-                }}>
+                >
                   {question.text}
                 </p>
               </div>
@@ -73,71 +90,76 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
               />
             </div>
             
-            {/* Add divider between questions except for the last one */}
+            {/* Add divider between questions except for the last one - fixed width */}
             {index < currentQuestions.length - 1 && (
-              <div className="h-px bg-[rgba(35,89,255,0.1)] w-4/5 max-w-md mx-auto mb-4" />
+              <div 
+                style={{ 
+                  height: '1px', 
+                  background: "rgba(35,89,255,0.2)",
+                  width: '85%',
+                  maxWidth: '36rem',
+                  margin: '0 auto 1rem auto'
+                }}
+              />
             )}
           </React.Fragment>
         ))}
         
         {/* Navigation buttons */}
-        <div className="flex justify-center mt-4">
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          marginTop: '1.5rem',
+          gap: '1rem'
+        }}>
           {onPrev && (
-            <button 
-              onClick={onPrev} 
-              className="relative px-8 py-2 transition-all duration-300 text-xs tracking-wide overflow-hidden keyboard-button mr-4"
+            <button
+              onClick={onPrev}
               style={{
-                borderRadius: "76px",
+                padding: '0.5rem 2rem',
+                borderRadius: '76px',
                 color: "#2359FF",
-                background: "#DBDECE",
-                border: "1px solid rgba(193,191,132,0.4)",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.1), 0 0 1px rgba(0,0,0,0.2)"
+                background: "rgba(224,224,224,0)",
+                border: "1px solid rgba(255,255,255,0.3)",
+                boxShadow: "inset 19px 19px 38px rgba(190,190,190,0.3), inset -19px -19px 38px rgba(255,255,255,0.3)",
+                fontSize: '0.75rem',
+                letterSpacing: '0.1em',
+                transition: 'all 0.3s',
+                cursor: 'pointer'
               }}
             >
-              <span className="relative z-10 tracking-widest">PREVIOUS</span>
-              
-              {/* Keyboard texture overlay */}
-              <div 
-                className="absolute inset-0 keyboard-texture"
-                style={{
-                  borderRadius: "76px",
-                  background: "linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, rgba(230,230,220,0.05) 100%)",
-                  boxShadow: "inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -1px 1px rgba(0,0,0,0.1)",
-                  pointerEvents: "none"
-                }}
-              ></div>
-              
-              {/* Button particles */}
-              <div className="button-particles"></div>
+              <span style={{ position: 'relative', zIndex: 10 }}>PREVIOUS</span>
             </button>
           )}
           
-          <button 
-            onClick={onNext} 
-            className="relative px-8 py-2 transition-all duration-300 text-xs tracking-wide overflow-hidden keyboard-button"
+          <button
+            onClick={onNext}
             style={{
-              borderRadius: "76px",
+              padding: '0.5rem 2rem',
+              borderRadius: '76px',
               color: "#2359FF",
-              background: "#DBDECE",
-              border: "1px solid rgba(193,191,132,0.4)",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.1), 0 0 1px rgba(0,0,0,0.2)"
+              background: "rgba(224,224,224,0)",
+              border: "1px solid rgba(255,255,255,0.3)",
+              boxShadow: "inset 19px 19px 38px rgba(190,190,190,0.3), inset -19px -19px 38px rgba(255,255,255,0.3)",
+              fontSize: '0.75rem',
+              letterSpacing: '0.1em',
+              position: 'relative',
+              overflow: 'hidden',
+              transition: 'all 0.3s',
+              cursor: 'pointer'
             }}
           >
-            <span className="relative z-10 tracking-widest">{isLast ? 'SEE RESULTS' : 'NEXT'}</span>
-            
-            {/* Keyboard texture overlay */}
-            <div 
-              className="absolute inset-0 keyboard-texture"
+            <span style={{ position: 'relative', zIndex: 10 }}>{isLast ? 'SEE RESULTS' : 'NEXT'}</span>
+            <div
               style={{
-                borderRadius: "76px",
-                background: "linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, rgba(230,230,220,0.05) 100%)",
-                boxShadow: "inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -1px 1px rgba(0,0,0,0.1)",
-                pointerEvents: "none"
+                position: 'absolute',
+                inset: 0,
+                opacity: 0.2,
+                background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
+                transform: "translateX(-100%)",
+                animation: "buttonShine 3s infinite"
               }}
-            ></div>
-            
-            {/* Button particles */}
-            <div className="button-particles"></div>
+            />
           </button>
         </div>
       </div>
