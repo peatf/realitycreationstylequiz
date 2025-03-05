@@ -21,7 +21,7 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
   };
   
   return (
-    <div className="bg-[#DBDECE] p-6 rounded-3xl w-full">
+    <div className="bg-transparent p-6 rounded-3xl w-full">
       <div className="relative z-10 pt-4">
         {/* Multiple Questions */}
         {currentQuestions.map((question, index) => (
