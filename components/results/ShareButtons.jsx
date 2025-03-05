@@ -36,34 +36,16 @@ const ShareButtons = ({ profileName, dimensionScores, profileId }) => {
   };
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      marginTop: '1.5rem',
-      marginBottom: '1rem'
-    }}>
-      <h3 
-        style={{ 
-          fontSize: '1rem', 
-          fontWeight: '300', 
-          marginBottom: '1rem',
-          textAlign: 'center',
-          color: "#2359FF"
-        }}
-      >
+    <div className="flex flex-col items-center mt-6 mb-4">
+      <h3 className="text-base font-light mb-4 text-center text-[#2359FF]">
         Share Your Results
       </h3>
       
-      <div style={{
-        display: 'flex',
-        marginBottom: '1rem',
-        gap: '1rem'
-      }}>
+      <div className="share-button-container">
         <FacebookShareButton
           url={shareUrl}
           quote={shareText}
-          className="hover:opacity-80 transition-opacity"
+          className="share-button"
         >
           <FacebookIcon size={40} round />
         </FacebookShareButton>
@@ -72,7 +54,7 @@ const ShareButtons = ({ profileName, dimensionScores, profileId }) => {
           url={shareUrl}
           title={shareText}
           hashtags={["RealityCreation", "Manifestation"]}
-          className="hover:opacity-80 transition-opacity"
+          className="share-button"
         >
           <TwitterIcon size={40} round />
         </TwitterShareButton>
@@ -82,43 +64,23 @@ const ShareButtons = ({ profileName, dimensionScores, profileId }) => {
           title={profileName}
           summary={shareText}
           source="Reality Creation Assessment"
-          className="hover:opacity-80 transition-opacity"
+          className="share-button"
         >
           <LinkedinIcon size={40} round />
         </LinkedinShareButton>
       </div>
       
-      <div style={{ display: 'flex', alignItems: 'center', marginTop: '0.5rem' }}>
+      <div className="flex items-center mt-4">
         <button 
           onClick={handleCopy}
-          style={{
-            padding: '0.5rem 2rem',
-            borderRadius: '76px',
-            color: "#2359FF",
-            background: "rgba(224,224,224,0)",
-            border: "1px solid rgba(255,255,255,0.3)",
-            boxShadow: "inset 19px 19px 38px rgba(190,190,190,0.3), inset -19px -19px 38px rgba(255,255,255,0.3)",
-            fontSize: '0.75rem',
-            letterSpacing: '0.1em',
-            position: 'relative',
-            overflow: 'hidden',
-            transition: 'all 0.3s',
-            cursor: 'pointer'
-          }}
+          className="keyboard-button"
         >
-          <span style={{ position: 'relative', zIndex: '10' }}>
+          <span className="relative z-10">
             {copied ? 'Link Copied!' : 'Copy Link'}
           </span>
-          <div 
-            style={{
-              position: 'absolute',
-              inset: '0',
-              opacity: '0.2',
-              background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)",
-              transform: "translateX(-100%)",
-              animation: "buttonShine 4s infinite"
-            }}
-          ></div>
+          <div className="keyboard-texture"></div>
+          <div className="button-particles"></div>
+          <div className="button-shine"></div>
         </button>
       </div>
     </div>
