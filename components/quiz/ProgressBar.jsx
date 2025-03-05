@@ -12,9 +12,14 @@ const ProgressBar = ({ progress, currentStep, totalSteps }) => {
       </div>
       <div className="progress-bar">
         <div 
-          className="progress-fill"
-          style={{ width: `${progress}%` }}
+          className="h-full rounded-full"
+          style={{ 
+            width: `${progress}%`,
+            background: "linear-gradient(to right, rgba(193,191,132,0.5), rgba(150,159,30,0.5))"
+          }}
         />
+        
+        {/* Animated pulse effect */}
         <div
           className="absolute inset-0 opacity-20"
           style={{
