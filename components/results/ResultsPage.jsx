@@ -31,7 +31,7 @@ const ResultsPage = () => {
       <div className="relative z-10">
         {/* Title */}
         <div className="text-center mb-6">
-          <h1 className="text-3xl font-thin tracking-widest mb-6 gradient-text">
+          <h1 className="results-title gradient-text">
             Your Reality Creation Profile
           </h1>
         </div>
@@ -51,11 +51,11 @@ const ResultsPage = () => {
         </div>
         
         {/* Trait Sliders/Charts */}
-        <div className="mb-8">
+        <div className="mb-8 space-y-4">
           {dimensions.map((dimension) => (
-            <div key={dimension.id} className="mb-4">
+            <div key={dimension.id} className="mb-6">
               {/* Dimension labels */}
-              <div className="flex justify-between mb-1 px-2">
+              <div className="flex justify-between mb-2 px-2">
                 <span className="text-sm text-[#2359FF]">{dimension.leftLabel}</span>
                 <span className="text-sm font-light text-[#2359FF]">{dimension.title}</span>
                 <span className="text-sm text-[#2359FF]">{dimension.rightLabel}</span>
@@ -63,7 +63,7 @@ const ResultsPage = () => {
               
               {/* Slider track */}
               <div className="relative h-5 w-full">
-                <div className="slider-track">
+                <div className="slider-track h-5 rounded-full w-full relative overflow-hidden">
                   {/* Filled portion */}
                   <div
                     className="absolute inset-y-0 left-0 rounded-full"
@@ -81,14 +81,24 @@ const ResultsPage = () => {
                       animation: "pulse 3s infinite"
                     }}
                   ></div>
-                  
-                  {/* Slider thumb */}
-                  <div
-                    className="slider-thumb"
-                    style={{ left: `${dimensionPercentages[dimension.id] || 50}%` }}
-                  >
-                    <div className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60 -translate-x-1/2 -translate-y-1/2"></div>
-                  </div>
+                </div>
+                
+                {/* Slider thumb */}
+                <div
+                  className="absolute top-1/2 w-4 h-4 rounded-full"
+                  style={{
+                    left: `${dimensionPercentages[dimension.id] || 50}%`,
+                    transform: "translate(-50%, -50%)",
+                    background: "rgba(255,255,255,0.2)",
+                    backdropFilter: "blur(8px)",
+                    WebkitBackdropFilter: "blur(8px)",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
+                    border: "1px solid rgba(255,255,255,0.2)",
+                    zIndex: 2
+                  }}
+                >
+                  <div className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60" 
+                       style={{transform: "translate(-50%, -50%)"}}></div>
                 </div>
               </div>
             </div>
@@ -96,26 +106,26 @@ const ResultsPage = () => {
         </div>
         
         {/* Dimension Description Cards */}
-        <div className="mb-8">
+        <div className="space-y-6 mb-8">
           {dimensions.map((dimension) => (
             <div 
               key={dimension.id}
               className="dimension-description"
             >
-              <h3 className="text-base font-light mb-2 text-[#2359FF]">
-                {dimension.title}: <span className="font-normal">
+              <h3 className="dimension-title">
+                {dimension.title}: <span className="dimension-value">
                   {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
                 </span>
               </h3>
-              <p className="text-sm text-[#2359FF]">
+              <p className="dimension-text">
                 {dimension.states[dimensionStates[dimension.id]]?.description || 'Your approach is balanced in this dimension.'}
               </p>
               
               {/* Show frameworks, practices, and tools if they exist */}
               {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
                 <div className="mt-3">
-                  <h4 className="text-sm font-semibold text-[#2359FF]">Frameworks you may be interested in:</h4>
-                  <p className="text-xs mt-1 text-[#2359FF]">
+                  <h4 className="section-title">Frameworks you may be interested in:</h4>
+                  <p className="section-text">
                     {dimension.states[dimensionStates[dimension.id]].frameworks}
                   </p>
                 </div>
@@ -123,8 +133,8 @@ const ResultsPage = () => {
               
               {dimension.states[dimensionStates[dimension.id]]?.practices && (
                 <div className="mt-3">
-                  <h4 className="text-sm font-semibold text-[#2359FF]">Practices you may be interested in:</h4>
-                  <p className="text-xs mt-1 text-[#2359FF]">
+                  <h4 className="section-title">Practices you may be interested in:</h4>
+                  <p className="section-text">
                     {dimension.states[dimensionStates[dimension.id]].practices}
                   </p>
                 </div>
@@ -132,8 +142,8 @@ const ResultsPage = () => {
               
               {dimension.states[dimensionStates[dimension.id]]?.tools && (
                 <div className="mt-3">
-                  <h4 className="text-sm font-semibold text-[#2359FF]">Tools you may be interested in:</h4>
-                  <p className="text-xs mt-1 text-[#2359FF]">
+                  <h4 className="section-title">Tools you may be interested in:</h4>
+                  <p className="section-text">
                     {dimension.states[dimensionStates[dimension.id]].tools}
                   </p>
                 </div>
@@ -144,11 +154,11 @@ const ResultsPage = () => {
 
         {/* Summary Section */}
         {profileResult && (
-          <div className="profile-card mb-6">
-            <h2 className="text-xl font-thin tracking-widest text-center mb-4 gradient-text">
+          <div className="profile-card mb-8">
+            <h2 className="results-subtitle gradient-text">
               Your Overall Style: {profileResult.name}
             </h2>
-            <p className="text-sm text-center text-[#2359FF]">
+            <p className="results-text">
               {profileResult.description}
             </p>
           </div>
@@ -162,7 +172,7 @@ const ResultsPage = () => {
         />
         
         {/* Restart button */}
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-center mt-8">
           <button 
             onClick={restartQuiz}
             className="keyboard-button"
