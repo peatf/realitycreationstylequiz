@@ -26,220 +26,169 @@ const ResultsPage = () => {
   // Generate share text
   const shareText = generateShareText(profileResult?.name);
   
-  // Debug dimension scores
-  console.log("Dimension Percentages:", dimensionPercentages);
-  
   return (
-    <div style={{
-      position: 'relative',
-      zIndex: 10,
-      width: '100%',
-      padding: '1.5rem',
-      borderRadius: '5rem',
-      background: "rgba(220, 230, 255, 0.2)",
-      backdropFilter: "blur(14px)",
-      WebkitBackdropFilter: "blur(14px)",
-      border: "1px solid rgba(255,255,255,0.3)",
-      boxShadow: "0 10px 40px rgba(255,255,255,0.2), inset 0 0 30px rgba(255,255,255,0.2)",
-      animation: "pulseGlow 8s infinite alternate ease-in-out",
-    }}>
-      {/* Texture overlay */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        borderRadius: '5rem',
-        mixBlendMode: 'overlay',
-        opacity: 0.03,
-        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)'/%3E%3C/svg%3E")`
-      }} />
-      
-      <div style={{ position: 'relative', zIndex: 10 }}>
+    <div className="w-full">
+      <div className="relative z-10">
         {/* Title */}
-        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+        <div className="text-center mb-6">
           <h1 
-            style={{
-              fontSize: '1.875rem',
-              letterSpacing: '0.2em',
-              fontWeight: 200,
-              marginBottom: '1.5rem',
+            className="text-3xl tracking-widest font-extralight mb-6"
+            style={{ 
               color: "#2359FF",
-              background: "linear-gradient(90deg, #2359FF, #6195ED)",
+              background: "linear-gradient(90deg, #2359FF, #5283E8)",
               WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text"
+              WebkitTextFillColor: "transparent"
             }}
           >
             Your Reality Creation Profile
           </h1>
         </div>
-        
+
         {/* Progress indicator (completed) */}
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '0.25rem' }}>
-            <span style={{ fontSize: '0.875rem', color: "#2359FF" }}>
+        <div className="w-full text-center mb-6">
+          <div className="flex justify-center mb-1">
+            <span className="text-sm" style={{ color: "#2359FF" }}>
               Step 10/10 - Complete!
             </span>
           </div>
-          <div style={{ width: '100%', maxWidth: '28rem', margin: '0 auto' }}>
+          <div className="w-full max-w-md mx-auto">
             <div
+              className="h-2 mx-auto rounded-full"
               style={{
-                height: '0.5rem',
-                borderRadius: '9999px',
                 background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
                 boxShadow: "0 0 10px rgba(193,191,132,0.3), inset 0 1px 3px rgba(0,0,0,0.1)"
               }}
             >
-              {/* Progress is complete */}
-              <div
+              <div 
+                className="h-full rounded-full"
                 style={{
-                  height: '100%',
                   width: '100%',
-                  borderRadius: '9999px',
                   background: "linear-gradient(to right, rgba(193,191,132,0.5), rgba(150,159,30,0.5))"
                 }}
               />
             </div>
           </div>
         </div>
-        
-        {/* Trait Sliders/Charts */}
-        <div style={{ marginBottom: '2rem' }}>
+
+        {/* Trait Sliders */}
+        <div className="space-y-6 mb-8">
           {dimensions.map((dimension) => (
-            <div key={dimension.id} style={{ marginBottom: '1.5rem' }}>
-              {/* Dimension labels */}
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
-                marginBottom: '0.25rem',
-                paddingLeft: '0.5rem',
-                paddingRight: '0.5rem'
-              }}>
-                <span style={{ fontSize: '0.875rem', color: "#2359FF" }}>{dimension.leftLabel}</span>
-                <span style={{ fontSize: '0.875rem', fontWeight: 300, color: "#2359FF" }}>{dimension.title}</span>
-                <span style={{ fontSize: '0.875rem', color: "#2359FF" }}>{dimension.rightLabel}</span>
+            <div key={dimension.id} className="mb-4">
+              <div className="flex justify-between mb-1">
+                <span className="text-sm" style={{ color: "#2359FF" }}>{dimension.leftLabel}</span>
+                <span className="text-sm font-light" style={{ color: "#2359FF" }}>{dimension.title}</span>
+                <span className="text-sm" style={{ color: "#2359FF" }}>{dimension.rightLabel}</span>
               </div>
               
               {/* Slider track */}
-              <div style={{ position: 'relative', height: '1.25rem', width: '100%' }}>
+              <div className="relative h-5 w-full">
                 <div
+                  className="h-5 rounded-full w-full relative overflow-hidden"
                   style={{
-                    height: '1.25rem',
-                    borderRadius: '9999px',
-                    width: '100%',
-                    position: 'relative',
-                    overflow: 'hidden',
                     background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
                     boxShadow: "inset 2px 2px 3px rgba(166,167,161,0.3), inset -2px -2px 3px rgba(255,255,250,0.3)"
                   }}
                 >
                   {/* Filled portion */}
                   <div
+                    className="absolute inset-y-0 left-0 rounded-full"
                     style={{
-                      position: 'absolute',
-                      top: 0,
-                      bottom: 0,
-                      left: 0,
                       width: `${dimensionPercentages[dimension.id] || 50}%`,
-                      borderRadius: '9999px',
-                      background: "linear-gradient(to right, rgba(193,191,132,0.5), rgba(150,159,30,0.5))",
+                      background: "linear-gradient(to right, rgba(193,191,132,0.6), rgba(150,159,30,0.6))",
                     }}
-                  />
+                  ></div>
                   
                   {/* Pulse animation */}
                   <div
+                    className="absolute inset-0 opacity-20"
                     style={{
-                      position: 'absolute',
-                      inset: 0,
-                      opacity: 0.2,
                       background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
                       animation: "pulse 3s infinite"
                     }}
-                  />
-                  
-                  {/* Slider thumb */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: `${dimensionPercentages[dimension.id] || 50}%`,
-                      width: '1rem',
-                      height: '1rem',
-                      borderRadius: '9999px',
-                      transform: "translate(-50%, -50%)",
-                      background: "rgba(255,255,255,0.2)",
-                      backdropFilter: "blur(8px)",
-                      WebkitBackdropFilter: "blur(8px)",
-                      boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
-                      border: "1px solid rgba(255,255,255,0.2)",
-                      zIndex: 2
-                    }}
-                  >
-                    <div style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      width: '0.25rem',
-                      height: '0.25rem',
-                      borderRadius: '9999px',
-                      background: 'white',
-                      opacity: 0.6,
-                      transform: "translate(-50%, -50%)"
-                    }} />
-                  </div>
+                  ></div>
+                </div>
+                
+                {/* Slider thumb */}
+                <div
+                  className="absolute top-1/2 w-4 h-4 rounded-full"
+                  style={{
+                    left: `${dimensionPercentages[dimension.id] || 50}%`,
+                    transform: "translate(-50%, -50%)",
+                    background: "rgba(255,255,255,0.2)",
+                    boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
+                    border: "1px solid rgba(255,255,255,0.2)"
+                  }}
+                >
+                  <div className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60"
+                       style={{ transform: "translate(-50%, -50%)" }}></div>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        
-        {/* Trait Description Cards - MODIFIED: Removed .slice(0, 3) to show all dimensions */}
-        <div style={{ marginBottom: '2rem' }}>
+
+        {/* Trait Description Cards - Grid Layout */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           {dimensions.map((dimension) => (
             <div 
               key={dimension.id}
+              className="p-4 rounded-[28px] inset-description-card"
               style={{
-                padding: '1rem',
-                borderRadius: '1.5rem',
-                background: "rgba(235,240,180,0.5)",
-                backdropFilter: "blur(4px)",
-                WebkitBackdropFilter: "blur(4px)",
-                border: "1px solid rgba(220,255,200,0.6)",
-                boxShadow: "inset 0 2px 5px rgba(0,0,0,0.1), 0 0 10px rgba(193,191,132,0.3)",
-                marginBottom: '1.5rem'
+                background: "linear-gradient(135deg, rgba(235,240,180,0.65) 0%, rgba(245,250,190,0.85) 50%, rgba(235,240,180,0.75) 100%)",
+                boxShadow: "inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3), 0 0 10px rgba(193,191,132,0.3)"
               }}
             >
-              <h3 style={{ fontSize: '1rem', fontWeight: 300, marginBottom: '0.5rem', color: "#2359FF" }}>
-                {dimension.title}: <span style={{ fontWeight: 400 }}>
-                  {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
-                </span>
+              {/* Inset shadow for debossed effect */}
+              <div 
+                className="absolute inset-0 rounded-[28px]"
+                style={{
+                  boxShadow: "inset 0 2px 5px rgba(0,0,0,0.15), inset 0 -1px 2px rgba(255,255,255,0.2)",
+                  pointerEvents: "none",
+                  zIndex: 1
+                }}
+              ></div>
+              
+              {/* Depression edge highlights */}
+              <div 
+                className="absolute inset-1 rounded-[26px]"
+                style={{
+                  boxShadow: "inset 0 1px 3px rgba(0,0,0,0.1)",
+                  pointerEvents: "none",
+                  zIndex: 2
+                }}
+              ></div>
+              
+              <h3 className="text-sm font-medium mb-2 relative z-10" style={{ color: "#2359FF" }}>
+                {dimension.title}: <span>{dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}</span>
               </h3>
-              <p style={{ fontSize: '0.875rem', color: "#2359FF" }}>
+              
+              <p className="text-xs mb-3 relative z-10" style={{ color: "#2359FF" }}>
                 {dimension.states[dimensionStates[dimension.id]]?.description || 'Your approach is balanced in this dimension.'}
               </p>
               
-              {/* ADDED: Show frameworks, practices, and tools if they exist */}
+              {/* Only show these sections if they exist */}
               {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
-                <div style={{ marginTop: '0.75rem' }}>
-                  <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: "#2359FF" }}>Frameworks you may be interested in:</h4>
-                  <p style={{ fontSize: '0.75rem', marginTop: '0.25rem', color: "#2359FF" }}>
+                <div className="mt-2 relative z-10">
+                  <h4 className="text-xs font-semibold" style={{ color: "#2359FF" }}>Frameworks:</h4>
+                  <p className="text-xs" style={{ color: "#2359FF" }}>
                     {dimension.states[dimensionStates[dimension.id]].frameworks}
                   </p>
                 </div>
               )}
               
               {dimension.states[dimensionStates[dimension.id]]?.practices && (
-                <div style={{ marginTop: '0.75rem' }}>
-                  <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: "#2359FF" }}>Practices you may be interested in:</h4>
-                  <p style={{ fontSize: '0.75rem', marginTop: '0.25rem', color: "#2359FF" }}>
+                <div className="mt-2 relative z-10">
+                  <h4 className="text-xs font-semibold" style={{ color: "#2359FF" }}>Practices:</h4>
+                  <p className="text-xs" style={{ color: "#2359FF" }}>
                     {dimension.states[dimensionStates[dimension.id]].practices}
                   </p>
                 </div>
               )}
               
               {dimension.states[dimensionStates[dimension.id]]?.tools && (
-                <div style={{ marginTop: '0.75rem' }}>
-                  <h4 style={{ fontSize: '0.875rem', fontWeight: 600, color: "#2359FF" }}>Tools you may be interested in:</h4>
-                  <p style={{ fontSize: '0.75rem', marginTop: '0.25rem', color: "#2359FF" }}>
+                <div className="mt-2 relative z-10">
+                  <h4 className="text-xs font-semibold" style={{ color: "#2359FF" }}>Tools:</h4>
+                  <p className="text-xs" style={{ color: "#2359FF" }}>
                     {dimension.states[dimensionStates[dimension.id]].tools}
                   </p>
                 </div>
@@ -251,76 +200,88 @@ const ResultsPage = () => {
         {/* Summary Section */}
         {profileResult && (
           <div 
+            className="p-6 rounded-3xl mb-6 mx-auto w-full overflow-hidden relative inset-description-card"
             style={{
-              padding: '1.5rem',
-              borderRadius: '1.5rem',
-              marginBottom: '1.5rem',
-              background: "rgba(224,224,224,0.2)",
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
-              border: "1px solid rgba(255,255,255,0.3)",
-              boxShadow: "inset 0 2px 5px rgba(0,0,0,0.05), 0 0 10px rgba(255,255,255,0.3)"
+              background: "linear-gradient(135deg, rgba(235,240,180,0.65) 0%, rgba(245,250,190,0.85) 50%, rgba(235,240,180,0.75) 100%)",
+              borderRadius: "28px",
+              boxShadow: "inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3), 0 0 10px rgba(193,191,132,0.3)"
             }}
           >
+            {/* Inset shadow for debossed effect */}
+            <div 
+              className="absolute inset-0 rounded-[28px]"
+              style={{
+                boxShadow: "inset 0 2px 5px rgba(0,0,0,0.15), inset 0 -1px 2px rgba(255,255,255,0.2)",
+                pointerEvents: "none",
+                zIndex: 1
+              }}
+            ></div>
+            
+            {/* Depression edge highlights */}
+            <div 
+              className="absolute inset-1 rounded-[26px]"
+              style={{
+                boxShadow: "inset 0 1px 3px rgba(0,0,0,0.1)",
+                pointerEvents: "none",
+                zIndex: 2
+              }}
+            ></div>
+            
             <h2 
+              className="text-xl font-thin tracking-widest text-center mb-4 relative z-10"
               style={{ 
-                fontSize: '1.25rem',
-                fontWeight: 100,
-                letterSpacing: '0.1em',
-                textAlign: 'center',
-                marginBottom: '1rem',
                 color: "#2359FF",
                 background: "linear-gradient(90deg, #2359FF, #5283E8)",
                 WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text"
+                WebkitTextFillColor: "transparent"
               }}
             >
               Your Overall Style: {profileResult.name}
             </h2>
-            <p style={{ fontSize: '0.875rem', textAlign: 'center', color: "#2359FF" }}>
+            <p className="text-sm text-center relative z-10" style={{ color: "#2359FF" }}>
               {profileResult.description}
             </p>
           </div>
         )}
-        
-      {/* Share Buttons Section */}
-<ShareButtons 
-  profileName={profileResult.name}
-  dimensionScores={dimensionScores}
-  profileId={profileResult.id}
-/>
-        
-        {/* Restart button */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1.5rem' }}>
-          <button 
-            onClick={restartQuiz}
-            style={{
-              padding: '0.5rem 2rem',
-              borderRadius: '76px',
-              color: "#2359FF",
-              background: "rgba(224,224,224,0)",
-              border: "1px solid rgba(255,255,255,0.3)",
-              boxShadow: "inset 19px 19px 38px rgba(190,190,190,0.3), inset -19px -19px 38px rgba(255,255,255,0.3)",
-              fontSize: '0.75rem',
-              letterSpacing: '0.2em',
-              position: 'relative',
-              overflow: 'hidden',
-              cursor: 'pointer'
-            }}
-          >
-            <span style={{ position: 'relative', zIndex: 10 }}>TAKE QUIZ AGAIN</span>
-            <div 
+
+        {/* Share Buttons */}
+        <div className="flex flex-col items-center">
+          <ShareButtons 
+            profileName={profileResult?.name}
+            dimensionScores={dimensionScores}
+            profileId={profileResult?.id}
+          />
+
+          {/* Restart button */}
+          <div className="flex justify-center mt-4 mb-8">
+            <button 
+              onClick={restartQuiz}
+              className="relative px-8 py-2 transition-all duration-300 text-xs tracking-wide overflow-hidden keyboard-button"
               style={{
-                position: 'absolute',
-                inset: 0,
-                opacity: 0.2,
-                background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)",
-                transform: "translateX(-100%)",
-                animation: "buttonShine 4s infinite"
+                borderRadius: "76px",
+                color: "#2359FF",
+                background: "#DBDECE",
+                border: "1px solid rgba(193,191,132,0.4)",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.1), 0 0 1px rgba(0,0,0,0.2)"
               }}
-            />
-          </button>
+            >
+              <span className="relative z-10 tracking-widest">TAKE QUIZ AGAIN</span>
+              
+              {/* Keyboard texture overlay */}
+              <div 
+                className="absolute inset-0 keyboard-texture"
+                style={{
+                  borderRadius: "76px",
+                  background: "linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, rgba(230,230,220,0.05) 100%)",
+                  boxShadow: "inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -1px 1px rgba(0,0,0,0.1)",
+                  pointerEvents: "none"
+                }}
+              ></div>
+              
+              {/* Button particles */}
+              <div className="button-particles"></div>
+            </button>
+          </div>
         </div>
       </div>
     </div>
