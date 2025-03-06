@@ -127,77 +127,79 @@ const ResultsPage = () => {
           ))}
         </div>
 
-        {/* Trait Description Cards - Two Column Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-          {dimensions.map((dimension) => (
-            <div 
-              key={dimension.id}
-              className="p-4 rounded-[28px]"
-              style={{
-                background: "linear-gradient(135deg, rgba(235,240,180,0.65) 0%, rgba(245,250,190,0.85) 50%, rgba(235,240,180,0.75) 100%)",
-                borderRadius: "28px",
-                position: "relative",
-                boxShadow: "inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3), 0 0 10px rgba(193,191,132,0.3)"
-              }}
-            >
-              {/* Inset shadow for debossed effect */}
-              <div 
-                className="absolute inset-0 rounded-[28px]"
-                style={{
-                  boxShadow: "inset 0 2px 5px rgba(0,0,0,0.15), inset 0 -1px 2px rgba(255,255,255,0.2)",
-                  pointerEvents: "none",
-                  zIndex: 1
-                }}
-              ></div>
-              
-              {/* Depression edge highlights */}
-              <div 
-                className="absolute inset-1 rounded-[26px]"
-                style={{
-                  boxShadow: "inset 0 1px 3px rgba(0,0,0,0.1)",
-                  pointerEvents: "none",
-                  zIndex: 2
-                }}
-              ></div>
-              
-              <h3 className="font-light text-base mb-2 relative z-10" style={{ color: "#2359FF" }}>
-                {dimension.title}: <span className="font-normal">{dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}</span>
-              </h3>
-              
-              <p className="text-sm relative z-10 mb-3" style={{ color: "#2359FF" }}>
-                {dimension.states[dimensionStates[dimension.id]]?.description || 'Your approach is balanced in this dimension.'}
-              </p>
-              
-              {/* Only show these sections if they exist */}
-              {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
-                <div className="mt-3 relative z-10">
-                  <h4 className="text-sm font-semibold" style={{ color: "#2359FF" }}>Frameworks you may be interested in:</h4>
-                  <p className="text-xs mt-1" style={{ color: "#2359FF" }}>
-                    {dimension.states[dimensionStates[dimension.id]].frameworks}
-                  </p>
-                </div>
-              )}
-              
-              {dimension.states[dimensionStates[dimension.id]]?.practices && (
-                <div className="mt-3 relative z-10">
-                  <h4 className="text-sm font-semibold" style={{ color: "#2359FF" }}>Practices you may be interested in:</h4>
-                  <p className="text-xs mt-1" style={{ color: "#2359FF" }}>
-                    {dimension.states[dimensionStates[dimension.id]].practices}
-                  </p>
-                </div>
-              )}
-              
-              {dimension.states[dimensionStates[dimension.id]]?.tools && (
-                <div className="mt-3 relative z-10">
-                  <h4 className="text-sm font-semibold" style={{ color: "#2359FF" }}>Tools you may be interested in:</h4>
-                  <p className="text-xs mt-1" style={{ color: "#2359FF" }}>
-                    {dimension.states[dimensionStates[dimension.id]].tools}
-                  </p>
-                </div>
-              )}
-            </div>
-          ))}
+        // For ResultsPage.jsx - Update the trait description cards section
+
+{/* Trait Description Cards - Always Two Columns */}
+<div className="grid-container dimension-cards mb-8">
+  {dimensions.map((dimension) => (
+    <div 
+      key={dimension.id}
+      className="dimension-card p-4 rounded-[28px]"
+      style={{
+        background: "linear-gradient(135deg, rgba(235,240,180,0.65) 0%, rgba(245,250,190,0.85) 50%, rgba(235,240,180,0.75) 100%)",
+        borderRadius: "28px",
+        position: "relative",
+        boxShadow: "inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3), 0 0 10px rgba(193,191,132,0.3)"
+      }}
+    >
+      {/* Inset shadow for debossed effect */}
+      <div 
+        className="absolute inset-0 rounded-[28px]"
+        style={{
+          boxShadow: "inset 0 2px 5px rgba(0,0,0,0.15), inset 0 -1px 2px rgba(255,255,255,0.2)",
+          pointerEvents: "none",
+          zIndex: 1
+        }}
+      ></div>
+      
+      {/* Depression edge highlights */}
+      <div 
+        className="absolute inset-1 rounded-[26px]"
+        style={{
+          boxShadow: "inset 0 1px 3px rgba(0,0,0,0.1)",
+          pointerEvents: "none",
+          zIndex: 2
+        }}
+      ></div>
+      
+      <h3 className="font-light text-base mb-2 relative z-10" style={{ color: "#2359FF" }}>
+        {dimension.title}: <span className="font-normal">{dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}</span>
+      </h3>
+      
+      <p className="text-sm relative z-10 mb-3" style={{ color: "#2359FF" }}>
+        {dimension.states[dimensionStates[dimension.id]]?.description || 'Your approach is balanced in this dimension.'}
+      </p>
+      
+      {/* Only show these sections if they exist */}
+      {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
+        <div className="mt-3 relative z-10">
+          <h4 className="text-sm font-semibold" style={{ color: "#2359FF" }}>Frameworks you may be interested in:</h4>
+          <p className="text-xs mt-1" style={{ color: "#2359FF" }}>
+            {dimension.states[dimensionStates[dimension.id]].frameworks}
+          </p>
         </div>
+      )}
+      
+      {dimension.states[dimensionStates[dimension.id]]?.practices && (
+        <div className="mt-3 relative z-10">
+          <h4 className="text-sm font-semibold" style={{ color: "#2359FF" }}>Practices you may be interested in:</h4>
+          <p className="text-xs mt-1" style={{ color: "#2359FF" }}>
+            {dimension.states[dimensionStates[dimension.id]].practices}
+          </p>
+        </div>
+      )}
+      
+      {dimension.states[dimensionStates[dimension.id]]?.tools && (
+        <div className="mt-3 relative z-10">
+          <h4 className="text-sm font-semibold" style={{ color: "#2359FF" }}>Tools you may be interested in:</h4>
+          <p className="text-xs mt-1" style={{ color: "#2359FF" }}>
+            {dimension.states[dimensionStates[dimension.id]].tools}
+          </p>
+        </div>
+      )}
+    </div>
+  ))}
+</div>
 
         {/* Summary Section */}
         {profileResult && (
