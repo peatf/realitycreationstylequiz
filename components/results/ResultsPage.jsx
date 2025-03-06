@@ -127,8 +127,7 @@ const ResultsPage = () => {
           ))}
         </div>
 
-        // For ResultsPage.jsx - Update the trait description cards section
-
+{/* For ResultsPage.jsx - Update the trait description cards section */}
 {/* Trait Description Cards - Always Two Columns */}
 <div className="grid-container dimension-cards mb-8">
   {dimensions.map((dimension) => (
