@@ -19,19 +19,17 @@ const ResultsPage = () => {
     return acc;
   }, {});
   
-  // Create shareable URL
+  // Create shareable URL (used by ShareButtons)
   const shareableUrl = createShareableUrl(dimensionScores, profileResult?.name);
   
   // Generate share text
   const shareText = generateShareText(profileResult?.name);
   
-  // NEW: State and handlers to create a carousel for dimension paragraphs
+  // State & handlers for dimension carousel (unchanged)
   const [activeIndex, setActiveIndex] = useState(0);
-
   const nextSlide = () => {
     setActiveIndex((prev) => (prev + 1) % dimensions.length);
   };
-
   const prevSlide = () => {
     setActiveIndex((prev) => (prev - 1 + dimensions.length) % dimensions.length);
   };
@@ -60,96 +58,69 @@ const ResultsPage = () => {
           </div>
         </div>
         
-        {/* Trait Sliders/Charts (unchanged) */}
-        <div className="mb-8 space-y-4">
-          {dimensions.map((dimension) => (
-            <div key={dimension.id} className="mb-6">
-              {/* Dimension labels */}
-              <div className="flex justify-between mb-2 px-2">
-                <span className="text-sm text-[#2359FF]">{dimension.leftLabel}</span>
-                <span className="text-sm font-light text-[#2359FF]">{dimension.title}</span>
-                <span className="text-sm text-[#2359FF]">{dimension.rightLabel}</span>
-              </div>
-              
-              {/* Slider track */}
-              <div className="relative h-5 w-full">
-                <div 
-                  style={{
-                    height: '20px',
-                    borderRadius: '9999px',
-                    width: '100%',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
-                    boxShadow: "inset 2px 2px 3px rgba(166,167,161,0.3), inset -2px -2px 3px rgba(255,255,250,0.3)"
-                  }}
-                >
-                  {/* Filled portion */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      bottom: 0,
-                      left: 0,
-                      borderRadius: '9999px',
-                      width: `${dimensionPercentages[dimension.id] || 50}%`,
-                      background: "linear-gradient(to right, rgba(193,191,132,0.6), rgba(150,159,30,0.6))"
-                    }}
-                  ></div>
-                  
-                  {/* Pulse animation */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      opacity: 0.2,
-                      background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
-                      animation: "pulse 3s infinite"
-                    }}
-                  ></div>
+        {/* TRAIT SLIDERS/CHARTS (UPDATED to match your snippet) */}
+        <div className="space-y-8 mb-8">
+          {dimensions.map((dimension) => {
+            const dimensionValue = dimensionPercentages[dimension.id] || 50;
+            return (
+              <div key={dimension.id} className="mb-4">
+                <div className="flex justify-between mb-1">
+                  <span className="text-sm" style={{ color: "#2359FF" }}>{dimension.leftLabel}</span>
+                  <span className="text-sm font-light" style={{ color: "#2359FF" }}>{dimension.title}</span>
+                  <span className="text-sm" style={{ color: "#2359FF" }}>{dimension.rightLabel}</span>
                 </div>
                 
-                {/* Slider thumb */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: `${dimensionPercentages[dimension.id] || 50}%`,
-                    width: '16px',
-                    height: '16px',
-                    borderRadius: '9999px',
-                    transform: "translate(-50%, -50%)",
-                    background: "rgba(255,255,255,0.2)",
-                    backdropFilter: "blur(8px)",
-                    WebkitBackdropFilter: "blur(8px)",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
-                    border: "1px solid rgba(255,255,255,0.2)",
-                    zIndex: 20,
-                    display: 'block !important'
-                  }}
-                >
-                  {/* Visible inner dot */}
-                  <div 
+                {/* Slider track */}
+                <div className="relative h-5 w-full">
+                  <div
+                    className="h-5 rounded-full w-full relative overflow-hidden"
                     style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      width: '4px',
-                      height: '4px',
-                      borderRadius: '9999px',
-                      background: 'white',
-                      opacity: 0.6,
-                      transform: "translate(-50%, -50%)",
-                      display: 'block !important'
+                      background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
+                      boxShadow: "inset 2px 2px 3px rgba(166,167,161,0.3), inset -2px -2px 3px rgba(255,255,250,0.3)"
                     }}
-                  ></div>
+                  >
+                    {/* Filled portion */}
+                    <div
+                      className="absolute inset-y-0 left-0 rounded-full"
+                      style={{
+                        width: `${dimensionValue}%`,
+                        background: "linear-gradient(to right, rgba(193,191,132,0.6), rgba(150,159,30,0.6))",
+                      }}
+                    ></div>
+                    
+                    {/* Pulse animation */}
+                    <div
+                      className="absolute inset-0 opacity-20"
+                      style={{
+                        background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
+                        animation: "pulse 3s infinite"
+                      }}
+                    ></div>
+                  </div>
+                  
+                  {/* Slider thumb */}
+                  <div
+                    className="absolute top-1/2 w-4 h-4 rounded-full"
+                    style={{
+                      left: `${dimensionValue}%`,
+                      transform: "translate(-50%, -50%)",
+                      background: "rgba(255,255,255,0.2)",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
+                      border: "1px solid rgba(255,255,255,0.2)"
+                    }}
+                  >
+                    <div
+                      className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60"
+                      style={{ transform: "translate(-50%, -50%)" }}
+                    ></div>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         
-        {/* DIMENSION CAROUSEL (replacing the stacked columns) */}
+        {/* DIMENSION CAROUSEL (unchanged from your updated code) */}
         <div className="mb-8" style={{ position: 'relative', maxWidth: '800px', margin: '0 auto' }}>
           {dimensions.map((dimension, index) => (
             <div
@@ -262,7 +233,7 @@ const ResultsPage = () => {
               {profileResult.description}
             </p>
 
-            {/* Add celebrate and support lists in columns if they exist */}
+            {/* Add celebrate and support lists if they exist */}
             {(profileResult.celebrate || profileResult.support) && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                 {profileResult.celebrate && (
@@ -320,7 +291,7 @@ const ResultsPage = () => {
             )}
           </div>
         )}
-
+        
         {/* Share Buttons Section (unchanged) */}
         <ShareButtons 
           profileName={profileResult?.name}
@@ -341,6 +312,21 @@ const ResultsPage = () => {
           </button>
         </div>
       </div>
+
+      {/* If you do NOT already define this keyframe globally, include it here: */}
+      <style jsx>{`
+        @keyframes pulse {
+          0% {
+            transform: translateX(-100%);
+          }
+          50% {
+            transform: translateX(100%);
+          }
+          100% {
+            transform: translateX(-100%);
+          }
+        }
+      `}</style>
     </div>
   );
 };
