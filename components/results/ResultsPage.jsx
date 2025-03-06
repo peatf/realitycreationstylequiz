@@ -61,46 +61,77 @@ const ResultsPage = () => {
                 <span className="text-sm text-[#2359FF]">{dimension.rightLabel}</span>
               </div>
               
-              {/* Slider track */}
+              {/* Slider track - Fixed with inline styles to ensure it works */}
               <div className="relative h-5 w-full">
-                <div className="slider-track h-5 rounded-full w-full relative overflow-hidden">
+                <div 
+                  style={{
+                    height: '20px',
+                    borderRadius: '9999px',
+                    width: '100%',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
+                    boxShadow: "inset 2px 2px 3px rgba(166,167,161,0.3), inset -2px -2px 3px rgba(255,255,250,0.3)"
+                  }}
+                >
                   {/* Filled portion */}
                   <div
-                    className="absolute inset-y-0 left-0 rounded-full"
                     style={{
+                      position: 'absolute',
+                      top: 0,
+                      bottom: 0,
+                      left: 0,
+                      borderRadius: '9999px',
                       width: `${dimensionPercentages[dimension.id] || 50}%`,
-                      background: "linear-gradient(to right, rgba(193,191,132,0.5), rgba(150,159,30,0.5))"
+                      background: "linear-gradient(to right, rgba(193,191,132,0.6), rgba(150,159,30,0.6))"
                     }}
                   ></div>
                   
                   {/* Pulse animation */}
                   <div
-                    className="absolute inset-0 opacity-20"
                     style={{
+                      position: 'absolute',
+                      inset: 0,
+                      opacity: 0.2,
                       background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
                       animation: "pulse 3s infinite"
                     }}
                   ></div>
                 </div>
                 
-                {/* Slider thumb - Fixed positioning with visible thumb */}
+                {/* Slider thumb - Forced to display with !important inline styles */}
                 <div
-                  className="thumb-glow absolute top-1/2 w-4 h-4 rounded-full"
                   style={{
+                    position: 'absolute',
+                    top: '50%',
                     left: `${dimensionPercentages[dimension.id] || 50}%`,
+                    width: '16px',
+                    height: '16px',
+                    borderRadius: '9999px',
                     transform: "translate(-50%, -50%)",
                     background: "rgba(255,255,255,0.2)",
                     backdropFilter: "blur(8px)",
                     WebkitBackdropFilter: "blur(8px)",
                     boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
                     border: "1px solid rgba(255,255,255,0.2)",
-                    zIndex: 2
+                    zIndex: 20,
+                    display: 'block !important'
                   }}
                 >
                   {/* Visible inner dot */}
                   <div 
-                    className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60" 
-                    style={{transform: "translate(-50%, -50%)"}}
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      width: '4px',
+                      height: '4px',
+                      borderRadius: '9999px',
+                      background: 'white',
+                      opacity: 0.6,
+                      transform: "translate(-50%, -50%)",
+                      display: 'block !important'
+                    }}
                   ></div>
                 </div>
               </div>
@@ -108,53 +139,81 @@ const ResultsPage = () => {
           ))}
         </div>
         
-        {/* Dimension Description Cards - Modified for columns layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-          {dimensions.map((dimension) => (
-            <div 
-              key={dimension.id}
-              className="dimension-description flex flex-col h-full"
-            >
-              <h3 className="dimension-title">
-                {dimension.title}: <span className="dimension-value">
-                  {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
-                </span>
-              </h3>
-              <p className="dimension-text">
-                {dimension.states[dimensionStates[dimension.id]]?.description || 'Your approach is balanced in this dimension.'}
-              </p>
-              
-              <div className="mt-auto">
-                {/* Show frameworks, practices, and tools if they exist */}
-                {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
-                  <div className="mt-3">
-                    <h4 className="section-title">Frameworks you may be interested in:</h4>
-                    <p className="section-text">
-                      {dimension.states[dimensionStates[dimension.id]].frameworks}
-                    </p>
-                  </div>
-                )}
+        {/* Dimension Description Cards - Fixed column layout with !important to ensure it works */}
+        <div className="mb-8" style={{ display: 'grid', gridTemplateColumns: 'repeat(1, 1fr)', gap: '16px' }}>
+          <style jsx>{`
+            @media (min-width: 768px) {
+              .dimension-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 16px !important;
+              }
+            }
+            @media (min-width: 1024px) {
+              .dimension-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+              }
+            }
+          `}</style>
+          <div className="dimension-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(1, 1fr)', gap: '16px' }}>
+            {dimensions.map((dimension) => (
+              <div 
+                key={dimension.id}
+                className="dimension-description"
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: '100%',
+                  padding: '1rem',
+                  borderRadius: '28px',
+                  background: "rgba(235,240,180,0.5)",
+                  backdropFilter: "blur(4px)",
+                  WebkitBackdropFilter: "blur(4px)",
+                  border: "1px solid rgba(220,255,200,0.6)",
+                  boxShadow: "inset 0 2px 5px rgba(0,0,0,0.1), 0 0 10px rgba(193,191,132,0.3)"
+                }}
+              >
+                <h3 className="dimension-title">
+                  {dimension.title}: <span className="dimension-value">
+                    {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
+                  </span>
+                </h3>
+                <p className="dimension-text">
+                  {dimension.states[dimensionStates[dimension.id]]?.description || 'Your approach is balanced in this dimension.'}
+                </p>
                 
-                {dimension.states[dimensionStates[dimension.id]]?.practices && (
-                  <div className="mt-3">
-                    <h4 className="section-title">Practices you may be interested in:</h4>
-                    <p className="section-text">
-                      {dimension.states[dimensionStates[dimension.id]].practices}
-                    </p>
-                  </div>
-                )}
-                
-                {dimension.states[dimensionStates[dimension.id]]?.tools && (
-                  <div className="mt-3">
-                    <h4 className="section-title">Tools you may be interested in:</h4>
-                    <p className="section-text">
-                      {dimension.states[dimensionStates[dimension.id]].tools}
-                    </p>
-                  </div>
-                )}
+                <div style={{ marginTop: 'auto' }}>
+                  {/* Show frameworks, practices, and tools if they exist */}
+                  {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
+                    <div className="mt-3">
+                      <h4 className="section-title">Frameworks you may be interested in:</h4>
+                      <p className="section-text">
+                        {dimension.states[dimensionStates[dimension.id]].frameworks}
+                      </p>
+                    </div>
+                  )}
+                  
+                  {dimension.states[dimensionStates[dimension.id]]?.practices && (
+                    <div className="mt-3">
+                      <h4 className="section-title">Practices you may be interested in:</h4>
+                      <p className="section-text">
+                        {dimension.states[dimensionStates[dimension.id]].practices}
+                      </p>
+                    </div>
+                  )}
+                  
+                  {dimension.states[dimensionStates[dimension.id]]?.tools && (
+                    <div className="mt-3">
+                      <h4 className="section-title">Tools you may be interested in:</h4>
+                      <p className="section-text">
+                        {dimension.states[dimensionStates[dimension.id]].tools}
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
         {/* Summary Section */}
