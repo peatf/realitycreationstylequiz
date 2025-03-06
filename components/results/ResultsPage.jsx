@@ -70,7 +70,7 @@ const ResultsPage = () => {
                 <span className="text-sm text-[#2359FF] w-1/3 text-right">{dimension.rightLabel}</span>
               </div>
               
-              {/* Slider track - inset styling */}
+              {/* Slider track - inset styling with inline styles */}
               <div className="relative h-5 w-full">
                 <div className="h-5 rounded-full w-full relative overflow-hidden"
                   style={{
@@ -119,7 +119,7 @@ const ResultsPage = () => {
           ))}
         </div>
         
-        {/* Trait Description Cards - Always Two Columns */}
+        {/* Trait Description Cards - Use grid-container with dimension-cards class */}
         <div className="grid-container dimension-cards mb-8">
           {dimensions.map((dimension) => (
             <div 
