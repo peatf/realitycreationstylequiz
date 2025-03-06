@@ -1,7 +1,6 @@
-// components/results/ResultsPage.jsx
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuiz } from '@/context/QuizContext';
 import { createShareableUrl, generateShareText } from '@/lib/utils';
 import { scoreToPercentage } from '@/lib/scoring';
@@ -26,17 +25,28 @@ const ResultsPage = () => {
   // Generate share text
   const shareText = generateShareText(profileResult?.name);
   
+  // NEW: State and handlers to create a carousel for dimension paragraphs
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const nextSlide = () => {
+    setActiveIndex((prev) => (prev + 1) % dimensions.length);
+  };
+
+  const prevSlide = () => {
+    setActiveIndex((prev) => (prev - 1 + dimensions.length) % dimensions.length);
+  };
+
   return (
     <div className="bg-transparent p-6 rounded-3xl w-full">
       <div className="relative z-10">
-        {/* Title */}
+        {/* Title (unchanged) */}
         <div className="text-center mb-6">
           <h1 className="results-title gradient-text">
             Your Reality Creation Profile
           </h1>
         </div>
         
-        {/* Progress indicator (completed) */}
+        {/* Progress Bar (unchanged) */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-1">
             <span className="text-sm text-[#2359FF]">
@@ -50,7 +60,7 @@ const ResultsPage = () => {
           </div>
         </div>
         
-        {/* Trait Sliders/Charts */}
+        {/* Trait Sliders/Charts (unchanged) */}
         <div className="mb-8 space-y-4">
           {dimensions.map((dimension) => (
             <div key={dimension.id} className="mb-6">
@@ -61,7 +71,7 @@ const ResultsPage = () => {
                 <span className="text-sm text-[#2359FF]">{dimension.rightLabel}</span>
               </div>
               
-              {/* Slider track - Fixed with inline styles to ensure it works */}
+              {/* Slider track */}
               <div className="relative h-5 w-full">
                 <div 
                   style={{
@@ -99,7 +109,7 @@ const ResultsPage = () => {
                   ></div>
                 </div>
                 
-                {/* Slider thumb - Forced to display with !important inline styles */}
+                {/* Slider thumb */}
                 <div
                   style={{
                     position: 'absolute',
@@ -139,26 +149,17 @@ const ResultsPage = () => {
           ))}
         </div>
         
-        {/* Dimension Description Cards - Fixed column layout with !important to ensure it works */}
-        <div className="mb-8" style={{ display: 'grid', gridTemplateColumns: 'repeat(1, 1fr)', gap: '16px' }}>
-          <style jsx>{`
-            @media (min-width: 768px) {
-              .dimension-grid {
-                display: grid !important;
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 16px !important;
-              }
-            }
-            @media (min-width: 1024px) {
-              .dimension-grid {
-                grid-template-columns: repeat(3, 1fr) !important;
-              }
-            }
-          `}</style>
-          <div className="dimension-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(1, 1fr)', gap: '16px' }}>
-            {dimensions.map((dimension) => (
-              <div 
-                key={dimension.id}
+        {/* DIMENSION CAROUSEL (replacing the stacked columns) */}
+        <div className="mb-8" style={{ position: 'relative', maxWidth: '800px', margin: '0 auto' }}>
+          {dimensions.map((dimension, index) => (
+            <div
+              key={dimension.id}
+              style={{
+                display: index === activeIndex ? 'block' : 'none',
+                transition: 'opacity 0.5s ease-in-out'
+              }}
+            >
+              <div
                 className="dimension-description"
                 style={{
                   display: 'flex',
@@ -170,18 +171,21 @@ const ResultsPage = () => {
                   backdropFilter: "blur(4px)",
                   WebkitBackdropFilter: "blur(4px)",
                   border: "1px solid rgba(220,255,200,0.6)",
-                  boxShadow: "inset 0 2px 5px rgba(0,0,0,0.1), 0 0 10px rgba(193,191,132,0.3)"
+                  boxShadow: "inset 0 2px 5px rgba(0,0,0,0.1), 0 0 10px rgba(193,191,132,0.3)",
+                  marginBottom: '1rem'
                 }}
               >
                 <h3 className="dimension-title">
-                  {dimension.title}: <span className="dimension-value">
+                  {dimension.title}:{" "}
+                  <span className="dimension-value">
                     {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
                   </span>
                 </h3>
                 <p className="dimension-text">
-                  {dimension.states[dimensionStates[dimension.id]]?.description || 'Your approach is balanced in this dimension.'}
+                  {dimension.states[dimensionStates[dimension.id]]?.description ||
+                    'Your approach is balanced in this dimension.'}
                 </p>
-                
+
                 <div style={{ marginTop: 'auto' }}>
                   {/* Show frameworks, practices, and tools if they exist */}
                   {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
@@ -192,7 +196,7 @@ const ResultsPage = () => {
                       </p>
                     </div>
                   )}
-                  
+
                   {dimension.states[dimensionStates[dimension.id]]?.practices && (
                     <div className="mt-3">
                       <h4 className="section-title">Practices you may be interested in:</h4>
@@ -201,7 +205,7 @@ const ResultsPage = () => {
                       </p>
                     </div>
                   )}
-                  
+
                   {dimension.states[dimensionStates[dimension.id]]?.tools && (
                     <div className="mt-3">
                       <h4 className="section-title">Tools you may be interested in:</h4>
@@ -212,11 +216,43 @@ const ResultsPage = () => {
                   )}
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+
+          {/* Carousel Controls */}
+          <button
+            onClick={prevSlide}
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '-3rem',
+              transform: 'translateY(-50%)',
+              cursor: 'pointer',
+              background: 'transparent',
+              border: 'none',
+              fontSize: '1rem'
+            }}
+          >
+            &lt; Prev
+          </button>
+          <button
+            onClick={nextSlide}
+            style={{
+              position: 'absolute',
+              top: '50%',
+              right: '-3rem',
+              transform: 'translateY(-50%)',
+              cursor: 'pointer',
+              background: 'transparent',
+              border: 'none',
+              fontSize: '1rem'
+            }}
+          >
+            Next &gt;
+          </button>
         </div>
 
-        {/* Summary Section */}
+        {/* Summary Section (unchanged) */}
         {profileResult && (
           <div className="profile-card mb-8">
             <h2 className="results-subtitle gradient-text">
@@ -236,7 +272,7 @@ const ResultsPage = () => {
                     </h3>
                     <ul className="space-y-2">
                       {profileResult.celebrate.map((item, index) => (
-                        <li 
+                        <li
                           key={index}
                           className="p-3 rounded-xl text-sm"
                           style={{
@@ -262,7 +298,7 @@ const ResultsPage = () => {
                     </h3>
                     <ul className="space-y-2">
                       {profileResult.support.map((item, index) => (
-                        <li 
+                        <li
                           key={index}
                           className="p-3 rounded-xl text-sm"
                           style={{
@@ -284,15 +320,15 @@ const ResultsPage = () => {
             )}
           </div>
         )}
-        
-        {/* Share Buttons Section */}
+
+        {/* Share Buttons Section (unchanged) */}
         <ShareButtons 
           profileName={profileResult?.name}
           dimensionScores={dimensionScores}
           profileId={profileResult?.id}
         />
         
-        {/* Restart button */}
+        {/* Restart button (unchanged) */}
         <div className="flex justify-center mt-8">
           <button 
             onClick={restartQuiz}
