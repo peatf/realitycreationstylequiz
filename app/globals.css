@@ -852,3 +852,62 @@ body.in-iframe h2 {
   margin: 0 auto;
   display: block;
 }
+/* Add these styles to your globals.css file */
+
+/* Force two columns on all screen sizes */
+.grid-container.dimension-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  width: 100%;
+}
+
+/* Larger screens - potentially three columns if you want */
+@media (min-width: 1024px) {
+  .grid-container.dimension-cards {
+    grid-template-columns: repeat(2, 1fr); /* Keep at 2 columns, or change to 3 */
+    gap: 1.5rem;
+  }
+}
+
+/* Smaller mobile adjustments */
+@media (max-width: 640px) {
+  .grid-container.dimension-cards {
+    gap: 0.75rem;
+  }
+  
+  .dimension-card {
+    padding: 0.75rem !important;
+  }
+  
+  .dimension-card h3 {
+    font-size: 0.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .dimension-card p {
+    font-size: 0.7rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  .dimension-card h4 {
+    font-size: 0.7rem !important;
+    margin-top: 0.5rem !important;
+  }
+}
+
+/* Make sure rounded corners and inset effects work */
+.rounded-\[28px\] {
+  border-radius: 28px !important;
+}
+
+.rounded-\[26px\] {
+  border-radius: 26px !important;
+}
+
+/* Ensure buttons are properly centered */
+.flex.justify-center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
