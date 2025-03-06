@@ -7,6 +7,7 @@ import { createShareableUrl, generateShareText } from '@/lib/utils';
 import { scoreToPercentage } from '@/lib/scoring';
 import ShareButtons from './ShareButtons';
 import { getAllDimensions } from '@/data/dimensions';
+import DimensionChart from '../components/results/DimensionChart';
 
 const ResultsPage = () => {
   const { dimensionScores, dimensionStates, profileResult, restartQuiz } = useQuiz();
