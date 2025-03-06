@@ -152,8 +152,11 @@ const ResultsPage = () => {
           </div>
         )}
         
-        {/* NEW: Dimension Carousel (replacing the stacked columns) */}
+        {/* UPDATED: Dimension Carousel */}
         <div className="mb-8">
+          <div className="text-center mb-3">
+            <h3 className="text-xl font-semibold text-[#2359FF]">Your Dimension Details</h3>
+          </div>
           <DimensionCarousel 
             dimensions={dimensions}
             dimensionStates={dimensionStates}
@@ -161,63 +164,60 @@ const ResultsPage = () => {
           />
         </div>
         
-        {/* Summary Section Part 2 (celebrate and support lists) */}
+        {/* Things to Celebrate and Support Your Process Sections */}
         {profileResult && (profileResult.celebrate || profileResult.support) && (
           <div className="profile-card mb-8">
-            {/* Add celebrate and support lists in columns */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {profileResult.celebrate && (
-                <div>
-                  <h3 className="text-base font-light mb-3 text-center text-[#2359FF]">
-                    Things to Celebrate
-                  </h3>
-                  <ul className="space-y-2">
-                    {profileResult.celebrate.map((item, index) => (
-                      <li 
-                        key={index}
-                        className="p-3 rounded-xl text-sm"
-                        style={{
-                          background: "rgba(235,240,180,0.3)",
-                          backdropFilter: "blur(4px)",
-                          WebkitBackdropFilter: "blur(4px)",
-                          border: "1px solid rgba(220,255,200,0.4)",
-                          boxShadow: "inset 0 1px 3px rgba(0,0,0,0.05), 0 0 5px rgba(193,191,132,0.2)",
-                          color: "#2359FF"
-                        }}
-                      >
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              
-              {profileResult.support && (
-                <div>
-                  <h3 className="text-base font-light mb-3 text-center text-[#2359FF]">
-                    What Will Support Your Process
-                  </h3>
-                  <ul className="space-y-2">
-                    {profileResult.support.map((item, index) => (
-                      <li 
-                        key={index}
-                        className="p-3 rounded-xl text-sm"
-                        style={{
-                          background: "rgba(220,230,255,0.2)",
-                          backdropFilter: "blur(4px)",
-                          WebkitBackdropFilter: "blur(4px)",
-                          border: "1px solid rgba(255,255,255,0.2)",
-                          boxShadow: "inset 0 1px 3px rgba(0,0,0,0.05), 0 0 5px rgba(35,89,255,0.1)",
-                          color: "#2359FF"
-                        }}
-                      >
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
+            {profileResult.celebrate && (
+              <div className="mb-6">
+                <h3 className="text-base font-medium mb-3 text-center text-[#2359FF]">
+                  Things to Celebrate
+                </h3>
+                <ul className="space-y-2">
+                  {profileResult.celebrate.map((item, index) => (
+                    <li 
+                      key={index}
+                      className="p-3 rounded-xl text-sm"
+                      style={{
+                        background: "rgba(235,240,180,0.3)",
+                        backdropFilter: "blur(4px)",
+                        WebkitBackdropFilter: "blur(4px)",
+                        border: "1px solid rgba(220,255,200,0.4)",
+                        boxShadow: "inset 0 1px 3px rgba(0,0,0,0.05), 0 0 5px rgba(193,191,132,0.2)",
+                        color: "#2359FF"
+                      }}
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            
+            {profileResult.support && (
+              <div>
+                <h3 className="text-base font-medium mb-3 text-center text-[#2359FF]">
+                  What Will Support Your Process
+                </h3>
+                <ul className="space-y-2">
+                  {profileResult.support.map((item, index) => (
+                    <li 
+                      key={index}
+                      className="p-3 rounded-xl text-sm"
+                      style={{
+                        background: "rgba(220,230,255,0.2)",
+                        backdropFilter: "blur(4px)",
+                        WebkitBackdropFilter: "blur(4px)",
+                        border: "1px solid rgba(255,255,255,0.2)",
+                        boxShadow: "inset 0 1px 3px rgba(0,0,0,0.05), 0 0 5px rgba(35,89,255,0.1)",
+                        color: "#2359FF"
+                      }}
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         )}
         
