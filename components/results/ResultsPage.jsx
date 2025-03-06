@@ -83,9 +83,9 @@ const ResultsPage = () => {
                   ></div>
                 </div>
                 
-                {/* Slider thumb */}
+                {/* Slider thumb - Fixed positioning with visible thumb */}
                 <div
-                  className="absolute top-1/2 w-4 h-4 rounded-full"
+                  className="thumb-glow absolute top-1/2 w-4 h-4 rounded-full"
                   style={{
                     left: `${dimensionPercentages[dimension.id] || 50}%`,
                     transform: "translate(-50%, -50%)",
@@ -97,20 +97,23 @@ const ResultsPage = () => {
                     zIndex: 2
                   }}
                 >
-                  <div className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60" 
-                       style={{transform: "translate(-50%, -50%)"}}></div>
+                  {/* Visible inner dot */}
+                  <div 
+                    className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60" 
+                    style={{transform: "translate(-50%, -50%)"}}
+                  ></div>
                 </div>
               </div>
             </div>
           ))}
         </div>
         
-        {/* Dimension Description Cards */}
-        <div className="space-y-6 mb-8">
+        {/* Dimension Description Cards - Modified for columns layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           {dimensions.map((dimension) => (
             <div 
               key={dimension.id}
-              className="dimension-description"
+              className="dimension-description flex flex-col h-full"
             >
               <h3 className="dimension-title">
                 {dimension.title}: <span className="dimension-value">
@@ -121,33 +124,35 @@ const ResultsPage = () => {
                 {dimension.states[dimensionStates[dimension.id]]?.description || 'Your approach is balanced in this dimension.'}
               </p>
               
-              {/* Show frameworks, practices, and tools if they exist */}
-              {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
-                <div className="mt-3">
-                  <h4 className="section-title">Frameworks you may be interested in:</h4>
-                  <p className="section-text">
-                    {dimension.states[dimensionStates[dimension.id]].frameworks}
-                  </p>
-                </div>
-              )}
-              
-              {dimension.states[dimensionStates[dimension.id]]?.practices && (
-                <div className="mt-3">
-                  <h4 className="section-title">Practices you may be interested in:</h4>
-                  <p className="section-text">
-                    {dimension.states[dimensionStates[dimension.id]].practices}
-                  </p>
-                </div>
-              )}
-              
-              {dimension.states[dimensionStates[dimension.id]]?.tools && (
-                <div className="mt-3">
-                  <h4 className="section-title">Tools you may be interested in:</h4>
-                  <p className="section-text">
-                    {dimension.states[dimensionStates[dimension.id]].tools}
-                  </p>
-                </div>
-              )}
+              <div className="mt-auto">
+                {/* Show frameworks, practices, and tools if they exist */}
+                {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
+                  <div className="mt-3">
+                    <h4 className="section-title">Frameworks you may be interested in:</h4>
+                    <p className="section-text">
+                      {dimension.states[dimensionStates[dimension.id]].frameworks}
+                    </p>
+                  </div>
+                )}
+                
+                {dimension.states[dimensionStates[dimension.id]]?.practices && (
+                  <div className="mt-3">
+                    <h4 className="section-title">Practices you may be interested in:</h4>
+                    <p className="section-text">
+                      {dimension.states[dimensionStates[dimension.id]].practices}
+                    </p>
+                  </div>
+                )}
+                
+                {dimension.states[dimensionStates[dimension.id]]?.tools && (
+                  <div className="mt-3">
+                    <h4 className="section-title">Tools you may be interested in:</h4>
+                    <p className="section-text">
+                      {dimension.states[dimensionStates[dimension.id]].tools}
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           ))}
         </div>
@@ -161,6 +166,63 @@ const ResultsPage = () => {
             <p className="results-text">
               {profileResult.description}
             </p>
+
+            {/* Add celebrate and support lists in columns if they exist */}
+            {(profileResult.celebrate || profileResult.support) && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                {profileResult.celebrate && (
+                  <div>
+                    <h3 className="text-base font-light mb-3 text-center text-[#2359FF]">
+                      Things to Celebrate
+                    </h3>
+                    <ul className="space-y-2">
+                      {profileResult.celebrate.map((item, index) => (
+                        <li 
+                          key={index}
+                          className="p-3 rounded-xl text-sm"
+                          style={{
+                            background: "rgba(235,240,180,0.3)",
+                            backdropFilter: "blur(4px)",
+                            WebkitBackdropFilter: "blur(4px)",
+                            border: "1px solid rgba(220,255,200,0.4)",
+                            boxShadow: "inset 0 1px 3px rgba(0,0,0,0.05), 0 0 5px rgba(193,191,132,0.2)",
+                            color: "#2359FF"
+                          }}
+                        >
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                
+                {profileResult.support && (
+                  <div>
+                    <h3 className="text-base font-light mb-3 text-center text-[#2359FF]">
+                      What Will Support Your Process
+                    </h3>
+                    <ul className="space-y-2">
+                      {profileResult.support.map((item, index) => (
+                        <li 
+                          key={index}
+                          className="p-3 rounded-xl text-sm"
+                          style={{
+                            background: "rgba(220,230,255,0.2)",
+                            backdropFilter: "blur(4px)",
+                            WebkitBackdropFilter: "blur(4px)",
+                            border: "1px solid rgba(255,255,255,0.2)",
+                            boxShadow: "inset 0 1px 3px rgba(0,0,0,0.05), 0 0 5px rgba(35,89,255,0.1)",
+                            color: "#2359FF"
+                          }}
+                        >
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
         
