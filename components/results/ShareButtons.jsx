@@ -37,74 +37,94 @@ const ShareButtons = ({ profileName, dimensionScores, profileId }) => {
   };
 
   return (
-    <div className="w-full text-center mb-4">
-      <h3 className="text-base font-light mb-4" style={{ color: "#2359FF" }}>
+    <div className="w-full flex flex-col items-center">
+      <h3 className="text-lg font-light mb-5 text-[#2359FF]">
         Share Your Results
       </h3>
       
-      {/* Social share buttons */}
-      <div className="flex justify-center gap-4 mb-4">
-        <FacebookShareButton
-          url={shareUrl}
-          quote={shareText}
-          className="transition-transform hover:scale-110"
-        >
-          <FacebookIcon size={40} round />
-        </FacebookShareButton>
-
-        <TwitterShareButton
-          url={shareUrl}
-          title={shareText}
-          hashtags={["RealityCreation", "Manifestation"]}
-          className="transition-transform hover:scale-110"
-        >
-          <TwitterIcon size={40} round />
-        </TwitterShareButton>
-
-        <LinkedinShareButton
-          url={shareUrl}
-          title={profileName}
-          summary={shareText}
-          source="Reality Creation Assessment"
-          className="transition-transform hover:scale-110"
-        >
-          <LinkedinIcon size={40} round />
-        </LinkedinShareButton>
+      {/* Share content preview */}
+      <div className="w-full max-w-md p-4 mb-6 rounded-xl bg-white/10 border border-[rgba(220,255,200,0.4)] shadow-sm">
+        <p className="text-sm text-[#2359FF] mb-2 italic">
+          "{shareText}"
+        </p>
+        <div className="text-xs text-[#2359FF] opacity-70 truncate">
+          {shareUrl}
+        </div>
       </div>
       
-      {/* Copy link button */}
-      <div className="flex justify-center">
-        <button 
-          onClick={handleCopy}
-          className="relative px-8 py-2 transition-all duration-300 text-xs tracking-wide overflow-hidden keyboard-button"
-          style={{
-            borderRadius: "76px",
-            color: "#2359FF",
-            background: "#DBDECE",
-            border: "1px solid rgba(193,191,132,0.4)",
-            boxShadow: "0 2px 4px rgba(0,0,0,0.1), 0 0 1px rgba(0,0,0,0.2)"
-          }}
-        >
-          <span className="relative z-10 tracking-widest uppercase">
-            {copied ? 'Link Copied!' : 'Copy Link'}
-          </span>
-          
-          {/* Keyboard texture overlay */}
-          <div 
-            className="absolute inset-0 keyboard-texture"
-            style={{
-              borderRadius: "76px",
-              background: "linear-gradient(to bottom, rgba(255,255,255,0.1) 0%, rgba(230,230,220,0.05) 100%)",
-              boxShadow: "inset 0 1px 1px rgba(255,255,255,0.4), inset 0 -1px 1px rgba(0,0,0,0.1)",
-              pointerEvents: "none"
-            }}
-          ></div>
-          
-          {/* Button particles */}
-          <div className="button-particles"></div>
-          <div className="button-shine"></div>
-        </button>
+      {/* Social share buttons with improved styling */}
+      <div className="flex justify-center gap-6 mb-6">
+        <div className="flex flex-col items-center">
+          <FacebookShareButton
+            url={shareUrl}
+            quote={shareText}
+            className="transition-all duration-300 hover:scale-110 mb-2 shadow-lg hover:shadow-xl rounded-full"
+            style={{ boxShadow: "0 4px 10px rgba(0,0,0,0.1)" }}
+          >
+            <FacebookIcon size={48} round />
+          </FacebookShareButton>
+          <span className="text-xs text-[#2359FF]">Facebook</span>
+        </div>
+
+        <div className="flex flex-col items-center">
+          <TwitterShareButton
+            url={shareUrl}
+            title={shareText}
+            hashtags={["RealityCreation", "Manifestation"]}
+            className="transition-all duration-300 hover:scale-110 mb-2 shadow-lg hover:shadow-xl rounded-full"
+            style={{ boxShadow: "0 4px 10px rgba(0,0,0,0.1)" }}
+          >
+            <TwitterIcon size={48} round />
+          </TwitterShareButton>
+          <span className="text-xs text-[#2359FF]">Twitter</span>
+        </div>
+
+        <div className="flex flex-col items-center">
+          <LinkedinShareButton
+            url={shareUrl}
+            title={profileName}
+            summary={shareText}
+            source="Reality Creation Assessment"
+            className="transition-all duration-300 hover:scale-110 mb-2 shadow-lg hover:shadow-xl rounded-full"
+            style={{ boxShadow: "0 4px 10px rgba(0,0,0,0.1)" }}
+          >
+            <LinkedinIcon size={48} round />
+          </LinkedinShareButton>
+          <span className="text-xs text-[#2359FF]">LinkedIn</span>
+        </div>
       </div>
+      
+      {/* Copy link button with enhanced feedback */}
+      <button 
+        onClick={handleCopy}
+        className="keyboard-button min-w-[180px] group"
+        style={{
+          transition: "all 0.3s ease",
+          transform: copied ? "translateY(2px)" : "translateY(0)",
+        }}
+      >
+        <span className="relative z-10 tracking-widest uppercase flex items-center gap-2">
+          {copied ? (
+            <>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 6L9 17l-5-5"></path>
+              </svg>
+              <span>Copied!</span>
+            </>
+          ) : (
+            <>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy Link</span>
+            </>
+          )}
+        </span>
+        <div className="keyboard-texture"></div>
+        <div className="button-particles"></div>
+        <div className="button-shine"></div>
+      </button>
     </div>
   );
 };
