@@ -12,7 +12,7 @@ const ResultsPage = () => {
   
   // Get all dimensions
   const dimensions = getAllDimensions();
-  
+
   // Convert dimension scores to percentages for display
   const dimensionPercentages = Object.entries(dimensionScores).reduce((acc, [key, value]) => {
     acc[key] = scoreToPercentage(value);
@@ -21,17 +21,14 @@ const ResultsPage = () => {
   
   // Create shareable URL
   const shareableUrl = createShareableUrl(dimensionScores, profileResult?.name);
-  
   // Generate share text
   const shareText = generateShareText(profileResult?.name);
   
-  // NEW: State and handlers to create a carousel for dimension paragraphs
+  // State and handlers for dimension carousel
   const [activeIndex, setActiveIndex] = useState(0);
-
   const nextSlide = () => {
     setActiveIndex((prev) => (prev + 1) % dimensions.length);
   };
-
   const prevSlide = () => {
     setActiveIndex((prev) => (prev - 1 + dimensions.length) % dimensions.length);
   };
@@ -39,6 +36,7 @@ const ResultsPage = () => {
   return (
     <div className="bg-transparent p-6 rounded-3xl w-full">
       <div className="relative z-10">
+        
         {/* Title (unchanged) */}
         <div className="text-center mb-6">
           <h1 className="results-title gradient-text">
@@ -60,97 +58,127 @@ const ResultsPage = () => {
           </div>
         </div>
         
-        {/* Trait Sliders/Charts (unchanged) */}
-        <div className="mb-8 space-y-4">
-          {dimensions.map((dimension) => (
-            <div key={dimension.id} className="mb-6">
-              {/* Dimension labels */}
-              <div className="flex justify-between mb-2 px-2">
-                <span className="text-sm text-[#2359FF]">{dimension.leftLabel}</span>
-                <span className="text-sm font-light text-[#2359FF]">{dimension.title}</span>
-                <span className="text-sm text-[#2359FF]">{dimension.rightLabel}</span>
-              </div>
-              
-              {/* Slider track */}
-              <div className="relative h-5 w-full">
+        {/*
+          Trait Sliders/Charts
+          (No change to the actual slider code below—only spacing & layout)
+        */}
+        <div 
+          className="mb-8"
+          style={{
+            /* A simple “grid” with a 1.5rem vertical gap between each dimension */
+            display: 'grid',
+            rowGap: '1.5rem'
+          }}
+        >
+          {dimensions.map((dimension) => {
+            const value = dimensionPercentages[dimension.id] || 50;
+            return (
+              <div key={dimension.id}>
+                
+                {/* Labels row */}
                 <div 
-                  style={{
-                    height: '20px',
-                    borderRadius: '9999px',
-                    width: '100%',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
-                    boxShadow: "inset 2px 2px 3px rgba(166,167,161,0.3), inset -2px -2px 3px rgba(255,255,250,0.3)"
-                  }}
+                  className="flex items-center justify-between px-2"
+                  style={{ marginBottom: '0.75rem' }}
                 >
-                  {/* Filled portion */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      bottom: 0,
-                      left: 0,
-                      borderRadius: '9999px',
-                      width: `${dimensionPercentages[dimension.id] || 50}%`,
-                      background: "linear-gradient(to right, rgba(193,191,132,0.6), rgba(150,159,30,0.6))"
-                    }}
-                  ></div>
-                  
-                  {/* Pulse animation */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      opacity: 0.2,
-                      background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
-                      animation: "pulse 3s infinite"
-                    }}
-                  ></div>
+                  <span className="text-sm text-[#2359FF]">
+                    {dimension.leftLabel}
+                  </span>
+                  <span className="text-sm font-light text-[#2359FF]">
+                    {dimension.title}
+                  </span>
+                  <span className="text-sm text-[#2359FF]">
+                    {dimension.rightLabel}
+                  </span>
                 </div>
                 
-                {/* Slider thumb */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: `${dimensionPercentages[dimension.id] || 50}%`,
-                    width: '16px',
-                    height: '16px',
-                    borderRadius: '9999px',
-                    transform: "translate(-50%, -50%)",
-                    background: "rgba(255,255,255,0.2)",
-                    backdropFilter: "blur(8px)",
-                    WebkitBackdropFilter: "blur(8px)",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
-                    border: "1px solid rgba(255,255,255,0.2)",
-                    zIndex: 20,
-                    display: 'block !important'
-                  }}
-                >
-                  {/* Visible inner dot */}
+                {/* Slider track (exactly as before) */}
+                <div className="relative h-5 w-full">
                   <div 
+                    style={{
+                      height: '20px',
+                      borderRadius: '9999px',
+                      width: '100%',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
+                      boxShadow: "inset 2px 2px 3px rgba(166,167,161,0.3), inset -2px -2px 3px rgba(255,255,250,0.3)"
+                    }}
+                  >
+                    {/* Filled portion */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        bottom: 0,
+                        left: 0,
+                        borderRadius: '9999px',
+                        width: `${value}%`,
+                        background: "linear-gradient(to right, rgba(193,191,132,0.6), rgba(150,159,30,0.6))"
+                      }}
+                    ></div>
+                    
+                    {/* Pulse animation */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        opacity: 0.2,
+                        background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
+                        animation: "pulse 3s infinite"
+                      }}
+                    ></div>
+                  </div>
+                  
+                  {/* Slider thumb */}
+                  <div
                     style={{
                       position: 'absolute',
                       top: '50%',
-                      left: '50%',
-                      width: '4px',
-                      height: '4px',
+                      left: `${value}%`,
+                      width: '16px',
+                      height: '16px',
                       borderRadius: '9999px',
-                      background: 'white',
-                      opacity: 0.6,
                       transform: "translate(-50%, -50%)",
+                      background: "rgba(255,255,255,0.2)",
+                      backdropFilter: "blur(8px)",
+                      WebkitBackdropFilter: "blur(8px)",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
+                      border: "1px solid rgba(255,255,255,0.2)",
+                      zIndex: 20,
                       display: 'block !important'
                     }}
-                  ></div>
+                  >
+                    {/* Visible inner dot */}
+                    <div 
+                      style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        width: '4px',
+                        height: '4px',
+                        borderRadius: '9999px',
+                        background: 'white',
+                        opacity: 0.6,
+                        transform: "translate(-50%, -50%)",
+                        display: 'block !important'
+                      }}
+                    ></div>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         
-        {/* DIMENSION CAROUSEL (replacing the stacked columns) */}
-        <div className="mb-8" style={{ position: 'relative', maxWidth: '800px', margin: '0 auto' }}>
+        {/* DIMENSION CAROUSEL (unchanged) */}
+        <div 
+          className="mb-8"
+          style={{
+            position: 'relative',
+            maxWidth: '800px',
+            margin: '0 auto'
+          }}
+        >
           {dimensions.map((dimension, index) => (
             <div
               key={dimension.id}
@@ -176,7 +204,7 @@ const ResultsPage = () => {
                 }}
               >
                 <h3 className="dimension-title">
-                  {dimension.title}:{" "}
+                  {dimension.title}:{' '}
                   <span className="dimension-value">
                     {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
                   </span>
@@ -187,7 +215,6 @@ const ResultsPage = () => {
                 </p>
 
                 <div style={{ marginTop: 'auto' }}>
-                  {/* Show frameworks, practices, and tools if they exist */}
                   {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
                     <div className="mt-3">
                       <h4 className="section-title">Frameworks you may be interested in:</h4>
@@ -196,7 +223,6 @@ const ResultsPage = () => {
                       </p>
                     </div>
                   )}
-
                   {dimension.states[dimensionStates[dimension.id]]?.practices && (
                     <div className="mt-3">
                       <h4 className="section-title">Practices you may be interested in:</h4>
@@ -205,7 +231,6 @@ const ResultsPage = () => {
                       </p>
                     </div>
                   )}
-
                   {dimension.states[dimensionStates[dimension.id]]?.tools && (
                     <div className="mt-3">
                       <h4 className="section-title">Tools you may be interested in:</h4>
@@ -261,8 +286,6 @@ const ResultsPage = () => {
             <p className="results-text">
               {profileResult.description}
             </p>
-
-            {/* Add celebrate and support lists in columns if they exist */}
             {(profileResult.celebrate || profileResult.support) && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                 {profileResult.celebrate && (
@@ -290,7 +313,6 @@ const ResultsPage = () => {
                     </ul>
                   </div>
                 )}
-                
                 {profileResult.support && (
                   <div>
                     <h3 className="text-base font-light mb-3 text-center text-[#2359FF]">
@@ -321,7 +343,7 @@ const ResultsPage = () => {
           </div>
         )}
 
-        {/* Share Buttons Section (unchanged) */}
+        {/* Share Buttons (unchanged) */}
         <ShareButtons 
           profileName={profileResult?.name}
           dimensionScores={dimensionScores}
