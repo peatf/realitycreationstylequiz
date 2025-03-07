@@ -19,12 +19,12 @@ const ResultsPage = () => {
     return acc;
   }, {});
   
-  // Create shareable URL
+  // Create shareable URL (used by ShareButtons)
   const shareableUrl = createShareableUrl(dimensionScores, profileResult?.name);
   // Generate share text
   const shareText = generateShareText(profileResult?.name);
   
-  // State and handlers for dimension carousel
+  // State & handlers for dimension carousel
   const [activeIndex, setActiveIndex] = useState(0);
   const nextSlide = () => {
     setActiveIndex((prev) => (prev + 1) % dimensions.length);
@@ -58,16 +58,12 @@ const ResultsPage = () => {
           </div>
         </div>
         
-        {/*
-          Trait Sliders/Charts
-          (No change to the actual slider code below—only spacing & layout)
-        */}
+        {/* Trait Sliders/Charts with improved label spacing */}
         <div 
           className="mb-8"
           style={{
-            /* A simple “grid” with a 1.5rem vertical gap between each dimension */
             display: 'grid',
-            rowGap: '1.5rem'
+            rowGap: '1.5rem' // space between each dimension
           }}
         >
           {dimensions.map((dimension) => {
@@ -75,10 +71,13 @@ const ResultsPage = () => {
             return (
               <div key={dimension.id}>
                 
-                {/* Labels row */}
+                {/* Label row with gap so text doesn't run together */}
                 <div 
                   className="flex items-center justify-between px-2"
-                  style={{ marginBottom: '0.75rem' }}
+                  style={{
+                    marginBottom: '0.75rem',
+                    gap: '1rem' // add horizontal gap between labels
+                  }}
                 >
                   <span className="text-sm text-[#2359FF]">
                     {dimension.leftLabel}
@@ -91,7 +90,7 @@ const ResultsPage = () => {
                   </span>
                 </div>
                 
-                {/* Slider track (exactly as before) */}
+                {/* Slider track (unchanged) */}
                 <div className="relative h-5 w-full">
                   <div 
                     style={{
@@ -286,6 +285,8 @@ const ResultsPage = () => {
             <p className="results-text">
               {profileResult.description}
             </p>
+
+            {/* Celebrate / Support lists */}
             {(profileResult.celebrate || profileResult.support) && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                 {profileResult.celebrate && (
