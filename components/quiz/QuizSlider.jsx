@@ -9,69 +9,71 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
   };
   
   return (
-    <div className="jp-slider-container">
+    <div className="relative w-full py-4">
       {/* Slider track */}
-      <div className="jp-slider-track">
-        {/* Slider fill */}
+      <div 
+        className="h-5 rounded-full w-full relative overflow-hidden"
+        style={{
+          background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
+          boxShadow: "inset 2px 2px 3px rgba(166,167,161,0.3), inset -2px -2px 3px rgba(255,255,250,0.3)"
+        }}
+      >
+        {/* Fill portion */}
         <div
-          className="jp-slider-fill"
-          style={{ width: `${value}%` }}
+          className="h-full rounded-full transition-all duration-300"
+          style={{
+            width: `${value}%`,
+            background: "linear-gradient(to right, rgba(193,191,132,0.6), rgba(150,159,30,0.6))"
+          }}
         ></div>
         
-        {/* Animated pulse effect */}
-        <div className="anim-pulse"></div>
-        
-        {/* Slider thumb */}
+        {/* Animated pulse */}
         <div
-          className="jp-slider-thumb"
-          style={{ left: `${value}%` }}
+          className="absolute inset-0 opacity-20 anim-pulse"
+          style={{
+            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)"
+          }}
+        ></div>
+        
+        {/* Thumb */}
+        <div
+          className="absolute top-1/2 w-6 h-6 rounded-full transform -translate-y-1/2 transition-all duration-300"
+          style={{
+            left: `${value}%`,
+            background: "rgba(255,255,255,0.2)",
+            backdropFilter: "blur(8px)",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
+            border: "1px solid rgba(255,255,255,0.2)",
+            transform: "translate(-50%, -50%)"
+          }}
         >
-          {/* White dot in the center of the thumb */}
+          {/* White dot in center */}
           <div 
-            style={{ 
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              width: '4px',
-              height: '4px',
-              borderRadius: '9999px',
-              background: 'white',
-              opacity: '0.6',
+            className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60"
+            style={{
               transform: "translate(-50%, -50%)"
             }}
-          />
+          ></div>
         </div>
       </div>
       
-      {/* Hidden actual input slider */}
+      {/* Hidden range input */}
       <input
         type="range"
         min="0"
         max="100"
         value={value}
         onChange={handleChange}
-        style={{
-          position: 'absolute',
-          inset: '0',
-          width: '100%',
-          height: '100%',
-          opacity: '0',
-          cursor: 'pointer',
-          zIndex: 10
-        }}
+        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
       />
       
-      {/* Answer labels */}
-      <div className="flex justify-between mt-2 px-4">
-        <div className="text-left max-w-[45%]">
-          <p className="text-xs text-[#2359FF] whitespace-pre-line">
-            {leftLabel}
-          </p>
+      {/* Answer labels - fixed to be side by side */}
+      <div className="flex justify-between mt-4">
+        <div className="w-[45%] text-left">
+          <p className="text-sm text-[#2359FF]">{leftLabel}</p>
         </div>
-        <div className="text-right max-w-[45%]">
-          <p className="text-xs text-[#2359FF] whitespace-pre-line">
-            {rightLabel}
-          </p>
+        <div className="w-[45%] text-right">
+          <p className="text-sm text-[#2359FF]">{rightLabel}</p>
         </div>
       </div>
     </div>
