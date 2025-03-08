@@ -146,13 +146,14 @@ const ResultsPage = () => {
             Analysis Results
           </h2>
 
-        <div
-  className="flex flex-row transition-transform duration-500 h-full"
-  style={{
-    transform: `translateX(-${activeIndex * (100 / dimensions.length)}%)`,
-    width: `${dimensions.length * 100}%`
-  }}
->
+          <div className="relative h-64 mb-6 overflow-hidden rounded-2xl">
+            <div
+              className="flex flex-row transition-transform duration-500 h-full"
+              style={{
+                transform: `translateX(-${activeIndex * (100 / dimensions.length)}%)`,
+                width: `${dimensions.length * 100}%`
+              }}
+            >
               {dimensions.map((dimension) => {
                 const value = dimensionPercentages[dimension.id] || 50;
                 const stateKey = getDimensionState(dimension.id, dimensionScores[dimension.id]);
