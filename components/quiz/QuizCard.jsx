@@ -1,4 +1,3 @@
-// components/quiz/QuizCard.jsx
 'use client';
 
 import React from 'react';
@@ -26,20 +25,20 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
         {currentQuestions.map((question, index) => (
           <React.Fragment key={question.id}>
             <div className="mb-12 text-center">
-              {/* Question card using styling from example */}
+              {/* Updated Question Card with proper layering */}
               <div className="question-card w-full max-w-3xl mx-auto mb-6">
-                {/* Glassmorphic layers */}
-                <div className="glass-layer layer-1"></div>
-                <div className="glass-layer layer-2"></div>
-                <div className="glass-layer layer-3"></div>
-                <div className="edge-highlight"></div>
+                <div className="glass-layer layer-1" />
+                <div className="glass-layer layer-2" />
+                <div className="glass-layer layer-3" />
                 
-                {/* Question content */}
-                <div className="relative z-10 p-6">
+                <div className="relative z-[5] p-6">
                   <p className="question-text text-lg md:text-xl text-center">
                     {question.text}
                   </p>
+                  {/* Slider component can be embedded here if desired */}
                 </div>
+                
+                <div className="edge-highlight" />
               </div>
               
               {/* Slider - styled according to the provided example */}
@@ -96,15 +95,15 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
                   />
                 </div>
 
-                {/* Answer Options */}
-                <div className="flex justify-between mt-2">
-                  <div className="text-left w-[45%]">
-                    <p className="text-xs whitespace-pre-line text-[#2359FF]">
+                {/* Answer Options with fixed text alignment */}
+                <div className="flex justify-between mt-4 px-2">
+                  <div className="w-[45%] text-left">
+                    <p className="text-xs text-primary whitespace-normal break-words">
                       {question.leftLabel}
                     </p>
                   </div>
-                  <div className="text-right w-[45%]">
-                    <p className="text-xs whitespace-pre-line text-[#2359FF]">
+                  <div className="w-[45%] text-right">
+                    <p className="text-xs text-primary whitespace-normal break-words">
                       {question.rightLabel}
                     </p>
                   </div>
@@ -112,7 +111,7 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
               </div>
             </div>
             
-            {/* Add divider between questions except for the last one */}
+            {/* Divider between questions except for the last one */}
             {index < currentQuestions.length - 1 && (
               <div className="h-px bg-[rgba(35,89,255,0.2)] w-4/5 max-w-3xl mx-auto mb-8" />
             )}
