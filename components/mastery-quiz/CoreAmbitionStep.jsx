@@ -13,7 +13,7 @@ const CoreAmbitionStep = ({ onNext }) => {
     {
       id: 'Recognition',
       title: 'Recognition',
-      description: 'You are driven by external validation and seek meaningful impact. Success feels like acknowledgment of your unique contributions.',
+      description: 'You are driven by validation internal then external and seek meaningful impact. Success feels like acknowledgment of your unique contributions.',
       icon: '01'
     },
     {
