@@ -9,39 +9,32 @@ import MasteryMetricStep from './MasteryMetricStep';
 import ProgressBar from '../quiz/ProgressBar';
 
 const MasteryQuizContainer = () => {
-  const { skipMasteryQuiz, calculateMasteryResults } = useQuiz();
+  const { skipMasteryQuiz } = useQuiz();
   const [currentStep, setCurrentStep] = useState(0);
 
-  // Step components
+  // Step components with proper rendering
   const steps = [
-    CoreAmbitionStep,
-    CreativeStateStep,
-    MasteryMetricStep
+    { Component: CoreAmbitionStep, title: "Core Ambition" },
+    { Component: CreativeStateStep, title: "Ideal Creative State" },
+    { Component: MasteryMetricStep, title: "Adaptive Mastery Metric" }
   ];
 
   // Progress calculation (0 to 100)
   const progress = Math.round(((currentStep + 1) / steps.length) * 100);
 
   // Navigation handlers
-  // components/mastery-quiz/MasteryQuizContainer.jsx
-
-// Find these lines:
-const handleNext = () => {
-  setCurrentStep(prev => Math.min(prev + 1, steps.length - 1));
-};
-
-// And modify them to log the step change for debugging:
-const handleNext = () => {
-  console.log(`Moving from step ${currentStep} to ${Math.min(currentStep + 1, steps.length - 1)}`);
-  setCurrentStep(prev => Math.min(prev + 1, steps.length - 1));
-};
+  const handleNext = () => {
+    console.log(`Moving from step ${currentStep} to ${Math.min(currentStep + 1, steps.length - 1)}`);
+    setCurrentStep(prev => Math.min(prev + 1, steps.length - 1));
+  };
 
   const handleBack = () => {
+    console.log(`Moving back from step ${currentStep} to ${Math.max(currentStep - 1, 0)}`);
     setCurrentStep(prev => Math.max(prev - 1, 0));
   };
 
-  // Get current step component
-  const CurrentStepComponent = steps[currentStep];
+  // Get current step info
+  const { Component: CurrentStepComponent, title: currentTitle } = steps[currentStep];
 
   return (
     <div className="bg-transparent p-6 rounded-3xl w-full">
@@ -59,15 +52,13 @@ const handleNext = () => {
         </div>
 
         {/* Current step */}
-        <div className="fade-in">
-          <CurrentStepComponent 
-            onNext={handleNext} 
-            onBack={currentStep > 0 ? handleBack : null}
-            onComplete={() => {}} 
-          />
-        </div>
+        <CurrentStepComponent 
+          onNext={handleNext} 
+          onBack={currentStep > 0 ? handleBack : null}
+          onComplete={currentStep === steps.length - 1 ? () => {} : null}
+        />
 
-        {/* Skip option (always visible) */}
+        {/* Skip option */}
         <div className="mt-8 text-center">
           <button 
             onClick={skipMasteryQuiz}
@@ -77,17 +68,6 @@ const handleNext = () => {
           </button>
         </div>
       </div>
-
-      {/* Fade-in animation for smoother step transitions */}
-      <style jsx>{`
-        .fade-in {
-          animation: fadeIn 0.3s ease-in-out;
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </div>
   );
 };
