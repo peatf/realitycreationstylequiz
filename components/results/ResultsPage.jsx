@@ -214,91 +214,97 @@ const ResultsPage = () => {
     Analysis Results
   </h2>
   
-  <div className="relative h-64 mb-6 overflow-hidden rounded-2xl">
-    {/* Carousel inner container as a flex row */}
-    <div
-      className="flex transition-transform duration-500 h-full"
-      style={{ transform: `translateX(-${activeIndex * 100}%)` }}
-    >
-      {dimensions.map((dimension) => {
-        const value = dimensionPercentages[dimension.id] || 50;
-        const stateKey = getDimensionState(dimension.id, dimensionScores[dimension.id]);
-        const classification = dimension.states[stateKey]?.name || 'Balanced';
-        const description = dimension.states[stateKey]?.description || 'Your approach is balanced in this dimension.';
-        return (
-          <div key={dimension.id} className="w-full flex-shrink-0">
-            <div className="p-6 h-full overflow-hidden relative rounded-2xl"
-                 style={{
-                   background: "linear-gradient(135deg, rgba(235,240,180,0.25) 0%, rgba(245,250,190,0.35) 50%, rgba(235,240,180,0.25) 100%)",
-                   boxShadow: "inset 0 2px 6px rgba(0,0,0,0.1), inset 0 -1px 2px rgba(255,255,255,0.2), 0 0 10px rgba(193,191,132,0.1)"
-                 }}>
-              <div
-                className="absolute inset-0 rounded-2xl"
-                style={{
-                  boxShadow: "inset 0 2px 5px rgba(0,0,0,0.08), inset 0 -1px 2px rgba(255,255,255,0.1)",
-                  pointerEvents: "none"
-                }}
-              />
-              <div className="flex items-center mb-4 relative z-10">
-                <div className="flex items-center justify-center w-12 h-12 mr-4 rounded-sm" 
-                     style={{
-                       background: "rgba(255,255,255,0.15)",
-                       border: "1px solid rgba(193,191,132,0.4)",
-                       boxShadow: "inset 0 1px 3px rgba(0,0,0,0.05)"
-                     }}>
-                  {renderBitmapIcon(dimension)}
-                </div>
-                <h3 className="text-lg font-medium" style={{ color: "#2359FF" }}>{classification}</h3>
+ <div className="relative h-64 mb-6 overflow-hidden rounded-2xl">
+  {/* Carousel inner container as a flex row */}
+  <div
+    className="flex transition-transform duration-500 h-full"
+    style={{ 
+      transform: `translateX(-${activeIndex * (100 / dimensions.length)}%)`,
+      width: `${dimensions.length * 100}%`
+    }}
+  >
+    {dimensions.map((dimension) => {
+      const value = dimensionPercentages[dimension.id] || 50;
+      const stateKey = getDimensionState(dimension.id, dimensionScores[dimension.id]);
+      const classification = dimension.states[stateKey]?.name || 'Balanced';
+      const description = dimension.states[stateKey]?.description || 'Your approach is balanced in this dimension.';
+      return (
+        <div
+          key={dimension.id}
+          className="flex-shrink-0"
+          style={{ width: `${100 / dimensions.length}%` }}
+        >
+          <div className="p-6 h-full overflow-hidden relative rounded-2xl"
+               style={{
+                 background: "linear-gradient(135deg, rgba(235,240,180,0.25) 0%, rgba(245,250,190,0.35) 50%, rgba(235,240,180,0.25) 100%)",
+                 boxShadow: "inset 0 2px 6px rgba(0,0,0,0.1), inset 0 -1px 2px rgba(255,255,255,0.2), 0 0 10px rgba(193,191,132,0.1)"
+               }}>
+            <div
+              className="absolute inset-0 rounded-2xl"
+              style={{
+                boxShadow: "inset 0 2px 5px rgba(0,0,0,0.08), inset 0 -1px 2px rgba(255,255,255,0.1)",
+                pointerEvents: "none"
+              }}
+            />
+            <div className="flex items-center mb-4 relative z-10">
+              <div className="flex items-center justify-center w-12 h-12 mr-4 rounded-sm" 
+                   style={{
+                     background: "rgba(255,255,255,0.15)",
+                     border: "1px solid rgba(193,191,132,0.4)",
+                     boxShadow: "inset 0 1px 3px rgba(0,0,0,0.05)"
+                   }}>
+                {renderBitmapIcon(dimension)}
               </div>
-              <p className="text-sm relative z-10 mb-6" style={{ color: "#2359FF" }}>{description}</p>
-              <div className="mt-4 flex items-center justify-between">
-                <span className="text-xs" style={{ color: "#2359FF" }}>{dimension.title}</span>
-                <span className="text-xs font-mono" style={{ color: "#2359FF" }}>{value}%</span>
-              </div>
+              <h3 className="text-lg font-medium" style={{ color: "#2359FF" }}>{classification}</h3>
+            </div>
+            <p className="text-sm relative z-10 mb-6" style={{ color: "#2359FF" }}>{description}</p>
+            <div className="mt-4 flex items-center justify-between">
+              <span className="text-xs" style={{ color: "#2359FF" }}>{dimension.title}</span>
+              <span className="text-xs font-mono" style={{ color: "#2359FF" }}>{value}%</span>
             </div>
           </div>
-        );
-      })}
-    </div>
-    
-    {/* Navigation Dots */}
-    <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
-      {dimensions.map((_, i) => (
-        <button
-          key={i}
-          onClick={() => setActiveIndex(i)}
-          className={`w-2 h-2 rounded-full transition-all duration-300 ${
-            activeIndex === i ? 'bg-blue-600 w-4' : 'bg-blue-300'
-          }`}
-          aria-label={`Go to slide ${i + 1}`}
-        />
-      ))}
-    </div>
-    
-    {/* Carousel Navigation Buttons */}
-    <button
-      onClick={prevSlide}
-      className="absolute left-0 top-1/2 -translate-y-1/2 -ml-4 w-8 h-8 rounded-full flex items-center justify-center z-20"
-      style={{
-        background: "rgba(255,255,255,0.2)",
-        border: "1px solid rgba(193,191,132,0.4)"
-      }}
-      aria-label="Previous dimension"
-    >
-      <div className="w-2 h-2 border-l border-b -rotate-45" style={{ borderColor: "#2359FF" }} />
-    </button>
-    <button
-      onClick={nextSlide}
-      className="absolute right-0 top-1/2 -translate-y-1/2 -mr-4 w-8 h-8 rounded-full flex items-center justify-center z-20"
-      style={{
-        background: "rgba(255,255,255,0.2)",
-        border: "1px solid rgba(193,191,132,0.4)"
-      }}
-      aria-label="Next dimension"
-    >
-      <div className="w-2 h-2 border-r border-t rotate-45" style={{ borderColor: "#2359FF" }} />
-    </button>
+        </div>
+      );
+    })}
   </div>
+  
+  {/* Navigation Dots and Carousel Navigation Buttons remain the same */}
+  <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
+    {dimensions.map((_, i) => (
+      <button
+        key={i}
+        onClick={() => setActiveIndex(i)}
+        className={`w-2 h-2 rounded-full transition-all duration-300 ${
+          activeIndex === i ? 'bg-blue-600 w-4' : 'bg-blue-300'
+        }`}
+        aria-label={`Go to slide ${i + 1}`}
+      />
+    ))}
+  </div>
+  <button
+    onClick={prevSlide}
+    className="absolute left-0 top-1/2 -translate-y-1/2 -ml-4 w-8 h-8 rounded-full flex items-center justify-center z-20"
+    style={{
+      background: "rgba(255,255,255,0.2)",
+      border: "1px solid rgba(193,191,132,0.4)"
+    }}
+    aria-label="Previous dimension"
+  >
+    <div className="w-2 h-2 border-l border-b -rotate-45" style={{ borderColor: "#2359FF" }} />
+  </button>
+  <button
+    onClick={nextSlide}
+    className="absolute right-0 top-1/2 -translate-y-1/2 -mr-4 w-8 h-8 rounded-full flex items-center justify-center z-20"
+    style={{
+      background: "rgba(255,255,255,0.2)",
+      border: "1px solid rgba(193,191,132,0.4)"
+    }}
+    aria-label="Next dimension"
+  >
+    <div className="w-2 h-2 border-r border-t rotate-45" style={{ borderColor: "#2359FF" }} />
+  </button>
+</div>
+
 </div>
 
         
