@@ -10,28 +10,25 @@ import {
   TwitterIcon,
   LinkedinIcon,
 } from 'react-share';
-import { createShareableUrl, generateShareText } from '@/lib/utils';
+import { generateShareText } from '@/lib/utils';
 
-const ShareButtons = ({ profileName, dimensionScores, profileId }) => {
+const ShareButtons = ({ profileName, dimensionScores, profileId, shareUrl, shareText }) => {
   const [copied, setCopied] = useState(false);
   
-  // Generate shareUrl only when component mounts
-  const shareUrl = typeof window !== 'undefined' 
-    ? window.location.href 
-    : 'https://www.peathefeary.com/realitycreationstyle';
-    
-  const shareText = generateShareText(profileName);
+  // Use props if provided, otherwise generate fallbacks
+  const finalShareUrl = shareUrl || (typeof window !== 'undefined' ? window.location.href : 'https://www.peathefeary.com/realitycreationstyle');
+  const finalShareText = shareText || generateShareText(profileName);
 
   // Handle copy link
   const handleCopy = () => {
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText(shareUrl).then(() => {
+      navigator.clipboard.writeText(finalShareUrl).then(() => {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       });
     } else {
       const textArea = document.createElement('textarea');
-      textArea.value = shareUrl;
+      textArea.value = finalShareUrl;
       document.body.appendChild(textArea);
       textArea.select();
       document.execCommand('copy');
@@ -47,8 +44,8 @@ const ShareButtons = ({ profileName, dimensionScores, profileId }) => {
       <div className="flex justify-center gap-6 mb-6">
         <div className="flex flex-col items-center">
           <FacebookShareButton
-            url={shareUrl}
-            quote={shareText}
+            url={finalShareUrl}
+            quote={finalShareText}
             className="transition-all duration-300 hover:scale-110 mb-2 shadow-lg hover:shadow-xl rounded-full"
             style={{ boxShadow: "0 4px 10px rgba(0,0,0,0.1)" }}
           >
@@ -59,8 +56,8 @@ const ShareButtons = ({ profileName, dimensionScores, profileId }) => {
 
         <div className="flex flex-col items-center">
           <TwitterShareButton
-            url={shareUrl}
-            title={shareText}
+            url={finalShareUrl}
+            title={finalShareText}
             hashtags={["RealityCreation", "Manifestation"]}
             className="transition-all duration-300 hover:scale-110 mb-2 shadow-lg hover:shadow-xl rounded-full"
             style={{ boxShadow: "0 4px 10px rgba(0,0,0,0.1)" }}
@@ -72,9 +69,9 @@ const ShareButtons = ({ profileName, dimensionScores, profileId }) => {
 
         <div className="flex flex-col items-center">
           <LinkedinShareButton
-            url={shareUrl}
+            url={finalShareUrl}
             title={profileName}
-            summary={shareText}
+            summary={finalShareText}
             source="Reality Creation Assessment"
             className="transition-all duration-300 hover:scale-110 mb-2 shadow-lg hover:shadow-xl rounded-full"
             style={{ boxShadow: "0 4px 10px rgba(0,0,0,0.1)" }}
