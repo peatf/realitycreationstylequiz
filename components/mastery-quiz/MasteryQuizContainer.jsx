@@ -23,14 +23,18 @@ const MasteryQuizContainer = () => {
   const progress = Math.round(((currentStep + 1) / steps.length) * 100);
 
   // Navigation handlers
-  const handleNext = () => {
-    if (currentStep === steps.length - 1) {
-      // Ensure mastery results are calculated in the final step
-      calculateMasteryResults();
-    } else {
-      setCurrentStep(prev => Math.min(prev + 1, steps.length - 1));
-    }
-  };
+  // components/mastery-quiz/MasteryQuizContainer.jsx
+
+// Find these lines:
+const handleNext = () => {
+  setCurrentStep(prev => Math.min(prev + 1, steps.length - 1));
+};
+
+// And modify them to log the step change for debugging:
+const handleNext = () => {
+  console.log(`Moving from step ${currentStep} to ${Math.min(currentStep + 1, steps.length - 1)}`);
+  setCurrentStep(prev => Math.min(prev + 1, steps.length - 1));
+};
 
   const handleBack = () => {
     setCurrentStep(prev => Math.max(prev - 1, 0));
