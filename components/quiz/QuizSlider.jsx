@@ -9,55 +9,22 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
   };
   
   return (
-    <div style={{
-      position: 'relative',
-      paddingTop: '0.5rem',
-      paddingBottom: '0.5rem',
-      width: '100%',
-      maxWidth: '30rem',
-      margin: '0 auto'
-    }}>
+    <div className="jp-slider-container">
       {/* Slider track */}
-      <div
-        style={{
-          height: '1.25rem',
-          borderRadius: '9999px',
-          width: '100%',
-          position: 'relative',
-          overflow: 'hidden',
-          background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
-          boxShadow: "inset 2px 2px 3px rgba(166,167,161,0.3), inset -2px -2px 3px rgba(255,255,250,0.3)"
-        }}
-      >
-        {/* Animated pulse effect */}
+      <div className="jp-slider-track">
+        {/* Slider fill */}
         <div
-          style={{
-            position: 'absolute',
-            inset: '0',
-            opacity: '0.2',
-            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
-            transform: "translateX(-100%)",
-            animation: "pulse 3s infinite"
-          }}
-        />
+          className="jp-slider-fill"
+          style={{ width: `${value}%` }}
+        ></div>
         
-        {/* Slider thumb - moved inside the track div */}
+        {/* Animated pulse effect */}
+        <div className="anim-pulse"></div>
+        
+        {/* Slider thumb */}
         <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            width: '1rem',
-            height: '1rem',
-            borderRadius: '9999px',
-            left: `${value}%`,
-            transform: "translate(-50%, -50%)",
-            background: "rgba(255,255,255,0.2)",
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
-            border: "1px solid rgba(255,255,255,0.2)",
-            zIndex: 2
-          }}
+          className="jp-slider-thumb"
+          style={{ left: `${value}%` }}
         >
           {/* White dot in the center of the thumb */}
           <div 
@@ -65,8 +32,8 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
               position: 'absolute',
               top: '50%',
               left: '50%',
-              width: '0.25rem',
-              height: '0.25rem',
+              width: '4px',
+              height: '4px',
               borderRadius: '9999px',
               background: 'white',
               opacity: '0.6',
@@ -95,28 +62,14 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
       />
       
       {/* Answer labels */}
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        marginTop: '0.5rem',
-        paddingLeft: '1rem',
-        paddingRight: '1rem'
-      }}>
-        <div style={{ textAlign: 'left', maxWidth: '45%' }}>
-          <p style={{ 
-            fontSize: '0.75rem', 
-            whiteSpace: 'pre-line', 
-            color: "#2359FF"
-          }}>
+      <div className="flex justify-between mt-2 px-4">
+        <div className="text-left max-w-[45%]">
+          <p className="text-xs text-[#2359FF] whitespace-pre-line">
             {leftLabel}
           </p>
         </div>
-        <div style={{ textAlign: 'right', maxWidth: '45%' }}>
-          <p style={{ 
-            fontSize: '0.75rem', 
-            whiteSpace: 'pre-line', 
-            color: "#2359FF"
-          }}>
+        <div className="text-right max-w-[45%]">
+          <p className="text-xs text-[#2359FF] whitespace-pre-line">
             {rightLabel}
           </p>
         </div>
