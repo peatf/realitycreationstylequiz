@@ -64,17 +64,15 @@ const MasteryQuizContainer = () => {
         </div>
 
         {/* Skip option (hidden in production, useful for debugging) */}
-        {process.env.NODE_ENV === 'development' && (
-          <div className="mt-8 text-center">
-            <button 
-              onClick={skipMasteryQuiz}
-              role="button"
-              tabIndex="0"
-              className="text-sm text-[#2359FF] opacity-50 hover:opacity-100 focus:ring focus:ring-blue-300"
-            >
-              Skip mastery quiz
-            </button>
-          </div>
+{process.env.NODE_ENV === 'development' && (
+  <div className="mt-8 text-center">
+    <button 
+      onClick={skipMasteryQuiz}
+      className="text-sm text-[#2359FF] opacity-50 hover:opacity-100"
+    >
+      Skip mastery quiz
+    </button>
+  </div>
         )}
       </div>
 
