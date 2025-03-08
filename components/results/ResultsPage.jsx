@@ -8,6 +8,7 @@ import ShareButtons from './ShareButtons';
 import { getAllDimensions, getDimensionState } from '@/data/dimensions';
 import MasteryInsights from '../mastery-dashboard/MasteryInsights';
 import DynamicMasteryDiagram from '../mastery-dashboard/DynamicMasteryDiagram';
+import './globals.css';
 
 const ResultsPage = () => {
   const { 
