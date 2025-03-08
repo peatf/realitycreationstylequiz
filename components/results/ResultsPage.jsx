@@ -7,6 +7,10 @@ import { scoreToPercentage } from '@/lib/scoring';
 import ShareButtons from './ShareButtons';
 import { getAllDimensions } from '@/data/dimensions';
 
+// Add this import
+import MasteryInsights from '../mastery-dashboard/MasteryInsights';
+
+
 const ResultsPage = () => {
   const { dimensionScores, dimensionStates, profileResult, restartQuiz } = useQuiz();
   
@@ -57,6 +61,14 @@ const ResultsPage = () => {
             </div>
           </div>
         </div>
+
+        {/* Dynamic Mastery Diagram & Insights (Only if mastery quiz was completed) */}
+        {masteryQuizCompleted && (
+          <>
+            <DynamicMasteryDiagram />
+            <MasteryInsights />
+          </>
+        )}
         
         {/* Trait Sliders/Charts with improved label spacing */}
         <div 
