@@ -6,7 +6,7 @@ import { useQuiz } from '@/context/QuizContext';
 import { createShareableUrl, generateShareText } from '@/lib/utils';
 import { scoreToPercentage } from '@/lib/scoring';
 import ShareButtons from './ShareButtons';
-import { getAllDimensions } from '@/data/dimensions';
+import { getAllDimensions, getDimensionState } from '@/data/dimensions';
 import MasteryInsights from '../mastery-dashboard/MasteryInsights';
 import DynamicMasteryDiagram from '../mastery-dashboard/DynamicMasteryDiagram';
 
@@ -22,7 +22,7 @@ const ResultsPage = () => {
     return acc;
   }, {});
   
-  // Generate shareUrl and shareText - this is the important fix for the reference error
+  // Generate shareUrl and shareText
   const shareUrl = useMemo(() => {
     if (typeof window !== 'undefined') {
       return window.location.href;
@@ -30,9 +30,7 @@ const ResultsPage = () => {
     return 'https://www.peathefeary.com/realitycreationstyle';
   }, []);
   
-  const shareText = useMemo(() => {
-    return generateShareText(profileResult?.name);
-  }, [profileResult]);
+  const shareText = useMemo(() => generateShareText(profileResult?.name), [profileResult]);
   
   // State & handlers for dimension carousel
   const [activeIndex, setActiveIndex] = useState(0);
@@ -41,6 +39,18 @@ const ResultsPage = () => {
   };
   const prevSlide = () => {
     setActiveIndex((prev) => (prev - 1 + dimensions.length) % dimensions.length);
+  };
+
+  // Render Bitmap Icon dynamically from dimension.bitmap
+  const renderBitmapIcon = (dimension) => {
+    const pixels = dimension.bitmap || [];
+    return (
+      <div className="grid grid-cols-5 grid-rows-5 gap-px w-6 h-6">
+        {pixels.flat().map((pixel, index) => (
+          <div key={index} className={`w-1 h-1 ${pixel ? 'bg-blue-600' : 'bg-transparent'}`}></div>
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -77,7 +87,7 @@ const ResultsPage = () => {
           </div>
         </div>
 
-        {/* Add the Dynamic Mastery Diagram if mastery quiz was completed */}
+        {/* Dynamic Mastery Diagram & Insights */}
         {masteryQuizCompleted && (
           <>
             <DynamicMasteryDiagram />
@@ -85,202 +95,194 @@ const ResultsPage = () => {
           </>
         )}
         
-        {/* Trait Measurements Section - using JapaneseMinimalistProfile style */}
-        <div className="p-6 mb-8 rounded-3xl overflow-hidden relative" 
-             style={{
-               background: "linear-gradient(135deg, rgba(235,240,180,0.65) 0%, rgba(245,250,190,0.85) 50%, rgba(235,240,180,0.75) 100%)",
-               boxShadow: "inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3), 0 0 10px rgba(193,191,132,0.3)"
-             }}>
-          {/* Inset shadow for debossed effect */}
-          <div 
-            className="absolute inset-0 rounded-3xl"
-            style={{
-              boxShadow: "inset 0 2px 5px rgba(0,0,0,0.15), inset 0 -1px 2px rgba(255,255,255,0.2)",
-              pointerEvents: "none",
-              zIndex: 1
-            }}
-          ></div>
-          
-          <h2 className="text-xl font-light mb-6 text-center text-blue-600 relative z-10">
-            Your Dimension Profile
-          </h2>
-          
-          <div className="space-y-8 relative z-10">
-            {dimensions.map((dimension) => {
-              const value = dimensionPercentages[dimension.id] || 50;
-              return (
-                <div key={dimension.id} className="mb-6">
-                  <div className="flex justify-between mb-2">
-                    <span className="text-xs font-light text-[#2359FF]">{dimension.leftLabel}</span>
-                    <span className="text-xs font-light text-[#2359FF]">{dimension.title}</span>
-                    <span className="text-xs font-light text-[#2359FF]">{dimension.rightLabel}</span>
-                  </div>
-                  
-                  {/* Connection Line with Circle */}
-                  <div className="relative h-4 mb-3">
-                    <div className="absolute inset-y-0 w-full border-b border-dashed" 
-                         style={{ borderColor: "rgba(193,191,132,0.6)" }}></div>
-                    
-                    {/* Circle at current value */}
-                    <div 
-                      className="absolute top-1/2 w-4 h-4 rounded-full"
-                      style={{ 
-                        left: `${value}%`, 
-                        transform: 'translate(-50%, -50%)',
-                        background: "rgba(255,255,255,0.2)",
-                        boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
-                        border: "1px solid rgba(255,255,255,0.2)"
-                      }}
-                    >
-                      <div 
-                         className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60"
-                         style={{ transform: "translate(-50%, -50%)" }}></div>
+        {/* DIMENSION MEASUREMENTS SECTION */}
+        <div className="jp-card mb-6">
+          <div className="jp-card-inset">
+            <h2 className="text-xl font-light mb-6 text-center gradient-text">
+              Your Dimension Profile
+            </h2>
+            
+            <div className="space-y-8">
+              {dimensions.map((dimension) => {
+                const value = dimensionPercentages[dimension.id] || 50;
+                return (
+                  <div key={dimension.id} className="mb-6">
+                    <div className="flex justify-between mb-2">
+                      <span className="text-xs font-light text-[#2359FF]">{dimension.leftLabel}</span>
+                      <span className="text-xs font-light text-[#2359FF]">{dimension.title}</span>
+                      <span className="text-xs font-light text-[#2359FF]">{dimension.rightLabel}</span>
                     </div>
-                  </div>
-                  
-                  {/* Classification */}
-                  <div className="text-right">
-                    <span 
-                      className="text-xs inline-block px-2 py-1 rounded-full"
-                      style={{ 
-                        color: "#2359FF", 
-                        background: "rgba(255,255,255,0.4)",
-                        border: "1px solid rgba(193,191,132,0.4)"
-                      }}
-                    >
-                      {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        
-        {/* DIMENSION CAROUSEL - fixed styling from JapaneseMinimalistProfile */}
-        <div className="mb-8">
-          <h2 className="text-sm tracking-wide font-light mb-4 flex items-center" style={{ color: "#2359FF" }}>
-            <span className="inline-block w-5 h-5 mr-2 text-center rounded-full border text-xs"
-                 style={{ borderColor: "rgba(193,191,132,0.6)", color: "#2359FF", background: "rgba(255,255,255,0.5)" }}>
-              2
-            </span>
-            Dimension Details
-          </h2>
-          
-          <div className="relative h-64 mb-6">
-            {/* Carousel container */}
-            <div className="relative w-full h-full overflow-hidden rounded-2xl">
-              {/* Current dimension card */}
-              {dimensions.map((dimension, index) => (
-                <div 
-                  key={dimension.id}
-                  className={`absolute inset-0 transition-opacity duration-300 ${
-                    index === activeIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                  }`}
-                >
-                  <div 
-                    className="p-6 h-full overflow-hidden relative rounded-2xl"
-                    style={{
-                      background: "linear-gradient(135deg, rgba(235,240,180,0.65) 0%, rgba(245,250,190,0.85) 50%, rgba(235,240,180,0.75) 100%)",
-                      boxShadow: "inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3), 0 0 10px rgba(193,191,132,0.3)"
-                    }}
-                  >
-                    {/* Inset shadow for debossed effect */}
-                    <div 
-                      className="absolute inset-0 rounded-2xl"
-                      style={{
-                        boxShadow: "inset 0 2px 5px rgba(0,0,0,0.15), inset 0 -1px 2px rgba(255,255,255,0.2)",
-                        pointerEvents: "none",
-                        zIndex: 1
-                      }}
-                    ></div>
                     
-                    <h3 className="dimension-title">
-                      {dimension.title}:{' '}
-                      <span className="dimension-value">
+                    {/* Connection Line with Circle */}
+                    <div className="relative h-4 mb-3">
+                      <div className="absolute inset-y-0 w-full border-b border-dashed" 
+                           style={{ borderColor: "rgba(193,191,132,0.6)" }}></div>
+                      
+                      {/* Circle at current value */}
+                      <div 
+                        className="absolute top-1/2 w-4 h-4 rounded-full"
+                        style={{ 
+                          left: `${value}%`, 
+                          transform: 'translate(-50%, -50%)',
+                          background: "rgba(255,255,255,0.2)",
+                          boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
+                          border: "1px solid rgba(255,255,255,0.2)"
+                        }}
+                      >
+                        <div 
+                          className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60"
+                          style={{ transform: "translate(-50%, -50%)" }}
+                        ></div>
+                      </div>
+                    </div>
+                    
+                    {/* Classification */}
+                    <div className="text-right">
+                      <span 
+                        className="text-xs inline-block px-2 py-1 rounded-full"
+                        style={{ 
+                          color: "#2359FF", 
+                          background: "rgba(255,255,255,0.4)",
+                          border: "1px solid rgba(193,191,132,0.4)"
+                        }}
+                      >
                         {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
                       </span>
-                    </h3>
-                    <p className="dimension-text">
-                      {dimension.states[dimensionStates[dimension.id]]?.description ||
-                        'Your approach is balanced in this dimension.'}
-                    </p>
-
-                    <div className="mt-4">
-                      {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
-                        <div className="mt-3">
-                          <h4 className="section-title">Frameworks you may be interested in:</h4>
-                          <p className="section-text">
-                            {dimension.states[dimensionStates[dimension.id]].frameworks}
-                          </p>
-                        </div>
-                      )}
-                      {dimension.states[dimensionStates[dimension.id]]?.practices && (
-                        <div className="mt-3">
-                          <h4 className="section-title">Practices you may be interested in:</h4>
-                          <p className="section-text">
-                            {dimension.states[dimensionStates[dimension.id]].practices}
-                          </p>
-                        </div>
-                      )}
-                      {dimension.states[dimensionStates[dimension.id]]?.tools && (
-                        <div className="mt-3">
-                          <h4 className="section-title">Tools you may be interested in:</h4>
-                          <p className="section-text">
-                            {dimension.states[dimensionStates[dimension.id]].tools}
-                          </p>
-                        </div>
-                      )}
                     </div>
                   </div>
-                </div>
-              ))}
-              
-              {/* Navigation dots */}
-              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
-                {dimensions.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setActiveIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      activeIndex === index 
-                        ? 'bg-blue-600 w-4' 
-                        : 'bg-blue-300'
-                    }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
+                );
+              })}
             </div>
-            
-            {/* Carousel navigation buttons */}
-            <button 
-              onClick={prevSlide}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 -ml-4 w-8 h-8 rounded-full flex items-center justify-center z-20"
-              style={{
-                background: "rgba(255,255,255,0.6)",
-                border: "1px solid rgba(193,191,132,0.4)"
-              }}
-              aria-label="Previous dimension"
-            >
-              <div className="w-2 h-2 border-l border-b transform -rotate-45" style={{ borderColor: "#2359FF" }}></div>
-            </button>
-            
-            <button 
-              onClick={nextSlide}
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 -mr-4 w-8 h-8 rounded-full flex items-center justify-center z-20"
-              style={{
-                background: "rgba(255,255,255,0.6)",
-                border: "1px solid rgba(193,191,132,0.4)"
-              }}
-              aria-label="Next dimension"
-            >
-              <div className="w-2 h-2 border-r border-t transform rotate-45" style={{ borderColor: "#2359FF" }}></div>
-            </button>
           </div>
         </div>
         
-        {/* Summary Section */}
+        {/* DIMENSION CAROUSEL SECTION */}
+        <div className="jp-card mb-8">
+          <div className="jp-card-inset">
+            {/* Red Number Label */}
+            <h2 className="text-sm tracking-wide font-light mb-4 flex items-center" style={{ color: "#2359FF" }}>
+              <span className="inline-block w-5 h-5 mr-2 text-center rounded-full border text-xs"
+                    style={{ borderColor: "rgba(193,191,132,0.6)", color: "#2359FF", background: "rgba(255,255,255,0.5)" }}>
+                2
+              </span>
+              Dimension Details
+            </h2>
+            
+            {/* Carousel */}
+            <div className="relative h-64 mb-6">
+              <div className="relative w-full h-full overflow-hidden rounded-2xl">
+                {dimensions.map((dimension, index) => (
+                  <div 
+                    key={dimension.id}
+                    className={`absolute inset-0 transition-opacity duration-300 ${index === activeIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                  >
+                    <div 
+                      className="p-6 h-full overflow-hidden relative rounded-2xl"
+                      style={{
+                        background: "linear-gradient(135deg, rgba(235,240,180,0.65) 0%, rgba(245,250,190,0.85) 50%, rgba(235,240,180,0.75) 100%)",
+                        boxShadow: "inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3), 0 0 10px rgba(193,191,132,0.3)"
+                      }}
+                    >
+                      {/* Inset shadow for debossed effect */}
+                      <div 
+                        className="absolute inset-0 rounded-2xl"
+                        style={{
+                          boxShadow: "inset 0 2px 5px rgba(0,0,0,0.15), inset 0 -1px 2px rgba(255,255,255,0.2)",
+                          pointerEvents: "none",
+                          zIndex: 1
+                        }}
+                      ></div>
+                      
+                      <h3 className="dimension-title">
+                        {dimension.title}:{' '}
+                        <span className="dimension-value">
+                          {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
+                        </span>
+                      </h3>
+                      <p className="dimension-text">
+                        {dimension.states[dimensionStates[dimension.id]]?.description ||
+                          'Your approach is balanced in this dimension.'}
+                      </p>
+
+                      <div className="mt-4">
+                        {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
+                          <div className="mt-3">
+                            <h4 className="section-title">Frameworks you may be interested in:</h4>
+                            <p className="section-text">
+                              {dimension.states[dimensionStates[dimension.id]].frameworks}
+                            </p>
+                          </div>
+                        )}
+                        {dimension.states[dimensionStates[dimension.id]]?.practices && (
+                          <div className="mt-3">
+                            <h4 className="section-title">Practices you may be interested in:</h4>
+                            <p className="section-text">
+                              {dimension.states[dimensionStates[dimension.id]].practices}
+                            </p>
+                          </div>
+                        )}
+                        {dimension.states[dimensionStates[dimension.id]]?.tools && (
+                          <div className="mt-3">
+                            <h4 className="section-title">Tools you may be interested in:</h4>
+                            <p className="section-text">
+                              {dimension.states[dimensionStates[dimension.id]].tools}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {/* Icon & Title Row */}
+                      <div className="flex items-center mt-4">
+                        <div className="bitmap-icon-container mr-4">
+                          {renderBitmapIcon(dimension)}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                
+                {/* Navigation dots */}
+                <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
+                  {dimensions.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setActiveIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${activeIndex === index ? 'bg-blue-600 w-4' : 'bg-blue-300'}`}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+              
+              {/* Carousel navigation buttons */}
+              <button 
+                onClick={prevSlide}
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 -ml-4 w-8 h-8 rounded-full flex items-center justify-center z-20"
+                style={{
+                  background: "rgba(255,255,255,0.6)",
+                  border: "1px solid rgba(193,191,132,0.4)"
+                }}
+                aria-label="Previous dimension"
+              >
+                <div className="w-2 h-2 border-l border-b transform -rotate-45" style={{ borderColor: "#2359FF" }}></div>
+              </button>
+              
+              <button 
+                onClick={nextSlide}
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 -mr-4 w-8 h-8 rounded-full flex items-center justify-center z-20"
+                style={{
+                  background: "rgba(255,255,255,0.6)",
+                  border: "1px solid rgba(193,191,132,0.4)"
+                }}
+                aria-label="Next dimension"
+              >
+                <div className="w-2 h-2 border-r border-t transform rotate-45" style={{ borderColor: "#2359FF" }}></div>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        {/* SUMMARY SECTION */}
         {profileResult && (
           <div className="p-6 mb-8 rounded-3xl overflow-hidden relative" 
                style={{
@@ -298,9 +300,7 @@ const ResultsPage = () => {
             ></div>
             
             <div className="relative z-10">
-              <h2 
-                className="text-xl font-thin tracking-widest text-center mb-4 text-[#2359FF]"
-              >
+              <h2 className="text-xl font-thin tracking-widest text-center mb-4 text-[#2359FF]">
                 Your Overall Style: {profileResult.name}
               </h2>
               <p className="text-sm text-center text-[#2359FF] mb-6">
@@ -366,7 +366,7 @@ const ResultsPage = () => {
           </div>
         )}
 
-        {/* Share Buttons Section - without card background */}
+        {/* SHARE BUTTONS SECTION */}
         <div className="w-full flex flex-col items-center mb-8">
           <h3 className="text-xl font-light mb-5 text-center text-[#2359FF]">
             Share Your Results
@@ -382,7 +382,7 @@ const ResultsPage = () => {
             </div>
           </div>
           
-          {/* Social share buttons - passing the shareUrl variable directly */}
+          {/* Social share buttons */}
           <ShareButtons 
             profileName={profileResult?.name}
             dimensionScores={dimensionScores}
@@ -392,12 +392,9 @@ const ResultsPage = () => {
           />
         </div>
         
-        {/* Restart button */}
+        {/* RESTART BUTTON */}
         <div className="flex justify-center mt-8">
-          <button 
-            onClick={restartQuiz}
-            className="keyboard-button"
-          >
+          <button onClick={restartQuiz} className="keyboard-button">
             <span className="relative z-10 tracking-widest">TAKE QUIZ AGAIN</span>
             <div className="keyboard-texture"></div>
             <div className="button-particles"></div>
@@ -405,7 +402,7 @@ const ResultsPage = () => {
           </button>
         </div>
         
-        {/* Footer with technical info */}
+        {/* FOOTER */}
         <div className="mt-10 pt-2 border-t border-dashed flex justify-between items-center text-blue-600" 
              style={{ borderColor: "rgba(193,191,132,0.6)" }}>
           <span className="text-xs">REV 2024-03</span>
