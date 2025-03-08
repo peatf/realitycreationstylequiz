@@ -62,13 +62,13 @@ const ResultsPage = () => {
           </div>
         </div>
 
-        {/* Dynamic Mastery Diagram & Insights (Only if mastery quiz was completed) */}
-        {masteryQuizCompleted && (
-          <>
-            <DynamicMasteryDiagram />
-            <MasteryInsights />
-          </>
-        )}
+        {/* Add the Dynamic Mastery Diagram if mastery quiz was completed */}
+{(masteryQuizCompleted === true) && (
+  <>
+    <DynamicMasteryDiagram />
+    <MasteryInsights />
+  </>
+)}
         
         {/* Trait Sliders/Charts with improved label spacing */}
         <div 
