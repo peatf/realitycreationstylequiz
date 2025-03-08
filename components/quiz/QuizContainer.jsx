@@ -8,6 +8,7 @@ import IntroPage from './IntroPage';
 import QuizCard from './QuizCard';
 import ResultsPage from '../results/ResultsPage';
 import ProgressBar from './ProgressBar';
+import MasteryQuizContainer from '../mastery-quiz/MasteryQuizContainer';
 
 const QuizContainer = () => {
   const { 
@@ -94,6 +95,8 @@ const QuizContainer = () => {
             />
           </div>
         );
+      case 'masteryQuiz':
+        return <MasteryQuizContainer />;
       case 'results':
         return <ResultsPage />;
       default:
