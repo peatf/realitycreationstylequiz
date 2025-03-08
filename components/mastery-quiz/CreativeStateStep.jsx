@@ -1,11 +1,12 @@
 // components/mastery-quiz/CreativeStateStep.jsx
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuiz } from '@/context/QuizContext';
 
 const CreativeStateStep = ({ onNext, onBack }) => {
   const { idealCreativeState, setIdealCreativeState } = useQuiz();
+  const [hoverOption, setHoverOption] = useState(null);
 
   // Creative state options with descriptions
   const creativeStateOptions = [
@@ -13,25 +14,25 @@ const CreativeStateStep = ({ onNext, onBack }) => {
       id: 'Effortless Flow',
       title: 'Effortless Flow',
       description: 'You thrive when creativity feels natural and unforced, with minimal resistance and intuitive progression.',
-      icon: '🌊'
+      icon: '01'
     },
     {
       id: 'Absolute Clarity',
       title: 'Absolute Clarity',
       description: 'You thrive with precise understanding, decisive action, and minimal ambiguity in your creative process.',
-      icon: '✨'
+      icon: '02'
     },
     {
       id: 'Spacious Creativity',
       title: 'Spacious Creativity',
       description: 'You thrive with room for experimentation, open-ended exploration, and generous mental bandwidth.',
-      icon: '🌌'
+      icon: '03'
     },
     {
       id: 'Refined Impact',
       title: 'Refined Impact',
       description: 'You thrive with concentrated creative output, high-quality results, and minimal unnecessary effort.',
-      icon: '💎'
+      icon: '04'
     }
   ];
 
@@ -50,77 +51,150 @@ const CreativeStateStep = ({ onNext, onBack }) => {
   };
 
   return (
-    <div className="bg-transparent rounded-3xl w-full max-w-2xl mx-auto">
-      <div className="mb-6 text-center">
-        <h2 className="text-2xl font-light mb-3 gradient-text">
-          What is your ideal creative state?
-        </h2>
-        <p className="text-sm text-center mb-4 text-[#2359FF]">
-          This represents the optimal experience and emotional landscape in which your creativity thrives.
-        </p>
+    <div className="p-6 mb-8 rounded-xl overflow-hidden relative w-full max-w-2xl mx-auto" 
+         style={{
+           boxShadow: "inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3)"
+         }}>
+      {/* Document ID Label */}
+      <div className="absolute top-2 right-2 text-xs font-light tracking-widest" style={{ color: "#2359FF", fontSize: "8px" }}>
+        FORM-CS-24
       </div>
+      
+      <div className="relative z-10">
+        <div className="mb-6">
+          <h2 className="text-xl font-light mb-3 tracking-wide" style={{ color: "#2359FF", letterSpacing: "0.15em" }}>
+            Creative State Assessment
+          </h2>
+          <div className="w-16 h-px mx-auto my-2" style={{ background: "rgba(193,191,132,0.5)" }}></div>
+          <p className="text-xs text-center mb-4" style={{ color: "#2359FF", letterSpacing: "0.05em" }}>
+            Select the optimal experience in which your creativity thrives
+          </p>
+        </div>
 
-      {/* Creative state options */}
-      <div className="space-y-4 mb-8">
-        {creativeStateOptions.map((option) => (
-          <div
-            key={option.id}
-            className={`p-4 rounded-[28px] cursor-pointer transition-all duration-300 ${
-              idealCreativeState === option.id
-                ? 'bg-[rgba(235,240,180,0.95)] shadow-md transform scale-[1.02]'
-                : 'bg-[rgba(235,240,180,0.6)] hover:bg-[rgba(235,240,180,0.8)] touch-active'
-            }`}
-            onClick={() => handleSelect(option.id)}
-            onTouchStart={() => {}} // Empty handler to enable active state on mobile
-          >
-            <div className="flex items-start">
-              <div className="text-2xl mr-3">{option.icon}</div>
-              <div>
-                <h3 className="text-lg font-medium mb-1 text-[#2359FF]">{option.title}</h3>
-                <p className="text-sm text-[#2359FF]">{option.description}</p>
-              </div>
-              {idealCreativeState === option.id && (
-                <div className="ml-auto text-[#2359FF]">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg>
+        {/* Technical specifications line */}
+        <div className="flex justify-between items-center py-2 mb-6 border-t border-b border-dashed" style={{ borderColor: "rgba(193,191,132,0.6)" }}>
+          <span className="text-xs font-mono" style={{ color: "#2359FF", fontSize: "8px" }}>PROFILE-B</span>
+          <span className="text-xs tracking-widest font-extralight" style={{ color: "#2359FF", fontSize: "10px" }}>STATE-MAP</span>
+          <span className="text-xs font-mono" style={{ color: "#2359FF", fontSize: "8px" }}>4 OPTIONS</span>
+        </div>
+
+        {/* Creative state options */}
+        <div className="space-y-3 mb-8">
+          {creativeStateOptions.map((option) => (
+            <div
+              key={option.id}
+              className={`p-4 rounded-md border border-solid cursor-pointer transition-all duration-300 relative ${
+                idealCreativeState === option.id
+                  ? 'border-[#2359FF]'
+                  : 'border-[rgba(193,191,132,0.4)]'
+              }`}
+              onClick={() => handleSelect(option.id)}
+              onMouseEnter={() => setHoverOption(option.id)}
+              onMouseLeave={() => setHoverOption(null)}
+              onTouchStart={() => {}} // Empty handler to enable active state on mobile
+              style={{ borderWidth: "1px" }}
+            >
+              <div className="flex items-start">
+                <div className="mr-3 font-mono text-xs flex items-center justify-center w-5 h-5 border border-solid rounded-sm" 
+                     style={{ 
+                       color: "#2359FF", 
+                       borderColor: "rgba(193,191,132,0.6)",
+                       fontSize: "8px"
+                     }}>
+                  {option.icon}
                 </div>
+                <div>
+                  <h3 className="text-sm font-medium tracking-wide mb-1" style={{ color: "#2359FF", letterSpacing: "0.1em" }}>
+                    {option.title}
+                  </h3>
+                  <p className="text-xs" style={{ color: "#2359FF", lineHeight: "1.5" }}>
+                    {option.description}
+                  </p>
+                </div>
+                {idealCreativeState === option.id && (
+                  <div className="ml-auto" style={{ color: "#2359FF" }}>
+                    <div className="w-3 h-3 border-r border-b rotate-45 transform border-[#2359FF]" style={{ borderWidth: "1px" }}></div>
+                  </div>
+                )}
+              </div>
+              
+              {/* Selection indicator */}
+              {idealCreativeState === option.id && (
+                <div className="absolute -left-1 top-1/2 transform -translate-y-1/2 w-2 h-2 bg-[#2359FF]"></div>
+              )}
+              
+              {/* Hover effect - subtle */}
+              {hoverOption === option.id && idealCreativeState !== option.id && (
+                <div className="absolute inset-0 bg-[rgba(193,191,132,0.1)] pointer-events-none"></div>
               )}
             </div>
+          ))}
+        </div>
+
+        {/* Navigation buttons */}
+        <div className="flex justify-between items-center mt-6">
+          <button
+            onClick={onBack}
+            className="relative px-8 py-2 transition-all duration-300 text-xs tracking-wide"
+            type="button"
+            style={{
+              borderRadius: "2px",
+              color: "#2359FF",
+              background: "transparent",
+              border: "1px solid rgba(193,191,132,0.4)"
+            }}
+          >
+            <span className="relative z-10 tracking-widest" style={{ letterSpacing: "0.2em", fontSize: "8px" }}>BACK</span>
+            
+            {/* Subtle hover effect */}
+            <div 
+              className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300"
+              style={{
+                background: "rgba(193,191,132,0.1)"
+              }}
+            ></div>
+          </button>
+          
+          <div className="text-xs font-mono" style={{ color: "#2359FF", fontSize: "8px" }}>
+            {idealCreativeState ? `SELECTED: ${idealCreativeState}` : 'NO SELECTION'}
           </div>
-        ))}
-      </div>
-
-      {/* Navigation buttons */}
-      <div className="flex justify-center gap-4 mt-6">
-        <button 
-          onClick={onBack} 
-          className="keyboard-button"
-        >
-          <span className="relative z-10 tracking-widest">BACK</span>
-          <div className="keyboard-texture"></div>
-          <div className="button-particles"></div>
-        </button>
+          
+          <button
+            onClick={handleNext}
+            className={`relative px-8 py-2 transition-all duration-300 text-xs tracking-wide ${!idealCreativeState ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={!idealCreativeState}
+            type="button"
+            style={{
+              borderRadius: "2px",
+              color: "#2359FF",
+              background: "transparent",
+              border: "1px solid rgba(193,191,132,0.4)"
+            }}
+          >
+            <span className="relative z-10 tracking-widest" style={{ letterSpacing: "0.2em", fontSize: "8px" }}>NEXT</span>
+            
+            {/* Subtle hover effect */}
+            <div 
+              className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300"
+              style={{
+                background: "rgba(193,191,132,0.1)"
+              }}
+            ></div>
+          </button>
+        </div>
         
-        <button
-          onClick={handleNext}
-          className={`keyboard-button ${!idealCreativeState ? 'opacity-50 cursor-not-allowed' : ''}`}
-          disabled={!idealCreativeState}
-        >
-          <span className="relative z-10 tracking-widest">NEXT</span>
-          <div className="keyboard-texture"></div>
-          <div className="button-particles"></div>
-          <div className="button-shine"></div>
-        </button>
+        {/* Footer with technical info */}
+        <div className="mt-6 pt-2 border-t border-dashed flex justify-between items-center" 
+            style={{ borderColor: "rgba(193,191,132,0.6)" }}>
+          <span className="text-xs font-mono" style={{ fontSize: "8px", color: "#2359FF" }}>REV 2024-03</span>
+          <div className="flex items-center">
+            <div className="w-1 h-1 bg-blue-600 rounded-full mr-1"></div>
+            <span className="text-xs" style={{ fontSize: "8px", color: "#2359FF", letterSpacing: "0.1em" }}>
+              {idealCreativeState ? 'READY TO PROCEED' : 'AWAITING SELECTION'}
+            </span>
+          </div>
+        </div>
       </div>
-
-      {/* Touch feedback styles for mobile */}
-      <style jsx>{`
-        .touch-active {
-          transform: scale(0.98);
-          transition: transform 0.1s ease-in-out;
-        }
-      `}</style>
     </div>
   );
 };
