@@ -61,11 +61,11 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
           )}
           
           <button onClick={onNext} className="keyboard-button">
-            <span className="relative z-10 tracking-widest">{isLast ? 'SEE RESULTS' : 'NEXT'}</span>
-            <div className="keyboard-texture"></div>
-            <div className="button-particles"></div>
-            <div className="button-shine"></div>
-          </button>
+  <span className="relative z-10 tracking-widest">{isLast ? 'SEE RESULTS' : 'NEXT'}</span>
+  <div className="keyboard-texture"></div>
+  <div className="button-particles"></div>
+  <div className="button-shine"></div>
+</button>
         </div>
       </div>
     </div>
