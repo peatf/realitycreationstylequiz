@@ -10,11 +10,16 @@ import {
   TwitterIcon,
   LinkedinIcon,
 } from 'react-share';
-import { generateShareText } from '@/lib/utils';
+import { createShareableUrl, generateShareText } from '@/lib/utils';
 
 const ShareButtons = ({ profileName, dimensionScores, profileId }) => {
   const [copied, setCopied] = useState(false);
-  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+  
+  // Generate shareUrl only when component mounts
+  const shareUrl = typeof window !== 'undefined' 
+    ? window.location.href 
+    : 'https://www.peathefeary.com/realitycreationstyle';
+    
   const shareText = generateShareText(profileName);
 
   // Handle copy link
