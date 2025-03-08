@@ -996,3 +996,62 @@ body.in-iframe h2 {
     height: 1.5rem;
   }
 }
+
+/* Custom Updates for Slider Styling, Text Alignment, and Card Layering */
+
+/* Slider Styling Fixes */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #2359FF;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #2359FF;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Text Alignment Fixes */
+.text-primary {
+  color: var(--text-primary);
+}
+
+/* Prevent label stacking */
+@media (min-width: 640px) {
+  .quiz-label-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .quiz-label {
+    flex: 0 0 45%;
+    max-width: 45%;
+  }
+}
+
+/* Card Layering Fixes */
+.question-card {
+  position: relative;
+  isolation: isolate; /* Creates new stacking context */
+}
+
+.glass-layer {
+  z-index: 1;
+}
+
+.question-text {
+  position: relative;
+  z-index: 2;
+}
+
+.edge-highlight {
+  z-index: 3;
+}
