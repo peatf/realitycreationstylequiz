@@ -67,53 +67,77 @@ const MasteryInsights = () => {
       {/* Tab content */}
       <div className="bg-[rgba(235,240,180,0.5)] p-4 rounded-[28px]">
         {/* Summary tab */}
-        {activeTab === 'summary' && (
-          <div className="space-y-4">
-            <div className="bg-white rounded-[20px] p-4 shadow-sm">
-              <h3 className="text-base font-medium mb-2 text-[#2359FF]">
-                Your Core Ambition: {coreAmbition}
-              </h3>
-              <p className="text-sm text-[#2359FF]">
-                {summaryInsights.ambitionInsight}
-              </p>
-            </div>
+{activeTab === 'summary' && (
+  <div className="space-y-4">
+    {/* Debug output - remove in production */}
+    {process.env.NODE_ENV === 'development' && (
+      <div className="bg-white rounded-[20px] p-2 shadow-sm">
+        <pre className="text-xs text-red-500 overflow-auto max-h-20">
+          {JSON.stringify({coreAmbition, idealCreativeState, adaptiveMasteryMetric, summary: summaryInsights}, null, 2)}
+        </pre>
+      </div>
+    )}
+    
+    {/* Only render if coreAmbition and summaryInsights exist */}
+    {coreAmbition && summaryInsights && summaryInsights.ambitionInsight && (
+      <div className="bg-white rounded-[20px] p-4 shadow-sm">
+        <h3 className="text-base font-medium mb-2 text-[#2359FF]">
+          Your Core Ambition: {coreAmbition}
+        </h3>
+        <p className="text-sm text-[#2359FF]">
+          {summaryInsights.ambitionInsight}
+        </p>
+      </div>
+    )}
 
-            <div className="bg-white rounded-[20px] p-4 shadow-sm">
-              <h3 className="text-base font-medium mb-2 text-[#2359FF]">
-                Your Ideal Creative State: {idealCreativeState}
-              </h3>
-              <p className="text-sm text-[#2359FF]">
-                {summaryInsights.creativeStateInsight}
-              </p>
-            </div>
+    {idealCreativeState && summaryInsights && summaryInsights.creativeStateInsight && (
+      <div className="bg-white rounded-[20px] p-4 shadow-sm">
+        <h3 className="text-base font-medium mb-2 text-[#2359FF]">
+          Your Ideal Creative State: {idealCreativeState}
+        </h3>
+        <p className="text-sm text-[#2359FF]">
+          {summaryInsights.creativeStateInsight}
+        </p>
+      </div>
+    )}
 
-            <div className="bg-white rounded-[20px] p-4 shadow-sm">
-              <h3 className="text-base font-medium mb-2 text-[#2359FF]">
-                Your Mastery Metric: {adaptiveMasteryMetric}
-              </h3>
-              <p className="text-sm text-[#2359FF]">
-                {summaryInsights.masteryMetricInsight}
-              </p>
-            </div>
+    {adaptiveMasteryMetric && summaryInsights && summaryInsights.masteryMetricInsight && (
+      <div className="bg-white rounded-[20px] p-4 shadow-sm">
+        <h3 className="text-base font-medium mb-2 text-[#2359FF]">
+          Your Mastery Metric: {adaptiveMasteryMetric}
+        </h3>
+        <p className="text-sm text-[#2359FF]">
+          {summaryInsights.masteryMetricInsight}
+        </p>
+      </div>
+    )}
 
-            {summaryInsights.highPriorityDimensions && 
-             summaryInsights.highPriorityDimensions.length > 0 && (
-              <div className="bg-white rounded-[20px] p-4 shadow-sm">
-                <h3 className="text-base font-medium mb-2 text-[#2359FF]">
-                  Your Priority Focus Areas
-                </h3>
-                <ul className="list-disc list-inside text-sm text-[#2359FF] space-y-1">
-                  {summaryInsights.highPriorityDimensions.map(dimension => (
-                    <li key={dimension}>
-                      {dimension.replace(/([A-Z])/g, ' $1').trim()}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        )}
-
+    {summaryInsights && summaryInsights.highPriorityDimensions && 
+      summaryInsights.highPriorityDimensions.length > 0 && (
+      <div className="bg-white rounded-[20px] p-4 shadow-sm">
+        <h3 className="text-base font-medium mb-2 text-[#2359FF]">
+          Your Priority Focus Areas
+        </h3>
+        <ul className="list-disc list-inside text-sm text-[#2359FF] space-y-1">
+          {summaryInsights.highPriorityDimensions.map(dimension => (
+            <li key={dimension}>
+              {dimension.replace(/([A-Z])/g, ' $1').trim()}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+    
+    {/* Fall back message if no data available */}
+    {(!summaryInsights || !coreAmbition) && (
+      <div className="bg-white rounded-[20px] p-4 shadow-sm">
+        <p className="text-sm text-[#2359FF] italic">
+          Complete the mastery quiz to see personalized insight summaries.
+        </p>
+      </div>
+    )}
+  </div>
+)}
         {/* Synergies tab */}
         {activeTab === 'synergies' && (
           <div className="space-y-3">
