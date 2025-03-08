@@ -13,7 +13,7 @@ const CoreAmbitionStep = ({ onNext }) => {
     {
       id: 'Recognition',
       title: 'Recognition',
-      description: 'You are driven by validation internal then external and seek meaningful impact. Success feels like acknowledgment of your unique contributions.',
+      description: 'You are driven by external validation and seek meaningful impact. Success feels like acknowledgment of your unique contributions.',
       icon: '01'
     },
     {
@@ -58,22 +58,19 @@ const CoreAmbitionStep = ({ onNext }) => {
   };
 
   return (
-    <div className="p-6 mb-8 rounded-xl overflow-hidden relative" 
-         style={{
-           boxShadow: "inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3)"
-         }}>
+    <div className="p-6 mb-8 relative">
       {/* Document ID Label */}
-      <div className="absolute top-2 right-2 text-xs font-light tracking-widest" style={{ color: "#2359FF", fontSize: "8px" }}>
+      <div className="absolute top-2 right-0 text-xs font-light tracking-widest" style={{ color: "#2359FF", fontSize: "8px" }}>
         FORM-AM-24
       </div>
       
       <div className="relative z-10">
         <div className="mb-6">
-          <h2 className="text-xl font-light mb-3 tracking-wide" style={{ color: "#2359FF", letterSpacing: "0.15em" }}>
+          <h2 className="text-xl font-light mb-3 tracking-wide text-center" style={{ color: "#2359FF", letterSpacing: "0.15em", fontFamily: "sans-serif" }}>
             Core Ambition Assessment
           </h2>
           <div className="w-16 h-px mx-auto my-2" style={{ background: "rgba(193,191,132,0.5)" }}></div>
-          <p className="text-xs text-center mb-4" style={{ color: "#2359FF", letterSpacing: "0.05em" }}>
+          <p className="text-xs text-center mb-4" style={{ color: "#2359FF", letterSpacing: "0.05em", fontFamily: "sans-serif" }}>
             Select the fundamental driving force that shapes your approach to mastery
           </p>
         </div>
@@ -90,15 +87,15 @@ const CoreAmbitionStep = ({ onNext }) => {
           {ambitionOptions.map((option) => (
             <div
               key={option.id}
-              className={`p-4 rounded-md border border-solid cursor-pointer transition-all duration-300 relative ${
-                coreAmbition === option.id
-                  ? 'border-[#2359FF]'
-                  : 'border-[rgba(193,191,132,0.4)]'
-              }`}
+              className={`p-4 rounded-md border border-solid cursor-pointer transition-all duration-300 relative`}
               onClick={() => handleSelect(option.id)}
               onMouseEnter={() => setHoverOption(option.id)}
               onMouseLeave={() => setHoverOption(null)}
-              style={{ borderWidth: "1px" }}
+              style={{ 
+                borderWidth: "1px",
+                borderColor: coreAmbition === option.id ? "#2359FF" : "rgba(193,191,132,0.4)",
+                background: coreAmbition === option.id ? "rgba(235,240,180,0.95)" : "rgba(235,240,180,0.6)"
+              }}
             >
               <div className="flex items-start">
                 <div className="mr-3 font-mono text-xs flex items-center justify-center w-5 h-5 border border-solid rounded-sm" 
@@ -110,10 +107,10 @@ const CoreAmbitionStep = ({ onNext }) => {
                   {option.icon}
                 </div>
                 <div>
-                  <h3 className="text-sm font-medium tracking-wide mb-1" style={{ color: "#2359FF", letterSpacing: "0.1em" }}>
+                  <h3 className="text-sm font-medium tracking-wide mb-1" style={{ color: "#2359FF", letterSpacing: "0.1em", fontFamily: "sans-serif" }}>
                     {option.title}
                   </h3>
-                  <p className="text-xs" style={{ color: "#2359FF", lineHeight: "1.5" }}>
+                  <p className="text-xs" style={{ color: "#2359FF", lineHeight: "1.5", fontFamily: "sans-serif" }}>
                     {option.description}
                   </p>
                 </div>
@@ -152,7 +149,8 @@ const CoreAmbitionStep = ({ onNext }) => {
               borderRadius: "2px",
               color: "#2359FF",
               background: "transparent",
-              border: "1px solid rgba(193,191,132,0.4)"
+              border: "1px solid rgba(193,191,132,0.4)",
+              fontFamily: "sans-serif"
             }}
           >
             <span className="relative z-10 tracking-widest" style={{ letterSpacing: "0.2em", fontSize: "8px" }}>NEXT</span>
@@ -173,7 +171,7 @@ const CoreAmbitionStep = ({ onNext }) => {
           <span className="text-xs font-mono" style={{ fontSize: "8px", color: "#2359FF" }}>REV 2024-03</span>
           <div className="flex items-center">
             <div className="w-1 h-1 bg-blue-600 rounded-full mr-1"></div>
-            <span className="text-xs" style={{ fontSize: "8px", color: "#2359FF", letterSpacing: "0.1em" }}>
+            <span className="text-xs" style={{ fontSize: "8px", color: "#2359FF", letterSpacing: "0.1em", fontFamily: "sans-serif" }}>
               {coreAmbition ? 'READY TO PROCEED' : 'AWAITING SELECTION'}
             </span>
           </div>
