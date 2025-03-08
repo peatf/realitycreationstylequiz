@@ -34,59 +34,81 @@ const IntroPage = () => {
   return (
     <div className="bg-transparent p-6 rounded-3xl w-full">
       <div className="relative z-10">
+        {/* Document ID Label */}
+        <div className="doc-id-label">
+          INTRO_RCP-24
+        </div>
+        
         {/* Preloader graphic */}
         <PressedSquaresPreloader />
         
         {/* Title */}
-        <h1 
-          className="text-3xl md:text-5xl font-light text-center mb-8 gradient-text"
-          style={{ fontFamily: "'DotGothic16', monospace" }}
-        >
-          Reality Creation Style Assessment
-        </h1>
-        
-        {/* Description box */}
-        <div className="question-box mb-6 p-4 max-w-none">
-          <p className="mb-4 text-sm text-[#2359FF]">
-            We know that manifestation or reality creation at its core is simple. You desire something, and you're drawn to the reality where it exists. That's it.
-          </p>
-          <p className="mb-4 text-sm text-[#2359FF]">
-            Humans, however, the flesh avatar mixed with immaterial spirit, are complex. When it comes to playing the game of life, learning to harmonize the simplicity of the realization process with our human complexity makes the experience that much more enjoyable and fulfilling.
-          </p>
-          <p className="mb-4 text-sm text-[#2359FF]">
-            I'm assuming that if you're here, you're beyond the point of trying to "use" manifestation as a means to an end or to save you from your life. You know that creating your reality is an ongoing experience, one that never stops as long as you're in the game, and you just want to get better at it.
-          </p>
-          <p className="mb-4 text-sm text-[#2359FF]">
-            Part of getting better at playing the game is knowing the innate attributes of your character. If you incarnated as a mage but are trying to play as a knight, you're going to have a tough time, especially if everybody and their mother is telling you that you should be a knight and is offering advice on playing the game the way a knight does. The game is more fun when you know the character you're playing.
-          </p>
-          <p className="mb-4 text-sm text-[#2359FF]">
-            The process of taking this assessment will reveal your current attributes, you don't even need to reach the results page to start noticing them. These attributes naturally evolve and refine over time (as is the beauty of human complexity), but they don't change drastically. They shape how you're designed to play the game.
-          </p>
-          <p className="text-sm text-[#2359FF]">
-            Take this assessment to discover how you are designed to interface with creating your reality.
+        <div className="text-center mb-6">
+          <h1 
+            className="results-title gradient-text"
+            style={{ fontFamily: "'DotGothic16', monospace" }}
+          >
+            Reality Creation Style Assessment
+          </h1>
+          <div className="w-20 h-px mx-auto my-2" style={{ background: "rgba(193,191,132,0.5)" }}></div>
+          <p className="text-xs tracking-widest uppercase text-center text-blue-600">
+            Personal Assessment
           </p>
         </div>
         
+        {/* Metadata line */}
+        <div className="metadata-line">
+          <span className="text-xs font-mono">01</span>
+          <span className="text-sm tracking-widest font-extralight">INTRO</span>
+          <span className="text-xs font-mono">START</span>
+        </div>
+        
+        {/* Description box */}
+        <div className="jp-card mb-6">
+          <div className="jp-card-inset">
+            <p className="mb-4 text-sm text-[#2359FF]">
+              We know that manifestation or reality creation at its core is simple. You desire something, and you're drawn to the reality where it exists. That's it.
+            </p>
+            <p className="mb-4 text-sm text-[#2359FF]">
+              Humans, however, the flesh avatar mixed with immaterial spirit, are complex. When it comes to playing the game of life, learning to harmonize the simplicity of the realization process with our human complexity makes the experience that much more enjoyable and fulfilling.
+            </p>
+            <p className="mb-4 text-sm text-[#2359FF]">
+              I'm assuming that if you're here, you're beyond the point of trying to "use" manifestation as a means to an end or to save you from your life. You know that creating your reality is an ongoing experience, one that never stops as long as you're in the game, and you just want to get better at it.
+            </p>
+            <p className="mb-4 text-sm text-[#2359FF]">
+              Part of getting better at playing the game is knowing the innate attributes of your character. If you incarnated as a mage but are trying to play as a knight, you're going to have a tough time, especially if everybody and their mother is telling you that you should be a knight and is offering advice on playing the game the way a knight does. The game is more fun when you know the character you're playing.
+            </p>
+            <p className="mb-4 text-sm text-[#2359FF]">
+              The process of taking this assessment will reveal your current attributes, you don't even need to reach the results page to start noticing them. These attributes naturally evolve and refine over time (as is the beauty of human complexity), but they don't change drastically. They shape how you're designed to play the game.
+            </p>
+            <p className="text-sm text-[#2359FF]">
+              Take this assessment to discover how you are designed to interface with creating your reality.
+            </p>
+          </div>
+        </div>
+        
         {/* Assessment Process & Participation Box */}
-        <div className="question-box mb-6 p-4 max-w-none">
-          <h2 className="text-lg font-semibold mb-4 text-[#2359FF]">Assessment Process</h2>
-          <p className="mb-4 text-sm text-[#2359FF]">
-            This assessment consists of 30 questions across five key dimensions of reality creation. Each question presents a spectrum between two natural tendencies, there are no right or wrong answers, only what feels most like you.
-          </p>
-          <p className="mb-4 text-sm text-[#2359FF]">
-            For each question, use the slider to indicate where you naturally lean.
-          </p>
-          <p className="mb-4 text-sm text-[#2359FF]">
-            Once you've completed all questions, your results will be displayed immediately, providing insights into your reality creation style.
-          </p>
-          
-          <h2 className="text-lg font-semibold mb-4 text-[#2359FF]">Participation</h2>
-          <p className="mb-4 text-sm text-[#2359FF]">
-            This assessment is for self-reflection and exploration. There is no guarantee of accuracy. Your responses will be recorded anonymously, without any personally identifying information.
-          </p>
-          <p className="text-sm text-[#2359FF]">
-            No email sign-up is required.
-          </p>
+        <div className="jp-card mb-6">
+          <div className="jp-card-inset">
+            <h2 className="text-lg font-light mb-4 text-[#2359FF]">Assessment Process</h2>
+            <p className="mb-4 text-sm text-[#2359FF]">
+              This assessment consists of 30 questions across five key dimensions of reality creation. Each question presents a spectrum between two natural tendencies, there are no right or wrong answers, only what feels most like you.
+            </p>
+            <p className="mb-4 text-sm text-[#2359FF]">
+              For each question, use the slider to indicate where you naturally lean.
+            </p>
+            <p className="mb-4 text-sm text-[#2359FF]">
+              Once you've completed all questions, your results will be displayed immediately, providing insights into your reality creation style.
+            </p>
+            
+            <h2 className="text-lg font-light mb-4 text-[#2359FF]">Participation</h2>
+            <p className="mb-4 text-sm text-[#2359FF]">
+              This assessment is for self-reflection and exploration. There is no guarantee of accuracy. Your responses will be recorded anonymously, without any personally identifying information.
+            </p>
+            <p className="text-sm text-[#2359FF]">
+              No email sign-up is required.
+            </p>
+          </div>
         </div>
         
         {/* Begin button */}
@@ -100,6 +122,13 @@ const IntroPage = () => {
             <div className="button-particles"></div>
             <div className="button-shine"></div>
           </button>
+        </div>
+        
+        {/* Footer with technical info */}
+        <div className="mt-10 pt-2 border-t border-dashed flex justify-between items-center text-blue-600" 
+             style={{ borderColor: "rgba(193,191,132,0.6)" }}>
+          <span className="text-xs">REV 2024-03</span>
+          <span className="text-xs">AWAITING SUBMISSION</span>
         </div>
       </div>
     </div>
