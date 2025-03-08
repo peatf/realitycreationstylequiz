@@ -8,6 +8,13 @@ export const dimensions = {
     title: 'Belief & Mindset',
     leftLabel: 'Inquisitive Skeptic',
     rightLabel: 'Affirmative Visionary',
+    bitmap: [
+      [0,0,1,0,0],
+      [0,1,1,1,0],
+      [1,1,1,1,1],
+      [0,1,1,1,0],
+      [0,0,1,0,0]
+    ],
     states: {
       left: {
         name: 'Inquisitive Skeptic',
@@ -38,6 +45,13 @@ export const dimensions = {
     title: 'Clarity of Vision',
     leftLabel: 'Fluid Dreamer',
     rightLabel: 'Focused Visionary',
+    bitmap: [
+      [1,1,1,1,1],
+      [1,0,0,0,1],
+      [1,0,1,0,1],
+      [1,0,0,0,1],
+      [1,1,1,1,1]
+    ],
     states: {
       left: {
         name: 'Fluid Dreamer',
@@ -68,6 +82,13 @@ export const dimensions = {
     title: 'Action Orientation',
     leftLabel: 'Contemplative Observer',
     rightLabel: 'Decisive Doer',
+    bitmap: [
+      [0,0,1,0,0],
+      [0,0,1,1,0],
+      [1,1,1,1,1],
+      [0,0,1,1,0],
+      [0,0,1,0,0]
+    ],
     states: {
       left: {
         name: 'Contemplative Observer',
@@ -98,6 +119,13 @@ export const dimensions = {
     title: 'Intuition vs. Strategy',
     leftLabel: 'Instinctual Explorer',
     rightLabel: 'Methodical Planner',
+    bitmap: [
+      [1,0,0,0,1],
+      [1,1,0,1,0],
+      [1,0,1,0,1],
+      [1,0,1,1,0],
+      [1,0,0,0,1]
+    ],
     states: {
       left: {
         name: 'Instinctual Explorer',
@@ -128,6 +156,13 @@ export const dimensions = {
     title: 'Emotional Alignment',
     leftLabel: 'Expressively Dynamic',
     rightLabel: 'Consistently Calibrated',
+    bitmap: [
+      [0,1,0,1,0],
+      [1,1,1,1,1],
+      [1,1,1,1,1],
+      [0,1,1,1,0],
+      [0,0,1,0,0]
+    ],
     states: {
       left: {
         name: 'Expressively Dynamic',
