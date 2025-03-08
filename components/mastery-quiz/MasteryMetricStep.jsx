@@ -1,7 +1,7 @@
 // components/mastery-quiz/MasteryMetricStep.jsx
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuiz } from '@/context/QuizContext';
 
 const MasteryMetricStep = ({ onNext, onBack, onComplete }) => {
@@ -10,6 +10,7 @@ const MasteryMetricStep = ({ onNext, onBack, onComplete }) => {
     setAdaptiveMasteryMetric,
     calculateMasteryResults 
   } = useQuiz();
+  const [hoverOption, setHoverOption] = useState(null);
 
   // Mastery metric options with descriptions
   const metricOptions = [
@@ -17,25 +18,25 @@ const MasteryMetricStep = ({ onNext, onBack, onComplete }) => {
       id: 'Confidence in Decision-Making',
       title: 'Confidence in Decision-Making',
       description: 'You measure growth through reduced hesitation, quicker choices, and increased internal trust.',
-      icon: '🔍'
+      icon: '01'
     },
     {
       id: 'Creative Output Quality',
       title: 'Creative Output Quality',
       description: 'You measure growth through consistency of work, external recognition, and meeting high personal standards.',
-      icon: '✨'
+      icon: '02'
     },
     {
       id: 'Reduced Stress / Increased Ease',
       title: 'Reduced Stress / Increased Ease',
       description: 'You measure growth through improved energy management, external productivity, and feedback quality.',
-      icon: '🌿'
+      icon: '03'
     },
     {
       id: 'Personal Satisfaction & Enjoyment',
       title: 'Personal Satisfaction & Enjoyment',
       description: 'You measure growth through intrinsic motivation, joy in the process, and alignment with personal values.',
-      icon: '🌟'
+      icon: '04'
     }
   ];
 
@@ -60,81 +61,175 @@ const MasteryMetricStep = ({ onNext, onBack, onComplete }) => {
   };
 
   return (
-    <div className="bg-transparent rounded-3xl w-full max-w-2xl mx-auto">
-      <div className="mb-6 text-center">
-        <h2 className="text-2xl font-light mb-3 gradient-text">
-          How do you measure mastery?
-        </h2>
-        <p className="text-sm text-center mb-4 text-[#2359FF]">
-          This represents your personal criteria for determining growth and success in your creative journey.
-        </p>
-      </div>
-
-      {/* Mastery metric options */}
-      <div className="space-y-4 mb-8">
-        {metricOptions.map((option) => (
-          <div
-            key={option.id}
-            className={`p-4 rounded-[28px] cursor-pointer transition-all duration-300 ${
-              adaptiveMasteryMetric === option.id
-                ? 'bg-[rgba(235,240,180,0.95)] shadow-md transform scale-[1.02]'
-                : 'bg-[rgba(235,240,180,0.6)] hover:bg-[rgba(235,240,180,0.8)] touch-active'
-            }`}
-            onClick={() => handleSelect(option.id)}
-            onTouchStart={() => {}} // Empty handler to enable active state on mobile
-          >
-            <div className="flex items-start">
-              <div className="text-2xl mr-3">{option.icon}</div>
-              <div>
-                <h3 className="text-lg font-medium mb-1 text-[#2359FF]">{option.title}</h3>
-                <p className="text-sm text-[#2359FF]">{option.description}</p>
-              </div>
-              {adaptiveMasteryMetric === option.id && (
-                <div className="ml-auto text-[#2359FF]">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M20 6L9 17l-5-5"></path>
-                  </svg>
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Navigation buttons */}
-      <div className="flex justify-center gap-4 mt-6">
-        <button 
-          onClick={onBack} 
-          role="button"
-          tabIndex="0"
-          className="keyboard-button"
-        >
-          <span className="relative z-10 tracking-widest">BACK</span>
-          <div className="keyboard-texture"></div>
-          <div className="button-particles"></div>
-        </button>
-        
-        <button
-          onClick={handleNext}
-          role="button"
-          tabIndex="0"
-          className={`keyboard-button ${!adaptiveMasteryMetric ? 'opacity-50 cursor-not-allowed' : ''}`}
-          disabled={!adaptiveMasteryMetric}
-        >
-          <span className="relative z-10 tracking-widest">SEE RESULTS</span>
-          <div className="keyboard-texture"></div>
-          <div className="button-particles"></div>
-          <div className="button-shine"></div>
-        </button>
+    <div className="p-6 mb-8 rounded-xl overflow-hidden relative w-full max-w-2xl mx-auto" 
+         style={{
+           boxShadow: "inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3)"
+         }}>
+      {/* Document ID Label */}
+      <div className="absolute top-2 right-2 text-xs font-light tracking-widest" style={{ color: "#2359FF", fontSize: "8px" }}>
+        FORM-MM-24
       </div>
       
-      {/* Touch feedback styles for mobile */}
-      <style jsx>{`
-        .touch-active {
-          transform: scale(0.98);
-          transition: transform 0.1s ease-in-out;
-        }
-      `}</style>
+      <div className="relative z-10">
+        <div className="mb-6">
+          <h2 className="text-xl font-light mb-3 tracking-wide" style={{ color: "#2359FF", letterSpacing: "0.15em" }}>
+            Mastery Metric Assessment
+          </h2>
+          <div className="w-16 h-px mx-auto my-2" style={{ background: "rgba(193,191,132,0.5)" }}></div>
+          <p className="text-xs text-center mb-4" style={{ color: "#2359FF", letterSpacing: "0.05em" }}>
+            Select your personal criteria for determining growth and success
+          </p>
+        </div>
+
+        {/* Technical specifications line */}
+        <div className="flex justify-between items-center py-2 mb-6 border-t border-b border-dashed" style={{ borderColor: "rgba(193,191,132,0.6)" }}>
+          <span className="text-xs font-mono" style={{ color: "#2359FF", fontSize: "8px" }}>PROFILE-C</span>
+          <span className="text-xs tracking-widest font-extralight" style={{ color: "#2359FF", fontSize: "10px" }}>METRIC-MAP</span>
+          <span className="text-xs font-mono" style={{ color: "#2359FF", fontSize: "8px" }}>FINAL STEP</span>
+        </div>
+
+        {/* Mastery metric options */}
+        <div className="space-y-3 mb-8">
+          {metricOptions.map((option) => (
+            <div
+              key={option.id}
+              className={`p-4 rounded-md border border-solid cursor-pointer transition-all duration-300 relative ${
+                adaptiveMasteryMetric === option.id
+                  ? 'border-[#2359FF]'
+                  : 'border-[rgba(193,191,132,0.4)]'
+              }`}
+              onClick={() => handleSelect(option.id)}
+              onMouseEnter={() => setHoverOption(option.id)}
+              onMouseLeave={() => setHoverOption(null)}
+              onTouchStart={() => {}} // Empty handler to enable active state on mobile
+              style={{ borderWidth: "1px" }}
+            >
+              <div className="flex items-start">
+                <div className="mr-3 font-mono text-xs flex items-center justify-center w-5 h-5 border border-solid rounded-sm" 
+                     style={{ 
+                       color: "#2359FF", 
+                       borderColor: "rgba(193,191,132,0.6)",
+                       fontSize: "8px"
+                     }}>
+                  {option.icon}
+                </div>
+                <div>
+                  <h3 className="text-sm font-medium tracking-wide mb-1" style={{ color: "#2359FF", letterSpacing: "0.1em" }}>
+                    {option.title}
+                  </h3>
+                  <p className="text-xs" style={{ color: "#2359FF", lineHeight: "1.5" }}>
+                    {option.description}
+                  </p>
+                </div>
+                {adaptiveMasteryMetric === option.id && (
+                  <div className="ml-auto" style={{ color: "#2359FF" }}>
+                    <div className="w-3 h-3 border-r border-b rotate-45 transform border-[#2359FF]" style={{ borderWidth: "1px" }}></div>
+                  </div>
+                )}
+              </div>
+              
+              {/* Selection indicator */}
+              {adaptiveMasteryMetric === option.id && (
+                <div className="absolute -left-1 top-1/2 transform -translate-y-1/2 w-2 h-2 bg-[#2359FF]"></div>
+              )}
+              
+              {/* Hover effect - subtle */}
+              {hoverOption === option.id && adaptiveMasteryMetric !== option.id && (
+                <div className="absolute inset-0 bg-[rgba(193,191,132,0.1)] pointer-events-none"></div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Progress indicator */}
+        <div className="w-full mb-4">
+          <div className="flex justify-between items-center mb-1">
+            <span className="text-xs font-light" style={{ color: "#2359FF", fontSize: "8px" }}>PROGRESS</span>
+            <span className="text-xs font-light" style={{ color: "#2359FF", fontSize: "8px" }}>3/3</span>
+          </div>
+          <div className="w-full h-1 rounded-none overflow-hidden"
+               style={{ 
+                background: "rgba(193,191,132,0.3)",
+                boxShadow: "inset 0 1px 2px rgba(0,0,0,0.1)"
+               }}>
+            <div 
+              className="h-1 rounded-none" 
+              style={{ 
+                width: "100%", 
+                background: "rgba(193,191,132,0.6)" 
+              }}
+            ></div>
+          </div>
+        </div>
+
+        {/* Navigation buttons */}
+        <div className="flex justify-between items-center mt-6">
+          <button
+            onClick={onBack}
+            className="relative px-8 py-2 transition-all duration-300 text-xs tracking-wide"
+            role="button"
+            tabIndex="0"
+            type="button"
+            style={{
+              borderRadius: "2px",
+              color: "#2359FF",
+              background: "transparent",
+              border: "1px solid rgba(193,191,132,0.4)"
+            }}
+          >
+            <span className="relative z-10 tracking-widest" style={{ letterSpacing: "0.2em", fontSize: "8px" }}>BACK</span>
+            
+            {/* Subtle hover effect */}
+            <div 
+              className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300"
+              style={{
+                background: "rgba(193,191,132,0.1)"
+              }}
+            ></div>
+          </button>
+          
+          <div className="text-xs font-mono" style={{ color: "#2359FF", fontSize: "8px" }}>
+            {adaptiveMasteryMetric ? `SELECTED: ${adaptiveMasteryMetric.substring(0, 15)}...` : 'NO SELECTION'}
+          </div>
+          
+          <button
+            onClick={handleNext}
+            className={`relative px-8 py-2 transition-all duration-300 text-xs tracking-wide ${!adaptiveMasteryMetric ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={!adaptiveMasteryMetric}
+            role="button"
+            tabIndex="0"
+            type="button"
+            style={{
+              borderRadius: "2px",
+              color: "#2359FF",
+              background: "transparent",
+              border: "1px solid rgba(193,191,132,0.4)"
+            }}
+          >
+            <span className="relative z-10 tracking-widest" style={{ letterSpacing: "0.2em", fontSize: "8px" }}>SEE RESULTS</span>
+            
+            {/* Subtle hover effect */}
+            <div 
+              className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300"
+              style={{
+                background: "rgba(193,191,132,0.1)"
+              }}
+            ></div>
+          </button>
+        </div>
+        
+        {/* Footer with technical info */}
+        <div className="mt-6 pt-2 border-t border-dashed flex justify-between items-center" 
+            style={{ borderColor: "rgba(193,191,132,0.6)" }}>
+          <span className="text-xs font-mono" style={{ fontSize: "8px", color: "#2359FF" }}>REV 2024-03</span>
+          <div className="flex items-center">
+            <div className="w-1 h-1 bg-blue-600 rounded-full mr-1"></div>
+            <span className="text-xs" style={{ fontSize: "8px", color: "#2359FF", letterSpacing: "0.1em" }}>
+              {adaptiveMasteryMetric ? 'READY FOR ANALYSIS' : 'AWAITING SELECTION'}
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
