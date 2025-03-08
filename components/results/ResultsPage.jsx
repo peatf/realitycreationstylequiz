@@ -77,68 +77,116 @@ const ResultsPage = () => {
           </>
         )}
         
-        {/* Trait Sliders/Charts */}
-        <div className="jp-card mb-8">
-          <div className="jp-card-inset">
-            <h2 className="text-xl font-light mb-4 text-center text-blue-600">
-              Your Dimension Profile
-            </h2>
-
-            <div className="space-y-6">
-              {dimensions.map((dimension) => {
-                const value = dimensionPercentages[dimension.id] || 50;
-                return (
-                  <div key={dimension.id} className="trait-container">
-                    <div className="trait-header">
-                      <span className="trait-label">{dimension.leftLabel}</span>
-                      <span className="trait-title">{dimension.title}</span>
-                      <span className="trait-label text-right">{dimension.rightLabel}</span>
-                    </div>
+        {/* Trait Measurements Section - using JapaneseMinimalistProfile style */}
+        <div className="p-6 mb-8 rounded-3xl overflow-hidden relative" 
+             style={{
+               background: "linear-gradient(135deg, rgba(235,240,180,0.65) 0%, rgba(245,250,190,0.85) 50%, rgba(235,240,180,0.75) 100%)",
+               boxShadow: "inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3), 0 0 10px rgba(193,191,132,0.3)"
+             }}>
+          {/* Inset shadow for debossed effect */}
+          <div 
+            className="absolute inset-0 rounded-3xl"
+            style={{
+              boxShadow: "inset 0 2px 5px rgba(0,0,0,0.15), inset 0 -1px 2px rgba(255,255,255,0.2)",
+              pointerEvents: "none",
+              zIndex: 1
+            }}
+          ></div>
+          
+          <h2 className="text-xl font-light mb-6 text-center text-blue-600 relative z-10">
+            Your Dimension Profile
+          </h2>
+          
+          <div className="space-y-8 relative z-10">
+            {dimensions.map((dimension) => {
+              const value = dimensionPercentages[dimension.id] || 50;
+              return (
+                <div key={dimension.id} className="mb-6">
+                  <div className="flex justify-between mb-2">
+                    <span className="text-xs font-light text-[#2359FF]">{dimension.leftLabel}</span>
+                    <span className="text-xs font-light text-[#2359FF]">{dimension.title}</span>
+                    <span className="text-xs font-light text-[#2359FF]">{dimension.rightLabel}</span>
+                  </div>
+                  
+                  {/* Connection Line with Circle */}
+                  <div className="relative h-4 mb-3">
+                    <div className="absolute inset-y-0 w-full border-b border-dashed" 
+                         style={{ borderColor: "rgba(193,191,132,0.6)" }}></div>
                     
-                    {/* Slider track */}
-                    <div className="trait-track">
-                      {/* Current value indicator */}
+                    {/* Circle at current value */}
+                    <div 
+                      className="absolute top-1/2 w-4 h-4 rounded-full"
+                      style={{ 
+                        left: `${value}%`, 
+                        transform: 'translate(-50%, -50%)',
+                        background: "rgba(255,255,255,0.2)",
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
+                        border: "1px solid rgba(255,255,255,0.2)"
+                      }}
+                    >
                       <div 
-                        className="trait-thumb"
-                        style={{ left: `${value}%` }}
-                      ></div>
-                    </div>
-                    
-                    {/* Classification */}
-                    <div className="text-right">
-                      <span 
-                        className="text-xs inline-block px-2 py-1 rounded-full bg-white bg-opacity-40 border border-opacity-40"
-                        style={{ 
-                          color: "#2359FF", 
-                          borderColor: "rgba(193,191,132,0.4)"
-                        }}
-                      >
-                        {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
-                      </span>
+                         className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60"
+                         style={{ transform: "translate(-50%, -50%)" }}></div>
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                  
+                  {/* Classification */}
+                  <div className="text-right">
+                    <span 
+                      className="text-xs inline-block px-2 py-1 rounded-full"
+                      style={{ 
+                        color: "#2359FF", 
+                        background: "rgba(255,255,255,0.4)",
+                        border: "1px solid rgba(193,191,132,0.4)"
+                      }}
+                    >
+                      {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
         
-        {/* DIMENSION CAROUSEL */}
-        <div className="jp-card mb-8 relative">
-          <div className="jp-card-inset"> 
-            <h2 className="text-xl font-light mb-4 text-center text-blue-600">
-              Dimension Details
-            </h2>
-            
-            <div className="relative">
+        {/* DIMENSION CAROUSEL - fixed styling from JapaneseMinimalistProfile */}
+        <div className="mb-8">
+          <h2 className="text-sm tracking-wide font-light mb-4 flex items-center" style={{ color: "#2359FF" }}>
+            <span className="inline-block w-5 h-5 mr-2 text-center rounded-full border text-xs"
+                 style={{ borderColor: "rgba(193,191,132,0.6)", color: "#2359FF", background: "rgba(255,255,255,0.5)" }}>
+              2
+            </span>
+            Dimension Details
+          </h2>
+          
+          <div className="relative h-64 mb-6">
+            {/* Carousel container */}
+            <div className="relative w-full h-full overflow-hidden rounded-2xl">
+              {/* Current dimension card */}
               {dimensions.map((dimension, index) => (
-                <div
+                <div 
                   key={dimension.id}
-                  className={`transition-opacity duration-300 ${
-                    index === activeIndex ? 'opacity-100' : 'opacity-0 absolute inset-0'
+                  className={`absolute inset-0 transition-opacity duration-300 ${
+                    index === activeIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
                   }`}
                 >
-                  <div>
+                  <div 
+                    className="p-6 h-full overflow-hidden relative rounded-2xl"
+                    style={{
+                      background: "linear-gradient(135deg, rgba(235,240,180,0.65) 0%, rgba(245,250,190,0.85) 50%, rgba(235,240,180,0.75) 100%)",
+                      boxShadow: "inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3), 0 0 10px rgba(193,191,132,0.3)"
+                    }}
+                  >
+                    {/* Inset shadow for debossed effect */}
+                    <div 
+                      className="absolute inset-0 rounded-2xl"
+                      style={{
+                        boxShadow: "inset 0 2px 5px rgba(0,0,0,0.15), inset 0 -1px 2px rgba(255,255,255,0.2)",
+                        pointerEvents: "none",
+                        zIndex: 1
+                      }}
+                    ></div>
+                    
                     <h3 className="dimension-title">
                       {dimension.title}:{' '}
                       <span className="dimension-value">
@@ -179,55 +227,78 @@ const ResultsPage = () => {
                   </div>
                 </div>
               ))}
+              
+              {/* Navigation dots */}
+              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
+                {dimensions.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      activeIndex === index 
+                        ? 'bg-blue-600 w-4' 
+                        : 'bg-blue-300'
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
-
-            {/* Carousel navigation dots */}
-            <div className="flex justify-center gap-2 mt-4">
-              {dimensions.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveIndex(idx)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    activeIndex === idx 
-                      ? 'bg-blue-600 w-4' 
-                      : 'bg-blue-300'
-                  }`}
-                  aria-label={`Go to slide ${idx + 1}`}
-                />
-              ))}
-            </div>
-
-            {/* Carousel Controls */}
-            <button
+            
+            {/* Carousel navigation buttons */}
+            <button 
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 -ml-4 w-8 h-8 rounded-full flex items-center justify-center bg-white bg-opacity-60 border border-opacity-40"
-              style={{ borderColor: "rgba(193,191,132,0.4)" }}
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 -ml-4 w-8 h-8 rounded-full flex items-center justify-center z-20"
+              style={{
+                background: "rgba(255,255,255,0.6)",
+                border: "1px solid rgba(193,191,132,0.4)"
+              }}
               aria-label="Previous dimension"
             >
               <div className="w-2 h-2 border-l border-b transform -rotate-45" style={{ borderColor: "#2359FF" }}></div>
             </button>
-            <button
+            
+            <button 
               onClick={nextSlide}
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 -mr-4 w-8 h-8 rounded-full flex items-center justify-center bg-white bg-opacity-60 border border-opacity-40"
-              style={{ borderColor: "rgba(193,191,132,0.4)" }}
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 -mr-4 w-8 h-8 rounded-full flex items-center justify-center z-20"
+              style={{
+                background: "rgba(255,255,255,0.6)",
+                border: "1px solid rgba(193,191,132,0.4)"
+              }}
               aria-label="Next dimension"
             >
               <div className="w-2 h-2 border-r border-t transform rotate-45" style={{ borderColor: "#2359FF" }}></div>
             </button>
           </div>
         </div>
-
+        
         {/* Summary Section */}
         {profileResult && (
-          <div className="jp-card mb-8">
-            <div className="jp-card-inset">
-              <h2 className="text-xl font-light mb-4 text-center text-blue-600">
+          <div className="p-6 mb-8 rounded-3xl overflow-hidden relative" 
+               style={{
+                 background: "linear-gradient(135deg, rgba(235,240,180,0.65) 0%, rgba(245,250,190,0.85) 50%, rgba(235,240,180,0.75) 100%)",
+                 boxShadow: "inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3), 0 0 10px rgba(193,191,132,0.3)"
+               }}>
+            {/* Inset shadow for debossed effect */}
+            <div 
+              className="absolute inset-0 rounded-3xl"
+              style={{
+                boxShadow: "inset 0 2px 5px rgba(0,0,0,0.15), inset 0 -1px 2px rgba(255,255,255,0.2)",
+                pointerEvents: "none",
+                zIndex: 1
+              }}
+            ></div>
+            
+            <div className="relative z-10">
+              <h2 
+                className="text-xl font-thin tracking-widest text-center mb-4 text-[#2359FF]"
+              >
                 Your Overall Style: {profileResult.name}
               </h2>
-              <p className="results-text">
+              <p className="text-sm text-center text-[#2359FF] mb-6">
                 {profileResult.description}
               </p>
-
+              
               {/* Celebrate / Support lists */}
               {(profileResult.celebrate || profileResult.support) && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
@@ -287,12 +358,33 @@ const ResultsPage = () => {
           </div>
         )}
 
-        {/* Share Buttons */}
-        <ShareButtons 
-          profileName={profileResult?.name}
-          dimensionScores={dimensionScores}
-          profileId={profileResult?.id}
-        />
+        {/* Share Buttons - without card background */}
+        <div className="w-full flex flex-col items-center mb-8">
+          <h3 className="text-xl font-light mb-5 text-center text-[#2359FF]">
+            Share Your Results
+          </h3>
+          
+          {/* Share content preview */}
+          <div className="w-full max-w-md p-4 mb-6 rounded-xl bg-white/10 border border-[rgba(220,255,200,0.4)] shadow-sm">
+            <p className="text-sm text-[#2359FF] mb-2 italic">
+              "{shareText}"
+            </p>
+            <div className="text-xs text-[#2359FF] opacity-70 truncate">
+              {shareUrl}
+            </div>
+          </div>
+          
+          {/* Social share buttons with improved styling */}
+          <div className="flex justify-center gap-6 mb-6">
+            <div className="flex flex-col items-center">
+              <ShareButtons 
+                profileName={profileResult?.name}
+                dimensionScores={dimensionScores}
+                profileId={profileResult?.id}
+              />
+            </div>
+          </div>
+        </div>
         
         {/* Restart button */}
         <div className="flex justify-center mt-8">
