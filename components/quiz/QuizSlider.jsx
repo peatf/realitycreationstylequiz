@@ -9,7 +9,7 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
   };
   
   return (
-    <div className="relative w-full py-4">
+    <div className="relative w-full py-4 max-w-md mx-auto">
       {/* Slider track */}
       <div 
         className="h-5 rounded-full w-full relative overflow-hidden"
@@ -20,7 +20,7 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
       >
         {/* Fill portion */}
         <div
-          className="h-full rounded-full transition-all duration-300"
+          className="absolute top-0 left-0 h-full rounded-full"
           style={{
             width: `${value}%`,
             background: "linear-gradient(to right, rgba(193,191,132,0.6), rgba(150,159,30,0.6))"
@@ -29,32 +29,34 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
         
         {/* Animated pulse */}
         <div
-          className="absolute inset-0 opacity-20 anim-pulse"
+          className="absolute inset-0 opacity-20"
           style={{
-            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)"
+            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
+            animation: "pulse 3s infinite"
           }}
         ></div>
-        
-        {/* Thumb */}
-        <div
-          className="absolute top-1/2 w-6 h-6 rounded-full transform -translate-y-1/2 transition-all duration-300"
+      </div>
+      
+      {/* Thumb */}
+      <div
+        className="absolute top-1/2 w-6 h-6 rounded-full transform -translate-y-1/2 transition-all duration-300 thumb-glow"
+        style={{
+          left: `${value}%`,
+          transform: "translate(-50%, -50%)",
+          background: "rgba(255,255,255,0.2)",
+          backdropFilter: "blur(8px)",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
+          border: "1px solid rgba(255,255,255,0.2)",
+          zIndex: 2
+        }}
+      >
+        {/* White dot in center */}
+        <div 
+          className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60"
           style={{
-            left: `${value}%`,
-            background: "rgba(255,255,255,0.2)",
-            backdropFilter: "blur(8px)",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
-            border: "1px solid rgba(255,255,255,0.2)",
             transform: "translate(-50%, -50%)"
           }}
-        >
-          {/* White dot in center */}
-          <div 
-            className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60"
-            style={{
-              transform: "translate(-50%, -50%)"
-            }}
-          ></div>
-        </div>
+        ></div>
       </div>
       
       {/* Hidden range input */}
@@ -76,6 +78,15 @@ const QuizSlider = ({ value, onChange, leftLabel, rightLabel }) => {
           <p className="text-sm text-[#2359FF]">{rightLabel}</p>
         </div>
       </div>
+      
+      {/* Animation keyframes */}
+      <style jsx>{`
+        @keyframes pulse {
+          0% { transform: translateX(-100%); }
+          50% { transform: translateX(100%); }
+          100% { transform: translateX(-100%); }
+        }
+      `}</style>
     </div>
   );
 };
