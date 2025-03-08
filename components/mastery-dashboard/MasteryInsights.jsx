@@ -121,20 +121,30 @@ const MasteryInsights = () => {
               Discover how changes in one dimension can positively impact others:
             </p>
             
-            {synergyInsights && synergyInsights.length > 0 ? (
-              synergyInsights.map((synergy, index) => (
-                <div 
-                  key={index} 
-                  className="bg-white rounded-[20px] p-3 shadow-sm"
-                >
-                  <h3 className="text-sm font-medium mb-1 text-[#2359FF]">
-                    {synergy.fromDimension.replace(/([A-Z])/g, ' $1').trim()} →{' '}
-                    {synergy.toDimension.replace(/([A-Z])/g, ' $1').trim()}
-                  </h3>
-                  <p className="text-xs text-[#2359FF]">{synergy.insight}</p>
-                </div>
-              ))
-            ) : (
+           {synergyInsights && synergyInsights.length > 0 ? (
+  synergyInsights.map((synergy, index) => {
+    // Handle both direct structure and nested structure (with synergy.synergy)
+    const fromDimension = synergy.fromDimension || (synergy.synergy && synergy.synergy.fromDimension);
+    const toDimension = synergy.toDimension || (synergy.synergy && synergy.synergy.toDimension);
+    const insight = synergy.insight || (synergy.synergy && synergy.synergy.insight);
+    
+    // Skip rendering if we don't have the required fields
+    if (!fromDimension || !toDimension || !insight) return null;
+    
+    return (
+      <div 
+        key={index} 
+        className="bg-white rounded-[20px] p-3 shadow-sm"
+      >
+        <h3 className="text-sm font-medium mb-1 text-[#2359FF]">
+          {fromDimension.replace(/([A-Z])/g, ' $1').trim()} →{' '}
+          {toDimension.replace(/([A-Z])/g, ' $1').trim()}
+        </h3>
+        <p className="text-xs text-[#2359FF]">{insight}</p>
+      </div>
+    );
+  })
+) : (
               <div className="bg-white rounded-[20px] p-4 shadow-sm">
                 <p className="text-sm text-[#2359FF] italic">
                   No significant dimension synergies identified yet.
