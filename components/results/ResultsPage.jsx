@@ -9,10 +9,11 @@ import { getAllDimensions } from '@/data/dimensions';
 
 // Add this import
 import MasteryInsights from '../mastery-dashboard/MasteryInsights';
+import DynamicMasteryDiagram from '../mastery-dashboard/DynamicMasteryDiagram';
 
 
 const ResultsPage = () => {
-  const { dimensionScores, dimensionStates, profileResult, restartQuiz } = useQuiz();
+  const { dimensionScores, dimensionStates, profileResult, restartQuiz, masteryQuizCompleted } = useQuiz();
   
   // Get all dimensions
   const dimensions = getAllDimensions();
@@ -63,7 +64,7 @@ const ResultsPage = () => {
         </div>
 
         {/* Add the Dynamic Mastery Diagram if mastery quiz was completed */}
-{(masteryQuizCompleted === true) && (
+{masteryQuizCompleted && (
   <>
     <DynamicMasteryDiagram />
     <MasteryInsights />
