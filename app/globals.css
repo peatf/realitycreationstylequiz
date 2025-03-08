@@ -1134,3 +1134,13 @@ input[type="range"]::-moz-range-thumb {
   border: 1px solid rgba(255,255,255,0.2);
   box-shadow: 0 2px 5px rgba(0,0,0,0.1), inset 0 0 3px rgba(255,255,255,0.6);
 }
+  .divider {
+  background: rgba(193,191,132,0.5);
+}
+.divider {
+  background: rgba(193,191,132,0.5);
+}
+.arrow-icon {
+  border-color: var(--text-primary);
+}
+
