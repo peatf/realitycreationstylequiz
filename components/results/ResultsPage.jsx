@@ -1,6 +1,7 @@
+// components/results/ResultsPage.jsx
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useQuiz } from '@/context/QuizContext';
 import { createShareableUrl, generateShareText } from '@/lib/utils';
 import { scoreToPercentage } from '@/lib/scoring';
@@ -21,10 +22,17 @@ const ResultsPage = () => {
     return acc;
   }, {});
   
-  // Create shareable URL (used by ShareButtons)
-  const shareableUrl = createShareableUrl(dimensionScores, profileResult?.name);
-  // Generate share text
-  const shareText = generateShareText(profileResult?.name);
+  // Generate shareUrl and shareText - this is the important fix for the reference error
+  const shareUrl = useMemo(() => {
+    if (typeof window !== 'undefined') {
+      return window.location.href;
+    }
+    return 'https://www.peathefeary.com/realitycreationstyle';
+  }, []);
+  
+  const shareText = useMemo(() => {
+    return generateShareText(profileResult?.name);
+  }, [profileResult]);
   
   // State & handlers for dimension carousel
   const [activeIndex, setActiveIndex] = useState(0);
@@ -358,7 +366,7 @@ const ResultsPage = () => {
           </div>
         )}
 
-        {/* Share Buttons - without card background */}
+        {/* Share Buttons Section - without card background */}
         <div className="w-full flex flex-col items-center mb-8">
           <h3 className="text-xl font-light mb-5 text-center text-[#2359FF]">
             Share Your Results
@@ -374,16 +382,14 @@ const ResultsPage = () => {
             </div>
           </div>
           
-          {/* Social share buttons with improved styling */}
-          <div className="flex justify-center gap-6 mb-6">
-            <div className="flex flex-col items-center">
-              <ShareButtons 
-                profileName={profileResult?.name}
-                dimensionScores={dimensionScores}
-                profileId={profileResult?.id}
-              />
-            </div>
-          </div>
+          {/* Social share buttons - passing the shareUrl variable directly */}
+          <ShareButtons 
+            profileName={profileResult?.name}
+            dimensionScores={dimensionScores}
+            profileId={profileResult?.id}
+            shareUrl={shareUrl}
+            shareText={shareText}
+          />
         </div>
         
         {/* Restart button */}
