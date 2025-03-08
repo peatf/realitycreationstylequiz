@@ -48,10 +48,13 @@ const CoreAmbitionStep = ({ onNext }) => {
 
   // Handle next button click
   const handleNext = () => {
-    if (coreAmbition && onNext) {
-      onNext();
-    }
-  };
+  if (coreAmbition && onNext) {
+    console.log('CoreAmbitionStep: Calling onNext handler');
+    onNext();
+  } else {
+    console.log('CoreAmbitionStep: Cannot proceed - either coreAmbition is not set or onNext handler is missing');
+  }
+};
 
   return (
     <div className="bg-transparent rounded-3xl w-full max-w-2xl mx-auto">
