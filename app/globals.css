@@ -105,6 +105,7 @@ body {
   align-items: flex-start;
   justify-content: center;
   width: 100%;
+  max-width: 90vw;
   min-height: 100vh;
   background: transparent;
 }
@@ -112,7 +113,7 @@ body {
 .card-container {
   position: relative;
   width: 100%;
-  max-width: 640px;
+  max-width: 75vw;
   margin: 2.5rem auto;
   padding: 2rem;
 }
