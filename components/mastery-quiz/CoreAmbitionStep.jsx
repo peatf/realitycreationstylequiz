@@ -30,7 +30,7 @@ const CoreAmbitionStep = ({ onNext }) => {
     {
       id: 'Innovation',
       title: 'Innovation',
-      description: 'You seek to break new ground and value unique approaches. Success feels like creating something that didn't exist before.',
+      description: 'You seek to break new ground and value unique approaches. Success feels like creating something that didn\'t exist before.',
       icon: '💡'
     },
     {
