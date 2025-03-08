@@ -18,6 +18,9 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body style={{ background: 'transparent' }}>
+        {/* Add the grid background */}
+        <div className="grid-bg"></div>
+        
         <IFrameWrapper>
           {children}
         </IFrameWrapper>
