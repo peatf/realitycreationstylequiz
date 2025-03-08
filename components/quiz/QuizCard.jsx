@@ -3,7 +3,6 @@
 
 import React from 'react';
 import { useQuiz } from '@/context/QuizContext';
-import QuizSlider from './QuizSlider';
 import { getAllQuestions } from '@/data/questions';
 
 const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
@@ -37,7 +36,7 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
                 
                 {/* Question content */}
                 <div className="relative z-10 p-6">
-                  <p className="question-text text-lg md:text-xl text-center text-[#2359FF]">
+                  <p className="question-text text-lg md:text-xl text-center">
                     {question.text}
                   </p>
                 </div>
@@ -75,7 +74,7 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
                   
                   {/* Slider thumb */}
                   <div
-                    className="absolute top-1/2 w-4 h-4 rounded-full thumb-glow"
+                    className="absolute top-1/2 w-6 h-6 rounded-full thumb-glow"
                     style={{
                       left: `${answers[question.id] || 50}%`,
                       transform: "translate(-50%, -50%)",
@@ -84,7 +83,7 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
                       border: "1px solid rgba(255,255,255,0.2)"
                     }}
                   >
-                    <div className="absolute top-1 left-1 w-1 h-1 rounded-full bg-white opacity-60"></div>
+                    <div className="absolute top-1/2 left-1/2 w-1 h-1 rounded-full bg-white opacity-60" style={{ transform: "translate(-50%, -50%)" }}></div>
                   </div>
                   
                   <input
@@ -95,19 +94,19 @@ const QuizCard = ({ currentQuestionIndex, onNext, onPrev, isLast }) => {
                     onChange={(e) => handleSliderChange(question.id, question.dimension, parseInt(e.target.value, 10))}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
                   />
+                </div>
 
-                  {/* Answer Options */}
-                  <div className="flex justify-between mt-2 px-4">
-                    <div className="text-left w-5/12">
-                      <p className="text-xs whitespace-pre-line text-[#2359FF]">
-                        {question.leftLabel}
-                      </p>
-                    </div>
-                    <div className="text-right w-5/12">
-                      <p className="text-xs whitespace-pre-line text-[#2359FF]">
-                        {question.rightLabel}
-                      </p>
-                    </div>
+                {/* Answer Options */}
+                <div className="flex justify-between mt-2">
+                  <div className="text-left w-[45%]">
+                    <p className="text-xs whitespace-pre-line text-[#2359FF]">
+                      {question.leftLabel}
+                    </p>
+                  </div>
+                  <div className="text-right w-[45%]">
+                    <p className="text-xs whitespace-pre-line text-[#2359FF]">
+                      {question.rightLabel}
+                    </p>
                   </div>
                 </div>
               </div>
