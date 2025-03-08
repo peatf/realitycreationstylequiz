@@ -1055,3 +1055,44 @@ input[type="range"]::-moz-range-thumb {
 .edge-highlight {
   z-index: 3;
 }
+
+/* Carousel Transitions */
+.carousel-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+.carousel-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: all 300ms ease-in-out;
+}
+.carousel-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+.carousel-exit-active {
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: all 300ms ease-in-out;
+}
+
+/* Bitmap Grid */
+.bitmap-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 1px;
+  width: 24px;
+  height: 24px;
+}
+
+.bitmap-pixel {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.bitmap-pixel.active {
+  background-color: var(--text-primary);
+}
