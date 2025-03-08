@@ -6,11 +6,8 @@ import { createShareableUrl, generateShareText } from '@/lib/utils';
 import { scoreToPercentage } from '@/lib/scoring';
 import ShareButtons from './ShareButtons';
 import { getAllDimensions } from '@/data/dimensions';
-
-// Add this import
 import MasteryInsights from '../mastery-dashboard/MasteryInsights';
 import DynamicMasteryDiagram from '../mastery-dashboard/DynamicMasteryDiagram';
-
 
 const ResultsPage = () => {
   const { dimensionScores, dimensionStates, profileResult, restartQuiz, masteryQuizCompleted } = useQuiz();
@@ -41,340 +38,280 @@ const ResultsPage = () => {
   return (
     <div className="bg-transparent p-6 rounded-3xl w-full">
       <div className="relative z-10">
+        {/* Grid background */}
+        <div className="grid-bg"></div>
         
-        {/* Title (unchanged) */}
+        {/* Document ID Label */}
+        <div className="doc-id-label">
+          PROFILE_RCP-24
+        </div>
+        
+        {/* Title */}
         <div className="text-center mb-6">
           <h1 className="results-title gradient-text">
             Your Reality Creation Profile
           </h1>
+          <div className="w-20 h-px mx-auto my-2" style={{ background: "rgba(193,191,132,0.5)" }}></div>
+          <p className="text-xs tracking-widest uppercase text-center text-blue-600">
+            Personal Assessment
+          </p>
         </div>
         
-        {/* Progress Bar (unchanged) */}
+        {/* Progress Bar */}
         <div className="text-center mb-8">
-          <div className="flex justify-center mb-1">
-            <span className="text-sm text-[#2359FF]">
-              Step 10/10 - Complete!
-            </span>
+          <div className="metadata-line">
+            <span className="text-xs font-mono">10</span>
+            <span className="text-sm tracking-widest font-extralight">COMPLETE</span>
+            <span className="text-xs font-mono">100%</span>
           </div>
-          <div className="w-full max-w-md mx-auto">
-            <div className="progress-bar">
-              <div className="progress-fill" style={{ width: '100%' }}></div>
-            </div>
+          <div className="progress-bar">
+            <div className="progress-fill" style={{ width: '100%' }}></div>
           </div>
         </div>
 
         {/* Add the Dynamic Mastery Diagram if mastery quiz was completed */}
-{masteryQuizCompleted && (
-  <>
-    <DynamicMasteryDiagram />
-    <MasteryInsights />
-  </>
-)}
+        {masteryQuizCompleted && (
+          <>
+            <DynamicMasteryDiagram />
+            <MasteryInsights />
+          </>
+        )}
         
-        {/* Trait Sliders/Charts with improved label spacing */}
-        <div 
-          className="mb-8"
-          style={{
-            display: 'grid',
-            rowGap: '1.5rem' // space between each dimension
-          }}
-        >
-          {dimensions.map((dimension) => {
-            const value = dimensionPercentages[dimension.id] || 50;
-            return (
-              <div key={dimension.id}>
-                
-                {/* Label row with gap so text doesn't run together */}
-                <div 
-                  className="flex items-center justify-between px-2"
-                  style={{
-                    marginBottom: '0.75rem',
-                    gap: '1rem' // add horizontal gap between labels
-                  }}
-                >
-                  <span className="text-sm text-[#2359FF]">
-                    {dimension.leftLabel}
-                  </span>
-                  <span className="text-sm font-light text-[#2359FF]">
-                    {dimension.title}
-                  </span>
-                  <span className="text-sm text-[#2359FF]">
-                    {dimension.rightLabel}
-                  </span>
-                </div>
-                
-                {/* Slider track (unchanged) */}
-                <div className="relative h-5 w-full">
-                  <div 
-                    style={{
-                      height: '20px',
-                      borderRadius: '9999px',
-                      width: '100%',
-                      position: 'relative',
-                      overflow: 'hidden',
-                      background: "linear-gradient(to right, rgba(193,191,132,0.3), rgba(150,159,30,0.3))",
-                      boxShadow: "inset 2px 2px 3px rgba(166,167,161,0.3), inset -2px -2px 3px rgba(255,255,250,0.3)"
-                    }}
-                  >
-                    {/* Filled portion */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        top: 0,
-                        bottom: 0,
-                        left: 0,
-                        borderRadius: '9999px',
-                        width: `${value}%`,
-                        background: "linear-gradient(to right, rgba(193,191,132,0.6), rgba(150,159,30,0.6))"
-                      }}
-                    ></div>
-                    
-                    {/* Pulse animation */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        inset: 0,
-                        opacity: 0.2,
-                        background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)",
-                        animation: "pulse 3s infinite"
-                      }}
-                    ></div>
-                  </div>
-                  
-                  {/* Slider thumb */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '50%',
-                      left: `${value}%`,
-                      width: '16px',
-                      height: '16px',
-                      borderRadius: '9999px',
-                      transform: "translate(-50%, -50%)",
-                      background: "rgba(255,255,255,0.2)",
-                      backdropFilter: "blur(8px)",
-                      WebkitBackdropFilter: "blur(8px)",
-                      boxShadow: "0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6)",
-                      border: "1px solid rgba(255,255,255,0.2)",
-                      zIndex: 20,
-                      display: 'block !important'
-                    }}
-                  >
-                    {/* Visible inner dot */}
-                    <div 
-                      style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        width: '4px',
-                        height: '4px',
-                        borderRadius: '9999px',
-                        background: 'white',
-                        opacity: 0.6,
-                        transform: "translate(-50%, -50%)",
-                        display: 'block !important'
-                      }}
-                    ></div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        
-        {/* DIMENSION CAROUSEL (unchanged) */}
-        <div 
-          className="mb-8"
-          style={{
-            position: 'relative',
-            maxWidth: '800px',
-            margin: '0 auto'
-          }}
-        >
-          {dimensions.map((dimension, index) => (
-            <div
-              key={dimension.id}
-              style={{
-                display: index === activeIndex ? 'block' : 'none',
-                transition: 'opacity 0.5s ease-in-out'
-              }}
-            >
-              <div
-                className="dimension-description"
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  height: '100%',
-                  padding: '1rem',
-                  borderRadius: '28px',
-                  background: "rgba(235,240,180,0.5)",
-                  backdropFilter: "blur(4px)",
-                  WebkitBackdropFilter: "blur(4px)",
-                  border: "1px solid rgba(220,255,200,0.6)",
-                  boxShadow: "inset 0 2px 5px rgba(0,0,0,0.1), 0 0 10px rgba(193,191,132,0.3)",
-                  marginBottom: '1rem'
-                }}
-              >
-                <h3 className="dimension-title">
-                  {dimension.title}:{' '}
-                  <span className="dimension-value">
-                    {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
-                  </span>
-                </h3>
-                <p className="dimension-text">
-                  {dimension.states[dimensionStates[dimension.id]]?.description ||
-                    'Your approach is balanced in this dimension.'}
-                </p>
-
-                <div style={{ marginTop: 'auto' }}>
-                  {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
-                    <div className="mt-3">
-                      <h4 className="section-title">Frameworks you may be interested in:</h4>
-                      <p className="section-text">
-                        {dimension.states[dimensionStates[dimension.id]].frameworks}
-                      </p>
-                    </div>
-                  )}
-                  {dimension.states[dimensionStates[dimension.id]]?.practices && (
-                    <div className="mt-3">
-                      <h4 className="section-title">Practices you may be interested in:</h4>
-                      <p className="section-text">
-                        {dimension.states[dimensionStates[dimension.id]].practices}
-                      </p>
-                    </div>
-                  )}
-                  {dimension.states[dimensionStates[dimension.id]]?.tools && (
-                    <div className="mt-3">
-                      <h4 className="section-title">Tools you may be interested in:</h4>
-                      <p className="section-text">
-                        {dimension.states[dimensionStates[dimension.id]].tools}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          ))}
-
-          {/* Carousel Controls */}
-          <button
-            onClick={prevSlide}
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '-3rem',
-              transform: 'translateY(-50%)',
-              cursor: 'pointer',
-              background: 'transparent',
-              border: 'none',
-              fontSize: '1rem'
-            }}
-          >
-            &lt; Prev
-          </button>
-          <button
-            onClick={nextSlide}
-            style={{
-              position: 'absolute',
-              top: '50%',
-              right: '-3rem',
-              transform: 'translateY(-50%)',
-              cursor: 'pointer',
-              background: 'transparent',
-              border: 'none',
-              fontSize: '1rem'
-            }}
-          >
-            Next &gt;
-          </button>
-        </div>
-
-        {/* Summary Section (unchanged) */}
-        {profileResult && (
-          <div className="profile-card mb-8">
-            <h2 className="results-subtitle gradient-text">
-              Your Overall Style: {profileResult.name}
+        {/* Trait Sliders/Charts */}
+        <div className="jp-card mb-8">
+          <div className="jp-card-inset">
+            <h2 className="text-xl font-light mb-4 text-center text-blue-600">
+              Your Dimension Profile
             </h2>
-            <p className="results-text">
-              {profileResult.description}
-            </p>
 
-            {/* Celebrate / Support lists */}
-            {(profileResult.celebrate || profileResult.support) && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                {profileResult.celebrate && (
-                  <div>
-                    <h3 className="text-base font-light mb-3 text-center text-[#2359FF]">
-                      Things to Celebrate
-                    </h3>
-                    <ul className="space-y-2">
-                      {profileResult.celebrate.map((item, index) => (
-                        <li
-                          key={index}
-                          className="p-3 rounded-xl text-sm"
-                          style={{
-                            background: "rgba(235,240,180,0.3)",
-                            backdropFilter: "blur(4px)",
-                            WebkitBackdropFilter: "blur(4px)",
-                            border: "1px solid rgba(220,255,200,0.4)",
-                            boxShadow: "inset 0 1px 3px rgba(0,0,0,0.05), 0 0 5px rgba(193,191,132,0.2)",
-                            color: "#2359FF"
-                          }}
-                        >
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
+            <div className="space-y-6">
+              {dimensions.map((dimension) => {
+                const value = dimensionPercentages[dimension.id] || 50;
+                return (
+                  <div key={dimension.id} className="trait-container">
+                    <div className="trait-header">
+                      <span className="trait-label">{dimension.leftLabel}</span>
+                      <span className="trait-title">{dimension.title}</span>
+                      <span className="trait-label text-right">{dimension.rightLabel}</span>
+                    </div>
+                    
+                    {/* Slider track */}
+                    <div className="trait-track">
+                      {/* Current value indicator */}
+                      <div 
+                        className="trait-thumb"
+                        style={{ left: `${value}%` }}
+                      ></div>
+                    </div>
+                    
+                    {/* Classification */}
+                    <div className="text-right">
+                      <span 
+                        className="text-xs inline-block px-2 py-1 rounded-full bg-white bg-opacity-40 border border-opacity-40"
+                        style={{ 
+                          color: "#2359FF", 
+                          borderColor: "rgba(193,191,132,0.4)"
+                        }}
+                      >
+                        {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
+                      </span>
+                    </div>
                   </div>
-                )}
-                {profileResult.support && (
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        
+        {/* DIMENSION CAROUSEL */}
+        <div className="jp-card mb-8 relative">
+          <div className="jp-card-inset"> 
+            <h2 className="text-xl font-light mb-4 text-center text-blue-600">
+              Dimension Details
+            </h2>
+            
+            <div className="relative">
+              {dimensions.map((dimension, index) => (
+                <div
+                  key={dimension.id}
+                  className={`transition-opacity duration-300 ${
+                    index === activeIndex ? 'opacity-100' : 'opacity-0 absolute inset-0'
+                  }`}
+                >
                   <div>
-                    <h3 className="text-base font-light mb-3 text-center text-[#2359FF]">
-                      What Will Support Your Process
+                    <h3 className="dimension-title">
+                      {dimension.title}:{' '}
+                      <span className="dimension-value">
+                        {dimension.states[dimensionStates[dimension.id]]?.name || 'Balanced'}
+                      </span>
                     </h3>
-                    <ul className="space-y-2">
-                      {profileResult.support.map((item, index) => (
-                        <li
-                          key={index}
-                          className="p-3 rounded-xl text-sm"
-                          style={{
-                            background: "rgba(220,230,255,0.2)",
-                            backdropFilter: "blur(4px)",
-                            WebkitBackdropFilter: "blur(4px)",
-                            border: "1px solid rgba(255,255,255,0.2)",
-                            boxShadow: "inset 0 1px 3px rgba(0,0,0,0.05), 0 0 5px rgba(35,89,255,0.1)",
-                            color: "#2359FF"
-                          }}
-                        >
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
+                    <p className="dimension-text">
+                      {dimension.states[dimensionStates[dimension.id]]?.description ||
+                        'Your approach is balanced in this dimension.'}
+                    </p>
+
+                    <div className="mt-4">
+                      {dimension.states[dimensionStates[dimension.id]]?.frameworks && (
+                        <div className="mt-3">
+                          <h4 className="section-title">Frameworks you may be interested in:</h4>
+                          <p className="section-text">
+                            {dimension.states[dimensionStates[dimension.id]].frameworks}
+                          </p>
+                        </div>
+                      )}
+                      {dimension.states[dimensionStates[dimension.id]]?.practices && (
+                        <div className="mt-3">
+                          <h4 className="section-title">Practices you may be interested in:</h4>
+                          <p className="section-text">
+                            {dimension.states[dimensionStates[dimension.id]].practices}
+                          </p>
+                        </div>
+                      )}
+                      {dimension.states[dimensionStates[dimension.id]]?.tools && (
+                        <div className="mt-3">
+                          <h4 className="section-title">Tools you may be interested in:</h4>
+                          <p className="section-text">
+                            {dimension.states[dimensionStates[dimension.id]].tools}
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                )}
-              </div>
-            )}
+                </div>
+              ))}
+            </div>
+
+            {/* Carousel navigation dots */}
+            <div className="flex justify-center gap-2 mt-4">
+              {dimensions.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveIndex(idx)}
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    activeIndex === idx 
+                      ? 'bg-blue-600 w-4' 
+                      : 'bg-blue-300'
+                  }`}
+                  aria-label={`Go to slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Carousel Controls */}
+            <button
+              onClick={prevSlide}
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 -ml-4 w-8 h-8 rounded-full flex items-center justify-center bg-white bg-opacity-60 border border-opacity-40"
+              style={{ borderColor: "rgba(193,191,132,0.4)" }}
+              aria-label="Previous dimension"
+            >
+              <div className="w-2 h-2 border-l border-b transform -rotate-45" style={{ borderColor: "#2359FF" }}></div>
+            </button>
+            <button
+              onClick={nextSlide}
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 -mr-4 w-8 h-8 rounded-full flex items-center justify-center bg-white bg-opacity-60 border border-opacity-40"
+              style={{ borderColor: "rgba(193,191,132,0.4)" }}
+              aria-label="Next dimension"
+            >
+              <div className="w-2 h-2 border-r border-t transform rotate-45" style={{ borderColor: "#2359FF" }}></div>
+            </button>
+          </div>
+        </div>
+
+        {/* Summary Section */}
+        {profileResult && (
+          <div className="jp-card mb-8">
+            <div className="jp-card-inset">
+              <h2 className="text-xl font-light mb-4 text-center text-blue-600">
+                Your Overall Style: {profileResult.name}
+              </h2>
+              <p className="results-text">
+                {profileResult.description}
+              </p>
+
+              {/* Celebrate / Support lists */}
+              {(profileResult.celebrate || profileResult.support) && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                  {profileResult.celebrate && (
+                    <div>
+                      <h3 className="text-base font-light mb-3 text-center text-[#2359FF]">
+                        Things to Celebrate
+                      </h3>
+                      <ul className="space-y-2">
+                        {profileResult.celebrate.map((item, index) => (
+                          <li
+                            key={index}
+                            className="p-3 rounded-xl text-sm"
+                            style={{
+                              background: "rgba(235,240,180,0.3)",
+                              backdropFilter: "blur(4px)",
+                              WebkitBackdropFilter: "blur(4px)",
+                              border: "1px solid rgba(220,255,200,0.4)",
+                              boxShadow: "inset 0 1px 3px rgba(0,0,0,0.05), 0 0 5px rgba(193,191,132,0.2)",
+                              color: "#2359FF"
+                            }}
+                          >
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  {profileResult.support && (
+                    <div>
+                      <h3 className="text-base font-light mb-3 text-center text-[#2359FF]">
+                        What Will Support Your Process
+                      </h3>
+                      <ul className="space-y-2">
+                        {profileResult.support.map((item, index) => (
+                          <li
+                            key={index}
+                            className="p-3 rounded-xl text-sm"
+                            style={{
+                              background: "rgba(220,230,255,0.2)",
+                              backdropFilter: "blur(4px)",
+                              WebkitBackdropFilter: "blur(4px)",
+                              border: "1px solid rgba(255,255,255,0.2)",
+                              boxShadow: "inset 0 1px 3px rgba(0,0,0,0.05), 0 0 5px rgba(35,89,255,0.1)",
+                              color: "#2359FF"
+                            }}
+                          >
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         )}
 
-        {/* Share Buttons (unchanged) */}
+        {/* Share Buttons */}
         <ShareButtons 
           profileName={profileResult?.name}
           dimensionScores={dimensionScores}
           profileId={profileResult?.id}
         />
         
-        {/* Restart button (unchanged) */}
+        {/* Restart button */}
         <div className="flex justify-center mt-8">
           <button 
             onClick={restartQuiz}
             className="keyboard-button"
           >
-            <span className="relative z-10">TAKE QUIZ AGAIN</span>
+            <span className="relative z-10 tracking-widest">TAKE QUIZ AGAIN</span>
             <div className="keyboard-texture"></div>
             <div className="button-particles"></div>
             <div className="button-shine"></div>
           </button>
+        </div>
+        
+        {/* Footer with technical info */}
+        <div className="mt-10 pt-2 border-t border-dashed flex justify-between items-center text-blue-600" 
+             style={{ borderColor: "rgba(193,191,132,0.6)" }}>
+          <span className="text-xs">REV 2024-03</span>
+          <span className="text-xs">ANALYSIS COMPLETE</span>
         </div>
       </div>
     </div>
