@@ -22,14 +22,14 @@ const MasteryQuizContainer = () => {
   // Progress calculation (0 to 100)
   const progress = Math.round(((currentStep + 1) / steps.length) * 100);
 
-  // Navigation handlers
+  // Navigation handlers with debugging
   const handleNext = () => {
-    console.log(`Moving from step ${currentStep} to ${Math.min(currentStep + 1, steps.length - 1)}`);
+    console.log(`MasteryQuizContainer: Moving from step ${currentStep} to ${Math.min(currentStep + 1, steps.length - 1)}`);
     setCurrentStep(prev => Math.min(prev + 1, steps.length - 1));
   };
 
   const handleBack = () => {
-    console.log(`Moving back from step ${currentStep} to ${Math.max(currentStep - 1, 0)}`);
+    console.log(`MasteryQuizContainer: Moving back from step ${currentStep} to ${Math.max(currentStep - 1, 0)}`);
     setCurrentStep(prev => Math.max(prev - 1, 0));
   };
 
@@ -39,6 +39,11 @@ const MasteryQuizContainer = () => {
   return (
     <div className="bg-transparent p-6 rounded-3xl w-full">
       <div className="relative z-10 pt-4">
+        {/* Document ID Label */}
+        <div className="doc-id-label">
+          MASTERY_RCP-24
+        </div>
+        
         {/* Progress indicator */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-light mb-4 gradient-text">
@@ -63,6 +68,7 @@ const MasteryQuizContainer = () => {
           <button 
             onClick={skipMasteryQuiz}
             className="text-sm text-[#2359FF] opacity-50 hover:opacity-100 underline"
+            type="button"
           >
             Skip to results
           </button>
