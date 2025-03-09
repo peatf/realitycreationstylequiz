@@ -111,22 +111,6 @@ const ResultsPage = () => {
           <span className="text-xs font-mono text-primary">150mm</span>
         </div>
 
-        {/* Progress indicator */}
-        <div className="w-full mb-8">
-          <div className="progress-header">
-            <span className="text-sm font-light text-primary">Progress</span>
-            <span className="text-sm font-light text-primary">Complete</span>
-          </div>
-          
-          {/* Trait indicator showing which one we're viewing */}
-          <div className="progress-indicator my-4">
-            <span>Trait {currentTraitIndex + 1} of {dimensions.length}</span>
-          </div>
-          <div className="progress-bar">
-            <div className="progress-fill w-full"></div>
-          </div>
-        </div>
-
         {/* Optional Mastery Section */}
         {masteryQuizCompleted && (
           <>
@@ -141,19 +125,20 @@ const ResultsPage = () => {
           Trait Measurements
         </h2>
           
-        {/* Trait Measurement Section */}
+        {/* Trait Measurement Section - IMPROVED: Better spacing and text alignment */}
         <div className="jp-card p-6 mb-8">
-          <div className="jp-card-inset">
+          <div className="jp-card-inset overflow-visible">
             <div className="space-y-6">
               {dimensions.map((dimension) => {
                 const value = dimensionPercentages[dimension.id] || 50;
                 
                 return (
                   <div key={dimension.id} className="mb-6">
+                    {/* IMPROVED: Better aligned labels with more spacing */}
                     <div className="flex justify-between mb-2">
-                      <span className="trait-label" style={{ textAlign: "left" }}>{dimension.leftLabel}</span>
-                      <span className="trait-title">{dimension.title}</span>
-                      <span className="trait-label" style={{ textAlign: "right" }}>{dimension.rightLabel}</span>
+                      <span className="trait-label text-left w-1/3 pr-2">{dimension.leftLabel}</span>
+                      <span className="trait-title text-center w-1/3">{dimension.title}</span>
+                      <span className="trait-label text-right w-1/3 pl-2">{dimension.rightLabel}</span>
                     </div>
                     
                     {/* Trait track with thumb */}
@@ -183,17 +168,22 @@ const ResultsPage = () => {
           Analysis Results
         </h2>
         
-        {/* Trait Analysis Cards */}
+        {/* IMPROVED: Moved Trait X of 5 indicator here */}
+        <div className="progress-indicator my-4">
+          <span className="text-sm text-primary">Trait {currentTraitIndex + 1} of {dimensions.length}</span>
+        </div>
+        
+        {/* Trait Analysis Cards - IMPROVED: Fixed height, padding, and overflow issues */}
         <div className="mb-8">
-          <div className="relative h-64 mb-6">
+          <div className="relative h-auto mb-6">
             {/* Carousel container */}
-            <div className="relative w-full h-full overflow-hidden rounded-2xl">
+            <div className="relative w-full overflow-hidden rounded-2xl">
               {/* Current trait card */}
-              <div className="jp-card p-6 h-full">
-                <div className="jp-card-inset">
+              <div className="jp-card p-6">
+                <div className="jp-card-inset min-h-[250px] overflow-visible py-4">
                   <div className="flex items-center mb-4">
-                    {/* Bitmap Icon */}
-                    <div className="bitmap-icon-container">
+                    {/* Bitmap Icon - IMPROVED: Fixed sizing and overflow */}
+                    <div className="bitmap-icon-container flex-shrink-0">
                       <div className="bitmap-grid">
                         {dimensions[currentTraitIndex]?.bitmap?.flat().map((pixel, index) => (
                           <div 
@@ -204,33 +194,34 @@ const ResultsPage = () => {
                       </div>
                     </div>
                     
-                    <h3 className="text-lg font-medium text-primary">
+                    <h3 className="text-lg font-medium text-primary ml-3">
                       {getTraitClassificationName(dimensions[currentTraitIndex])}
                     </h3>
                   </div>
                   
-                  <p className="text-sm mb-6 text-primary">
+                  {/* IMPROVED: Better text wrapping and padding */}
+                  <p className="text-sm mb-6 text-primary overflow-visible">
                     {getTraitClassification(dimensions[currentTraitIndex])}
                   </p>
                   
                   {/* Trait title and value */}
-                  <div className="mt-4 flex items-center justify-between">
+                  <div className="mt-6 flex items-center justify-between">
                     <span className="text-xs text-primary">{dimensions[currentTraitIndex].title}</span>
                     <span className="text-xs font-mono text-primary">{dimensionPercentages[dimensions[currentTraitIndex].id]}%</span>
                   </div>
+                  
+                  {/* IMPROVED: Moved navigation dots inside the carousel container */}
+                  <div className="carousel-dots mt-4">
+                    {dimensions.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentTraitIndex(index)}
+                        className={`carousel-dot ${currentTraitIndex === index ? 'active' : ''}`}
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-              
-              {/* Navigation dots */}
-              <div className="carousel-dots">
-                {dimensions.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentTraitIndex(index)}
-                    className={`carousel-dot ${currentTraitIndex === index ? 'active' : ''}`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
               </div>
             </div>
             
@@ -252,31 +243,31 @@ const ResultsPage = () => {
             </button>
           </div>
           
-          {/* Overall Style */}
-          {profileResult && (
-            <div className="jp-card-accent p-6 mb-6">
-              <div className="jp-card-inset">
-                <h3 className="results-subtitle text-primary mb-4">
-                  Your Overall Style: {profileResult.name}
-                </h3>
-                <p className="text-sm text-center text-primary">
-                  {profileResult.description || "You are an action-oriented creator who blends vision with belief, taking decisive steps toward making your reality a reflection of your desires."}
-                </p>
-                
-                {/* Connector lines design element - in horizontal arrangement */}
-                <div className="mt-6 flex justify-center">
-                  <div className="w-2/3 flex justify-around">
-                    {[1, 2, 3].map(i => (
-                      <div key={i} className="flex flex-col items-center">
-                        <div className="connector-line"></div>
-                        <div className="connector-circle"></div>
-                      </div>
-                    ))}
+          {/* IMPROVED: Added margin-top to provide separation between sections */}
+          <div className="mt-12">
+            {/* Overall Style */}
+            {profileResult && (
+              <div className="jp-card-accent p-6 mb-6">
+                <div className="jp-card-inset">
+                  <h3 className="results-subtitle text-primary mb-4">
+                    Your Overall Style: {profileResult.name}
+                  </h3>
+                  <p className="text-sm text-center text-primary">
+                    {profileResult.description || "You are an action-oriented creator who blends vision with belief, taking decisive steps toward making your reality a reflection of your desires."}
+                  </p>
+                  
+                  {/* IMPROVED: Changed connector lines to horizontal layout */}
+                  <div className="mt-6 flex justify-center">
+                    <div className="flex justify-center gap-6 w-2/3">
+                      {[1, 2, 3].map(i => (
+                        <div key={i} className="connector-circle"></div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
         
         {/* Share Section */}
