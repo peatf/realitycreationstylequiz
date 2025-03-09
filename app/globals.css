@@ -1215,7 +1215,8 @@ input[type="range"]::-moz-range-thumb {
   opacity: 0;
   transform: translateX(-100%);
   transition: all 300ms ease-in-out;
-/* Carousel dots */
+}
+  /* Carousel dots */
 .carousel-dots {
   position: absolute;
   bottom: 1rem;
