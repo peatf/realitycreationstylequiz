@@ -158,7 +158,15 @@ body {
   color: var(--text-primary);
   opacity: 0.8;
 }
+.connector-line {
+  background: rgba(193,191,132,0.6);
+}
 
+.connector-circle {
+  background: rgba(255,255,255,0.2);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6);
+  border: 1px solid rgba(255,255,255,0.2);
+}
 .metadata-line {
   display: flex;
   justify-content: space-between;
@@ -355,10 +363,12 @@ body {
 
 .trait-track {
   position: relative;
-  height: 4px;
+  height: 1rem;
   width: 100%;
-  margin: 1rem 0;
+  margin: 1rem 0
+  position: relative;
 }
+
 
 .trait-track::before {
   content: "";
@@ -374,16 +384,13 @@ body {
 .trait-thumb {
   position: absolute;
   top: 50%;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
+  transform: translate(-50%, -50%);
   background: rgba(255,255,255,0.2);
   box-shadow: 0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6);
   border: 1px solid rgba(255,255,255,0.2);
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease;
 }
+
 
 .trait-thumb:hover {
   transform: translate(-50%, -50%) scale(1.2);
@@ -422,6 +429,7 @@ body {
 .jp-card-inset {
   position: relative;
   height: 100%;
+   z-index: 10;
 }
 
 .jp-card-inset::after {
@@ -501,19 +509,14 @@ body {
 /* Button styling - Japanese aesthetic */
 .keyboard-button {
   position: relative;
-  padding: 0.5rem 2.5rem;
   border-radius: 76px;
   color: var(--text-primary);
   background: #DBDECE;
   border: 1px solid rgba(193, 191, 132, 0.4);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.2);
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
   transition: all 0.2s ease;
   cursor: pointer;
   overflow: hidden;
-  margin: 0 auto;
-  display: block;
 }
 
 .keyboard-button:hover {
@@ -526,10 +529,7 @@ body {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
-/* Keyboard texture details */
 .keyboard-texture {
-  position: absolute;
-  inset: 0;
   border-radius: 76px;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(230, 230, 220, 0.05) 100%);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), inset 0 -1px 1px rgba(0, 0, 0, 0.1);
@@ -1022,6 +1022,9 @@ input[type="range"]::-moz-range-thumb {
 .text-primary {
   color: var(--text-primary);
 }
+.border-accent {
+  border-color: rgba(193,191,132,0.6);
+}
 
 /* Prevent label stacking */
 @media (min-width: 640px) {
@@ -1087,7 +1090,6 @@ input[type="range"]::-moz-range-thumb {
 
 /* Navigation Arrows */
 .carousel-nav {
-  @apply absolute top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center;
   background: rgba(255,255,255,0.6);
   border: 1px solid rgba(193,191,132,0.4);
 }
@@ -1098,7 +1100,6 @@ input[type="range"]::-moz-range-thumb {
 /* Bitmap Grid */
 
 .bitmap-icon-container {
-  @apply w-12 h-12 mr-4 rounded-sm flex items-center justify-center;
   background: rgba(255,255,255,0.3);
   border: 1px solid rgba(193,191,132,0.4);
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
