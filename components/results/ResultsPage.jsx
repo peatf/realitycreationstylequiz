@@ -125,32 +125,40 @@ const ResultsPage = () => {
           Trait Measurements
         </h2>
           
-        {/* Trait Measurement Section - IMPROVED: Better spacing and text alignment */}
-        <div className="jp-card p-6 mb-8">
-          <div className="jp-card-inset overflow-visible">
-            <div className="space-y-6">
+        {/* Trait Measurement Section - IMPROVED: Better text alignment and spacing */}
+        <div className="jp-card p-6 mb-12">
+          <div className="jp-card-inset py-4 overflow-visible">
+            <div className="space-y-8">
               {dimensions.map((dimension) => {
                 const value = dimensionPercentages[dimension.id] || 50;
                 
                 return (
-                  <div key={dimension.id} className="mb-6">
-                    {/* IMPROVED: Better aligned labels with more spacing */}
-                    <div className="flex justify-between mb-2">
-                      <span className="trait-label text-left w-1/3 pr-2">{dimension.leftLabel}</span>
-                      <span className="trait-title text-center w-1/3">{dimension.title}</span>
-                      <span className="trait-label text-right w-1/3 pl-2">{dimension.rightLabel}</span>
+                  <div key={dimension.id} className="mb-8">
+                    {/* IMPROVED: Better aligned labels with proper spacing and grid structure */}
+                    <div className="grid grid-cols-3 mb-3">
+                      <div className="text-left pr-2">
+                        <span className="trait-label text-xs text-primary">{dimension.leftLabel}</span>
+                      </div>
+                      <div className="text-center">
+                        <span className="trait-title text-xs text-primary font-medium">{dimension.title}</span>
+                      </div>
+                      <div className="text-right pl-2">
+                        <span className="trait-label text-xs text-primary">{dimension.rightLabel}</span>
+                      </div>
                     </div>
                     
                     {/* Trait track with thumb */}
-                    <div className="trait-track">
+                    <div className="trait-track relative h-6 my-2">
+                      <div className="absolute inset-y-0 w-full border-b border-dashed border-accent"></div>
+                      
                       <div 
-                        className="trait-thumb"
+                        className="trait-thumb absolute top-1/2 -translate-y-1/2"
                         style={{ left: `${value}%` }}
                       ></div>
                     </div>
                     
                     {/* Classification */}
-                    <div className="text-right mt-2">
+                    <div className="text-right mt-3">
                       <span className="classification-badge">
                         {getTraitClassificationName(dimension)}
                       </span>
@@ -168,22 +176,23 @@ const ResultsPage = () => {
           Analysis Results
         </h2>
         
-        {/* IMPROVED: Moved Trait X of 5 indicator here */}
-        <div className="progress-indicator my-4">
+        {/* IMPROVED: Moved Trait X of 5 indicator below section title with better spacing */}
+        <div className="progress-indicator my-4 text-center">
           <span className="text-sm text-primary">Trait {currentTraitIndex + 1} of {dimensions.length}</span>
         </div>
         
-        {/* Trait Analysis Cards - IMPROVED: Fixed height, padding, and overflow issues */}
-        <div className="mb-8">
-          <div className="relative h-auto mb-6">
+        {/* Trait Analysis Cards - IMPROVED: Fixed content cutoff, added proper spacing */}
+        <div className="mb-16"> {/* Increased bottom margin to create separation */}
+          <div className="relative mb-6">
             {/* Carousel container */}
             <div className="relative w-full overflow-hidden rounded-2xl">
               {/* Current trait card */}
               <div className="jp-card p-6">
-                <div className="jp-card-inset min-h-[250px] overflow-visible py-4">
-                  <div className="flex items-center mb-4">
+                {/* IMPROVED: Added proper padding, min-height, and overflow handling */}
+                <div className="jp-card-inset py-6 px-4 min-h-[280px] overflow-visible">
+                  <div className="flex items-start mb-6"> {/* Changed to items-start for better alignment */}
                     {/* Bitmap Icon - IMPROVED: Fixed sizing and overflow */}
-                    <div className="bitmap-icon-container flex-shrink-0">
+                    <div className="bitmap-icon-container flex-shrink-0 mr-4">
                       <div className="bitmap-grid">
                         {dimensions[currentTraitIndex]?.bitmap?.flat().map((pixel, index) => (
                           <div 
@@ -194,29 +203,31 @@ const ResultsPage = () => {
                       </div>
                     </div>
                     
-                    <h3 className="text-lg font-medium text-primary ml-3">
+                    <h3 className="text-lg font-medium text-primary">
                       {getTraitClassificationName(dimensions[currentTraitIndex])}
                     </h3>
                   </div>
                   
-                  {/* IMPROVED: Better text wrapping and padding */}
-                  <p className="text-sm mb-6 text-primary overflow-visible">
-                    {getTraitClassification(dimensions[currentTraitIndex])}
-                  </p>
+                  {/* IMPROVED: Better text wrapping, padding, and spacing */}
+                  <div className="mb-8">
+                    <p className="text-sm text-primary leading-relaxed">
+                      {getTraitClassification(dimensions[currentTraitIndex])}
+                    </p>
+                  </div>
                   
                   {/* Trait title and value */}
-                  <div className="mt-6 flex items-center justify-between">
+                  <div className="mt-auto flex items-center justify-between">
                     <span className="text-xs text-primary">{dimensions[currentTraitIndex].title}</span>
                     <span className="text-xs font-mono text-primary">{dimensionPercentages[dimensions[currentTraitIndex].id]}%</span>
                   </div>
                   
-                  {/* IMPROVED: Moved navigation dots inside the carousel container */}
-                  <div className="carousel-dots mt-4">
+                  {/* IMPROVED: Placed navigation dots inside the card with better spacing */}
+                  <div className="carousel-dots mt-6 flex justify-center">
                     {dimensions.map((_, index) => (
                       <button
                         key={index}
                         onClick={() => setCurrentTraitIndex(index)}
-                        className={`carousel-dot ${currentTraitIndex === index ? 'active' : ''}`}
+                        className={`carousel-dot ${currentTraitIndex === index ? 'active' : ''} mx-1`}
                         aria-label={`Go to slide ${index + 1}`}
                       />
                     ))}
@@ -242,33 +253,30 @@ const ResultsPage = () => {
               <div className="carousel-nav-arrow"></div>
             </button>
           </div>
+        </div>
           
-          {/* IMPROVED: Added margin-top to provide separation between sections */}
-          <div className="mt-12">
-            {/* Overall Style */}
-            {profileResult && (
-              <div className="jp-card-accent p-6 mb-6">
-                <div className="jp-card-inset">
-                  <h3 className="results-subtitle text-primary mb-4">
-                    Your Overall Style: {profileResult.name}
-                  </h3>
-                  <p className="text-sm text-center text-primary">
-                    {profileResult.description || "You are an action-oriented creator who blends vision with belief, taking decisive steps toward making your reality a reflection of your desires."}
-                  </p>
-                  
-                  {/* IMPROVED: Changed connector lines to horizontal layout */}
-                  <div className="mt-6 flex justify-center">
-                    <div className="flex justify-center gap-6 w-2/3">
-                      {[1, 2, 3].map(i => (
-                        <div key={i} className="connector-circle"></div>
-                      ))}
-                    </div>
-                  </div>
+        {/* Overall Style with IMPROVED spacing and separation from above section */}
+        {profileResult && (
+          <div className="jp-card-accent p-6 mb-10">
+            <div className="jp-card-inset py-4">
+              <h3 className="results-subtitle text-primary mb-4">
+                Your Overall Style: {profileResult.name}
+              </h3>
+              <p className="text-sm text-center text-primary mb-6 px-4">
+                {profileResult.description || "You are an action-oriented creator who blends vision with belief, taking decisive steps toward making your reality a reflection of your desires."}
+              </p>
+              
+              {/* IMPROVED: Horizontally aligned dots with proper spacing */}
+              <div className="flex justify-center mt-4">
+                <div className="flex justify-center items-center gap-4 w-2/3">
+                  {[1, 2, 3].map(i => (
+                    <div key={i} className="connector-circle w-3 h-3"></div>
+                  ))}
                 </div>
               </div>
-            )}
+            </div>
           </div>
-        </div>
+        )}
         
         {/* Share Section */}
         <div className="mb-8">
@@ -276,7 +284,7 @@ const ResultsPage = () => {
             Share Your Results
           </h3>
           <div className="jp-card p-6 max-w-md mx-auto mb-6">
-            <div className="jp-card-inset">
+            <div className="jp-card-inset py-4">
               <p className="text-sm italic mb-2 text-primary">
                 "{shareText}"
               </p>
@@ -297,7 +305,7 @@ const ResultsPage = () => {
         </div>
         
         {/* Restart Button */}
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-center mt-10">
           <button 
             onClick={restartQuiz} 
             className="keyboard-button px-8 py-2 text-xs tracking-wide"
