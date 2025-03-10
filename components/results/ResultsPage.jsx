@@ -301,33 +301,32 @@ const ResultsPage = () => {
         </div>
 
         {/* Your Overall Style */}
-        {/* Added `mt-12` to ensure enough space from the carousel */}
         {profileResult && (
-          <div className="jp-card-accent p-6 mb-10 mt-12">
-            <div className="jp-card-inset py-4">
-              <h3 className="results-subtitle text-primary mb-4">
-                Your Overall Style: {profileResult.name}
-              </h3>
-              <p className="text-sm text-center text-primary mb-6 px-4">
-                {profileResult.description ||
-                  "You are an action-oriented creator who blends vision with belief, taking decisive steps toward making your reality a reflection of your desires."}
-              </p>
+  <div className="jp-card-accent p-6 mb-10 mt-12">
+    <div className="jp-card-inset py-4">
+      <h3 className="results-subtitle text-primary mb-4">
+        Your Overall Style: {profileResult.name}
+      </h3>
+      <p className="text-sm text-center text-primary mb-6 px-4">
+        {profileResult.description ||
+          "You are an action-oriented creator who blends vision with belief, taking decisive steps toward making your reality a reflection of your desires."}
+      </p>
 
-              {/* Ellipsis with more spacing: used gap-4 */}
-              <div className="flex justify-center mt-4">
-                <div className="flex justify-center items-center gap-4 w-2/3">
-                  {[1, 2, 3].map((i) => (
-                    <div
-                      key={i}
-                      className="connector-circle w-3 h-3"
-                      style={{ minWidth: "0.75rem" }}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+      {/* Ellipsis with more spacing: used gap-4 */}
+      <div className="flex justify-center mt-4">
+        <div className="flex justify-center items-center gap-4 w-2/3">
+          {[1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className="connector-circle w-3 h-3"
+              style={{ minWidth: "0.75rem" }}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+)}
 
         {/* Share Section */}
         <div className="mb-8">
