@@ -10,7 +10,7 @@
   --border-subtle: rgba(193,191,132,0.6);
   --border-light: rgba(255,255,255,0.2);
   --shadow-card: inset 0 2px 6px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.3), 0 0 10px rgba(193,191,132,0.3);
-  --shadow-inset: inset 0 2px 5px rgba(0,0,0,0.15), inset 0 -1px 2px rgba(255,255,255,0.2);
+  --shadow-inset: inset 0 1px 3px rgba(0,0,0,0.1), inset 0 -0.5px 1px rgba(255,255,255,0.15);
   --shadow-element: 0 2px 8px rgba(0,0,0,0.1), 0 0 10px rgba(255,255,255,0.3), inset 0 0 4px rgba(255,255,255,0.6);
 
   /* Question box styling */
@@ -475,7 +475,7 @@ body {
   box-shadow: var(--shadow-inset);
   pointer-events: none;
   z-index: 1;
-  border-radius: inherit;
+  border-radius: 1.5rem;
 }
 
 .jp-card-accent {
@@ -483,8 +483,10 @@ body {
   box-shadow: var(--shadow-card);
   border-radius: 1.5rem;
   position: relative;
-  overflow: hidden;
+  overflow: visible; /* Change from hidden to visible */
+  padding: 1.5rem;   /* Provide consistent inner spacing */
 }
+
 
 
 .jp-card:hover {
@@ -712,6 +714,7 @@ body {
   font-weight: 200;
   margin-bottom: 1.5rem;
   text-align: center;
+  padding: 0 1rem;
 }
 
 .results-subtitle {
@@ -720,6 +723,7 @@ body {
   letter-spacing: 0.1em;
   text-align: center;
   margin-bottom: 1rem;
+  padding: 0 1rem;
 }
 
 .results-text {
@@ -727,6 +731,7 @@ body {
   text-align: center;
   color: #2359FF;
   margin-bottom: 1rem;
+  padding: 0 1rem;
 }
 
 .dimension-title {
